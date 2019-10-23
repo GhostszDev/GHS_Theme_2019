@@ -1,0 +1,37 @@
+/*
+Theme Name: GHS Theme
+Theme URI: https://ghostszmusic.com/
+Author: GhostszMusic INC
+Author URI: https://ghostszmusic.com/
+Description: This is a modern wordpress site using modern JS to enhance this theme.
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: ghostszmusic
+Tags: ghostszmusic, ghostszmusic inc, ghost, wordpress theme
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+*/
+
+/* Animations */
+.ghs_animate_slide_up{}
+.ghs_animate_slide_down{}
+
+
+/* All Styling elements */
+ul{ margin: 0; padding: 0; }
+ul li{ list-style: none; margin: 0; padding: 0; }
+.footer{ width: 100%; color: #fff; padding: 0.5rem 1rem; display: flex; }
+.ghs_error{ width: 100%; color: #be002a; padding: .5rem; }
+.ghs_success{ width: 100%; color: #009220; padding: .5rem; }
+.ghs_theme_settings{ margin-right: 3rem; }
+.ghs_admin_alert{ display: none; }
+.ghs_hero_preview{ display: none; overflow: hidden; position: relative; width: 100%; height: 15rem; }
+.ghs_hero_preview img{ position: absolute; }
+.ghs_hero_banner { height: 100vh; position: relative; overflow: hidden; }
+.ghs_hero_banner img{ position: absolute; width: 100%; left: 0; top: 0; }
+.ghs_hero_banner_content{ width: 100%; height: calc(10rem); position: absolute; }
+.ghs_light_bg{ background: rgba(255, 255, 255, 0.5); color: #000000; }
+.ghs_dark_bg{ background: rgba(0, 0, 0, 0.5); color: #FFFFFF; }
+.ghs-front-page{ display: flex; flex-wrap: wrap; }
+.ghs-front-page .card{ width: 45%; display: inline-block; margin-right: 2.5%; margin-bottom: 2rem; }
