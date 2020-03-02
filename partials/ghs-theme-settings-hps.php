@@ -15,24 +15,53 @@
             <td><input class="theme-settings-input ghs-hero-banner-img" type="file" accept="image/jpeg"></td>
         </tr>
         <tr>
-            <th>Twitter:</th>
-            <td><input class="theme-settings-input ghs-set-social-twitter" placeholder="Twitter"></td>
+            <th>Title:</th>
+            <td>
+                <select class="theme-settings-select ghs-hero-banner-title-tag">
+                    <option value="h1">H1</option>
+                    <option value="h2" selected>H2</option>
+                    <option value="h3">H3</option>
+                    <option value="h4">H4</option>
+                    <option value="h5">H5</option>
+                    <option value="h6">H6</option>
+                    <option value="p">P</option>
+                </select>
+                <br>
+                <br>
+                <input type="text" class="theme-settings-input ghs-hero-banner-title" placeholder="Title">
+            </td>
         </tr>
         <tr>
-            <th>Tumblr:</th>
-            <td><input class="theme-settings-input ghs-set-social-tumblr" placeholder="Tumblr"></td>
+            <th>Subtitle:</th>
+            <td>
+                <select class="theme-settings-select ghs-hero-banner-subtitle-tag">
+                    <option value="h1">H1</option>
+                    <option value="h2" selected>H2</option>
+                    <option value="h3">H3</option>
+                    <option value="h4">H4</option>
+                    <option value="h5">H5</option>
+                    <option value="h6">H6</option>
+                    <option value="p">P</option>
+                </select>
+                <br>
+                <br>
+                <input type="text" class="theme-settings-input ghs-hero-banner-subtitle" placeholder="Subtitle">
+            </td>
         </tr>
         <tr>
-            <th>Instagram:</th>
-            <td><input class="theme-settings-input ghs-set-social-instagram" placeholder="Instagram"></td>
+            <th>Theme:</th>
+            <td>
+                <select class="theme-settings-select ghs-hero-banner-theme">
+                    <option value="dark">Dark</option>
+                    <option value="light" selected>Light</option>
+                </select>
+            </td>
         </tr>
         <tr>
-            <th>Youtube:</th>
-            <td><input class="theme-settings-input ghs-set-social-youtube" placeholder="Youtube"></td>
-        </tr>
-        <tr>
-            <th>Snapchat:</th>
-            <td><input class="theme-settings-input ghs-set-social-snapchat" placeholder="Snapchat"></td>
+            <th>Link:</th>
+            <td>
+                <input type="url" class="theme-settings-input ghs-hero-banner-link" placeholder="Link">
+            </td>
         </tr>
     </table>
 

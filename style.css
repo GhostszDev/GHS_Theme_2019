@@ -21,7 +21,7 @@ Use it to make something cool, have fun, and share what you've learned with othe
 /* All Styling elements */
 ul{ margin: 0; padding: 0; }
 ul li{ list-style: none; margin: 0; padding: 0; }
-.footer{ width: 100%; color: #fff; padding: 0.5rem 1rem; display: flex; }
+.footer{ width: 100%; color: #fff; padding: 0.5rem 1rem; display: flex; margin-top: 1rem; }
 .ghs_error{ width: 100%; color: #be002a; padding: .5rem; }
 .ghs_success{ width: 100%; color: #009220; padding: .5rem; }
 .ghs_theme_settings{ margin-right: 3rem; }

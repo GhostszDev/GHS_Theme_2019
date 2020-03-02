@@ -32,6 +32,7 @@ include_once(ghs_acf_path . 'acf.php');
 function ghs_defaults(){
 
     ghs_check_if_db_exist('ghs_settings');
+    ghs_check_if_db_exist('ghs_hero_banner_settings');
 }
 
 function ghs_head(){
@@ -42,7 +43,6 @@ function ghs_head(){
     <meta name="description" content="<?php if(is_front_page()): bloginfo('description'); else: echo get_the_excerpt(); endif;?>" />
     <meta name="" content="" />
     <meta name="p:domain_verify" content="e341cb4b482b32ffd88698442a7c6c71"/>
-    <script type="text/javascript"> var ajaxurl = "<?php echo admin_url('admin-ajax.php', is_ssl()) ?>"; </script>
 
 <?php
 
@@ -88,14 +88,15 @@ function ghs_footer(){ ?>
 
 function ghs_scripts(){
 
+    // all style files
+    wp_enqueue_style('bundleCSS', get_stylesheet_directory_uri() . '/assets/css/bundle.css');
+
     // all scripts
     wp_enqueue_script('jquery');
     wp_enqueue_script('bundleJS', get_template_directory_uri() . '/assets/js/bundle-min.js', array('jquery'), '', true);
 
-    // all style files
-    wp_enqueue_style('bundleCSS', get_stylesheet_directory_uri() . '/assets/css/bundle.css');
-
     // all localize scripts
+    wp_localize_script('bundleJS', 'ghs_ajax_obj', array('ajaxurl' => admin_url( 'admin-ajax.php' )));
 }
 
 function ghs_admin_scripts(){
@@ -104,9 +105,18 @@ function ghs_admin_scripts(){
     wp_enqueue_style('mainStyle', get_stylesheet_directory_uri() . '/style.css');
 
     // all scripts
-    wp_enqueue_script('mainJS', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), '', true);
+    wp_enqueue_script('jquery');
+    wp_enqueue_script('mainJS', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), null, true);
 
     // all localize scripts
+    wp_localize_script('mainJS', 'ghs_ajax_obj', array('ajaxurl' => admin_url( 'admin-ajax.php' )));
+}
+
+function ghs_clear_wp_cache(){
+
+    global $wp_object_cache;
+    $wp_object_cache->flush();
+
 }
 
 function ghs_admin_redirects(){
@@ -137,6 +147,7 @@ function ghs_get_navigation($name = ''){
             $data[$key]['url'] = $mi->url;
             $data[$key]['target'] = $mi->target;
             $data[$key]['title'] = $mi->title;
+            $data[$key]['submenu'] = array();
             $key++;
             $subKey = 0;
         else:
@@ -183,6 +194,10 @@ function ghs_check_if_db_exist($name){
 
             case 'ghs_settings':
                 $create = $wpdb->query("CREATE TABLE " . $name . " ( ID int NOT NULL AUTO_INCREMENT, FaceBookName varchar(255), TwitterName varchar(255), TumblrName varchar(255), InstagramName varchar(255), YoutubeName varchar(255), SnapChatName varchar(255), PRIMARY KEY(ID) ); ");
+                break;
+
+            case 'ghs_hero_banner_settings':
+                $create = $wpdb->query("CREATE TABLE " . $name . " ( ID int NOT NULL, Title varchar(255), TitleTag varchar(2), Subtitle varchar(255), SubtitleTag varchar(2), Link text, TextBgColor varchar(255), PRIMARY KEY(ID) ); ");
                 break;
         endswitch;
 
@@ -253,8 +268,7 @@ function ghs_set_social(){
         // if collection as data
         $data['success'] = true;
 
-        $check = $wpdb->query('SELECT * FROM `ghs_settings`');
-        $results=$wpdb->get_results($check);
+        $results=$wpdb->get_results('SELECT * FROM `ghs_settings`');
 
         if($results <= 0):
             $data['success'] = false;
@@ -282,11 +296,49 @@ function ghs_set_social(){
 
 function ghs_set_hero_settings(){
     $data['success'] = false;
+    global $wpdb;
 
     $file = $_REQUEST['hero-banner-img'];
+    $hero_data = [
+            'Title' => $_REQUEST['hero-banner-title'],
+            'TitleTag' => $_REQUEST['hero-banner-title-tag'],
+            'Subtitle' => $_REQUEST['hero-banner-subtitle'],
+            'SubtitleTag' => $_REQUEST['hero-banner-subtitle-tag'],
+            'TextBgColor' => $_REQUEST['hero-banner-theme'],
+            'Link' => $_REQUEST['hero-banner-link']
+    ];
+
+    if($hero_data){
+        $results=$wpdb->get_results('SELECT * FROM `ghs_hero_banner_settings`');
+
+        if($results <= 0):
+            $data['success'] = false;
+            $insert = $wpdb->insert('ghs_hero_banner_settings', $hero_data);
+
+            if($insert):
+                $data['success'] = true;
+                $data['success_msg'] = "Your hero banner settings have been updated";
+            endif;
+        else:
+            $update = $wpdb->update('ghs_hero_banner_settings', $hero_data, ['ID' => 0]);
+
+            if($update):
+                $data['success'] = true;
+                $data['success_msg'] = "Your hero banner settings have been updated";
+            endif;
+        endif;
+
+        $data['test'] = $wpdb->last_error;
+    }
+
     $check = decode_base64($file, 'hero-banner');
     $data['success'] = $check['success'];
 
+    if($data['success']){
+        ghs_clear_wp_cache();
+    }
+
+    $wpdb->flush();
     echo json_encode($data);
     wp_die();
 }
@@ -305,7 +357,14 @@ function ghs_get_hero_settings(){
     if($has_banner):
         $data['success'] = true;
         $data['hero_banner_img'] = $path['baseurl'] . '/theme_media/hero-banner.jpeg';
+
+        global $wpdb;
+        $results=$wpdb->get_results('SELECT * FROM `ghs_hero_banner_settings` LIMIT 1', ARRAY_A);
+
+        $data['hero_banner_data'] = $results;
+        $wpdb->flush();
     endif;
+
 
     echo json_encode($data);
     wp_die();
@@ -332,4 +391,31 @@ function decode_base64($base64File, $nameToSave){
     $data['success'] = in_array($nameToSave . '.' . $image_type, $check);
 
     return $data;
+}
+
+if(!function_exists('ghs_remove_default_endpoints')) {
+
+    add_filter('rest_endpoints', 'ghs_remove_default_endpoints');
+
+//disable default routes and keep my endpoints
+    function ghs_remove_default_endpoints($endpoints)
+    {
+        $prefix = 'ghs-api';
+        $jwtPreix = 'jwt-auth';
+
+        foreach ($endpoints as $endpoint => $details) {
+            switch ($endpoint):
+                case fnmatch('/' . $prefix . '/*', $endpoint, FNM_CASEFOLD):
+                case fnmatch('/' . $jwtPreix . '/*', $endpoint, FNM_CASEFOLD):
+                    break;
+
+                default:
+                    unset($endpoints[$endpoint]);
+                    break;
+
+            endswitch;
+        }
+
+        return $endpoints;
+    }
 }
