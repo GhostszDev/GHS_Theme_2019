@@ -12,7 +12,7 @@ var set_social = function(){
     };
 
     jQuery.post(ghs_ajax_obj.ajaxurl, data, function (response) {
-        console.log(response);
+        // console.log(response);
         if(response.success){
             jQuery('.ghs_admin_alert').css('display','block').addClass('ghs_success');
         }else{
@@ -33,12 +33,23 @@ var get_social = function(){
     jQuery.post(ghs_ajax_obj.ajaxurl, data, function (response) {
 
         if(response.success){
-            jQuery('.ghs-set-social-facebook').val(response.social[0].FaceBookName);
-            jQuery('.ghs-set-social-twitter').val(response.social[0].TwitterName);
-            jQuery('.ghs-set-social-tumblr').val(response.social[0].TumblrName);
-            jQuery('.ghs-set-social-youtube').val(response.social[0].YoutubeName);
-            jQuery('.ghs-set-social-snapchat').val(response.social[0].SnapChatName);
-            jQuery('.ghs-set-social-instagram').val(response.social[0].InstagramName);
+            if(document.URL.indexOf("page=ghs-theme-settings") !== -1) {
+                jQuery('.ghs-set-social-facebook').val(response.social.facebook);
+                jQuery('.ghs-set-social-twitter').val(response.social.twitter);
+                jQuery('.ghs-set-social-tumblr').val(response.social.tumblr);
+                jQuery('.ghs-set-social-youtube').val(response.social.youtube);
+                jQuery('.ghs-set-social-snapchat').val(response.social.snapchat);
+                jQuery('.ghs-set-social-instagram').val(response.social.instagram);
+            } else {
+                if(jQuery('.social-list').length > 0){
+                    jQuery.each(response.social, function (i, val) {
+
+                        if(val !== ''){
+                            jQuery('.social-list').append("<li class='ghs-social-"+ i +"'><a href='"+val+"'><i class='fab fa-"+ i +"-square'></i></a></li>")
+                        }
+                    });
+                }
+            }
         }
     }, 'json');
 
@@ -127,6 +138,32 @@ var get_hero_settings = function () {
 
 };
 
+function addToMailingList() {
+    var email = jQuery('.ghs_email_list input').val();
+
+    var data = {
+        action: 'ghs_add_to_mailing_list',
+        'post_type': 'POST',
+        'mailingListEmail': email
+    };
+
+    jQuery.post(ghs_ajax_obj.ajaxurl, data, function (response) {
+
+        if(response.success){
+            if(jQuery('.ghs_email_list').length > 1){
+                var ghs_email_list = jQuery('.ghs_email_list');
+                ghs_email_list.empty();
+                ghs_email_list.append('<div class="ghs_email_success">' +
+                    '<p>Thank for joining the mailing list!</p>' +
+                    '</div>');
+            }
+        } else {
+            console.error(response.error_msg);
+        }
+    });
+
+}
+
 if(document.URL.indexOf("page=ghs-theme-settings") !== -1) {
     //found
     get_social();
@@ -151,6 +188,10 @@ jQuery(document).ready(function ($) {
 
         if($('.ghs_hero_banner').length > 0){
             get_hero_settings();
+        }
+
+        if($('.social-list').length > 0){
+            get_social();
         }
 
     };

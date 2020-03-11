@@ -18,12 +18,18 @@ const
     cssnano       = require('cssnano'),
     jsScripts     = [
         'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
+        'node_modules/@fortawesome/fontawesome-free/js/all.js',
         'assets/js/main.js'
     ],
     cssFiles      = [
         'node_modules/bootstrap/dist/css/*.css',
-        'node_modules/font-awesome/css/font-awesome.css',
+        'node_modules/@fortawesome/fontawesome-free/css/all.min.css',
         'style.css'
+    ],
+    fontFiles     =[
+    ],
+    webfontsFiles =[
+        'node_modules/@fortawesome/fontawesome-free/webfonts/*.{ttf,woff,woff2,eot,svg}'
     ],
     files = [
         'style.css',
@@ -66,5 +72,13 @@ gulp.task('watch_files', function(){
     browserSync.reload();
 });
 
+gulp.task('copy_fonts', function (done) {
+    gulp.src(webfontsFiles)
+        .pipe(gulp.dest('assets/webfonts/'));
+    // gulp.src(fontFiles)
+    //     .pipe(gulp.dest('assets/fonts/'));
+    done();
+});
 
-exports.default = gulp.series('js', 'css', 'browserSync', 'watch_files');
+
+exports.default = gulp.series('js', 'css', 'copy_fonts', 'browserSync', 'watch_files');

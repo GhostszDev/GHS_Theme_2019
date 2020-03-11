@@ -19,8 +19,12 @@ Use it to make something cool, have fun, and share what you've learned with othe
 
 
 /* All Styling elements */
+a{ color: #977fff; }
+a:hover, a:visited, a:focus{ color: #7878e6; }
 ul{ margin: 0; padding: 0; }
 ul li{ list-style: none; margin: 0; padding: 0; }
+button{ background: #977fff; color: white; }
+button:hover{ background: #7878e6; color: #d4d4d4; }
 .footer{ width: 100%; color: #fff; padding: 0.5rem 1rem; display: flex; margin-top: 1rem; }
 .ghs_error{ width: 100%; color: #be002a; padding: .5rem; }
 .ghs_success{ width: 100%; color: #009220; padding: .5rem; }
@@ -32,6 +36,12 @@ ul li{ list-style: none; margin: 0; padding: 0; }
 .ghs_hero_banner img{ position: absolute; width: 100%; left: 0; top: 0; }
 .ghs_hero_banner_content{ width: 100%; height: calc(10rem); position: absolute; }
 .ghs_light_bg{ background: rgba(255, 255, 255, 0.5); color: #000000; }
-.ghs_dark_bg{ background: rgba(0, 0, 0, 0.5); color: #FFFFFF; }
+.ghs_dark_bg{ background: #1f1f1f; color: #FFFFFF; }
 .ghs-front-page{ display: flex; flex-wrap: wrap; }
 .ghs-front-page .card{ width: 45%; display: inline-block; margin-right: 2.5%; margin-bottom: 2rem; }
+.social-list{ display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; align-items: flex-start; align-content: flex-start; font-size: 2.5em; }
+.social-list li{ margin-left: .5rem; }
+.social-list li:first-child{ margin-left: 0; }
+.ghs_email_list{ width: 50%; }
+.ghs_email_list button{ background: #977fff; color: white; }
+.ghs_email_list button:hover{ background: #7878e6; color: #d4d4d4; }

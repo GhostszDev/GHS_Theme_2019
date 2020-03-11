@@ -9,10 +9,12 @@ add_action('wp_head', 'ghs_head');
 add_action('wp_footer', 'ghs_footer');
 add_action('admin_menu', 'ghs_admin_options');
 add_action('wp_ajax_ghs_set_social', 'ghs_set_social');
-add_action('wp_ajax_ghs_get_social', 'ghs_get_social');
+add_action('wp_ajax_nopriv_ghs_get_social', 'ghs_get_social');
+add_action('wp_ajax_nopriv_ghs_add_to_mailing_list', 'ghs_add_to_mailing_list');
 add_action('wp_ajax_ghs_set_hero_settings', 'ghs_set_hero_settings');
-add_action('wp_ajax_ghs_get_hero_settings', 'ghs_get_hero_settings');
+add_action('wp_ajax_nopriv_ghs_get_hero_settings', 'ghs_get_hero_settings');
 add_action('admin_enqueue_scripts', 'ghs_admin_scripts');
+
 
 // Filters
 add_filter('acf/settings/url', 'ghs_acf_settings_url');
@@ -33,6 +35,7 @@ function ghs_defaults(){
 
     ghs_check_if_db_exist('ghs_settings');
     ghs_check_if_db_exist('ghs_hero_banner_settings');
+    ghs_check_if_db_exist('ghs_mailing_list');
 }
 
 function ghs_head(){
@@ -199,6 +202,10 @@ function ghs_check_if_db_exist($name){
             case 'ghs_hero_banner_settings':
                 $create = $wpdb->query("CREATE TABLE " . $name . " ( ID int NOT NULL, Title varchar(255), TitleTag varchar(2), Subtitle varchar(255), SubtitleTag varchar(2), Link text, TextBgColor varchar(255), PRIMARY KEY(ID) ); ");
                 break;
+
+            case 'ghs_mailing_list':
+                $create = $wpdb->query("CREATE TABLE " . $name . "( ID int NOT NULL AUTO_INCREMENT, Email varchar(255), OptIn int, PRIMARY KEY(ID) ); ");
+                break;
         endswitch;
 
         if($create):
@@ -238,7 +245,12 @@ function ghs_get_social(){
 
     if($check):
         $data['success'] = true;
-        $data['social'] = $check;
+        $data['social']['facebook'] = $check[0]->FaceBookName;
+        $data['social']['twitter'] = $check[0]->TwitterName;
+        $data['social']['tumblr'] = $check[0]->TumblrName;
+        $data['social']['youtube'] = $check[0]->YoutubeName;
+        $data['social']['instagram'] = $check[0]->InstagramName;
+        $data['social']['snapchat'] = $check[0]->SnapChatName;
     endif;
 
     $wpdb->flush();
@@ -370,6 +382,35 @@ function ghs_get_hero_settings(){
     wp_die();
 }
 
+function ghs_add_to_mailing_list(){
+
+    $data['success'] = false;
+    $insertData = [
+            'Email' => $_REQUEST['mailingListEmail'],
+            'OptIn' => 1
+    ];
+
+    global $wpdb;
+
+    $check = $wpdb->get_row('SELECT * FROM `ghs_mailing_list` WHERE `Email` = \' '. $insertData['Email'] .' \' LIMIT 1', ARRAY_A);
+
+    if(!$check) {
+        $insert = $wpdb->insert('ghs_mailing_list', $insertData);
+
+        if ($insert) {
+            $data['success'] = true;
+        } else {
+            $data['error_msg'] = 'Error 419: Email couldn\'t be added to the mailing list!';
+        }
+    } else {
+        $data['error_msg'] = 'Email already has been signed up for the email list!';
+    }
+
+    $wpdb->flush();
+    echo json_encode($data);
+    wp_die();
+}
+
 function decode_base64($base64File, $nameToSave){
 
     $data['success'] = false;
@@ -418,4 +459,8 @@ if(!function_exists('ghs_remove_default_endpoints')) {
 
         return $endpoints;
     }
+}
+
+function ghs_add_post_types(){
+
 }
