@@ -13,17 +13,20 @@ This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 */
 
+/* Fonts */
+@font-face { font-family: 'PressStart2P'; src: url('../webfonts/PressStart2P-Regular.eot'); src: url('../webfonts/PressStart2P-Regular.woff') format('woff'), url('../webfonts/PressStart2P-Regular.ttf') format('truetype'), url('../webfonts/PressStart2P-Regular.svg') format('svg'); font-weight: normal; font-style: normal; }
+
 /* Animations */
 .ghs_animate_slide_up{}
 .ghs_animate_slide_down{}
 
-
 /* All Styling elements */
+.ghs_body{ background: #1f1f1f; color: #FFFFFF; }
 a{ color: #977fff; }
 a:hover, a:visited, a:focus{ color: #7878e6; }
 ul{ margin: 0; padding: 0; }
 ul li{ list-style: none; margin: 0; padding: 0; }
-button{ background: #977fff; color: white; }
+button{ background: #977fff; color: white; transition: all .5s ease-in-out; }
 button:hover{ background: #7878e6; color: #d4d4d4; }
 .footer{ width: 100%; color: #fff; padding: 0.5rem 1rem; display: flex; margin-top: 1rem; }
 .ghs_error{ width: 100%; color: #be002a; padding: .5rem; }
@@ -32,16 +35,31 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .ghs_admin_alert{ display: none; }
 .ghs_hero_preview{ display: none; overflow: hidden; position: relative; width: 100%; height: 15rem; }
 .ghs_hero_preview img{ position: absolute; }
-.ghs_hero_banner { height: 100vh; position: relative; overflow: hidden; }
-.ghs_hero_banner img{ position: absolute; width: 100%; left: 0; top: 0; }
-.ghs_hero_banner_content{ width: 100%; height: calc(10rem); position: absolute; }
+.ghs_hero_banner { height: 100vh; position: relative; overflow: hidden; background-position: center center; background-size: cover; background-repeat: no-repeat; text-align: center; }
+.ghs_hero_banner .container{ margin-top: 55vh; }
+.ghs_title{ font-family: "PressStart2P", Serif; }
 .ghs_light_bg{ background: rgba(255, 255, 255, 0.5); color: #000000; }
 .ghs_dark_bg{ background: #1f1f1f; color: #FFFFFF; }
 .ghs-front-page{ display: flex; flex-wrap: wrap; }
-.ghs-front-page .card{ width: 45%; display: inline-block; margin-right: 2.5%; margin-bottom: 2rem; }
+.ghs-front-page .card{ width: 45%; display: inline-block; margin-right: 2.5%; margin-bottom: 2rem; color: #1a1a1a; }
 .social-list{ display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; align-items: flex-start; align-content: flex-start; font-size: 2.5em; }
 .social-list li{ margin-left: .5rem; }
 .social-list li:first-child{ margin-left: 0; }
 .ghs_email_list{ width: 50%; }
 .ghs_email_list button{ background: #977fff; color: white; }
 .ghs_email_list button:hover{ background: #7878e6; color: #d4d4d4; }
+.ghs_button{ background: #977fff; color: white !important; border: none; }
+.ghs_button:hover{ background: #7878e6; color: #d4d4d4 !important; border: none; }
+.feat-cats .col-md{ height: 20rem; text-align: center; background-position: center center; background-size: 150% 100%; background-repeat: no-repeat; margin-right: .5rem; transition: all .5s ease-in-out; }
+.feat-cats .col-md:last-child{ margin-right: 0; }
+.feat-cats .col-md h3{ padding-top: 8rem; }
+.feat-cats .col-md:hover{ background-size: 160% 110%; cursor: pointer; }
+.recent-posts .col-md-6{ min-height: 20rem; text-align: center; padding-top: 4rem; }
+.recent-posts .recent-posts__img{ background-position: center center; background-size: 100% 100%; background-repeat: no-repeat; transition: all .5s ease-in-out; }
+.recent-posts .recent-posts__img:hover{ background-size: 110% 110%; cursor: pointer; }
+.recent-posts .ghs_title, .recent-posts .lead { font-size: 1em; }
+
+@media only screen and (max-width: 768px) {
+    .ghs_hero_banner .container{ margin-top: 40vh; }
+    .ghs_email_list{ width: 100%; }
+}

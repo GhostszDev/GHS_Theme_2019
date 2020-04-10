@@ -14,11 +14,13 @@ add_action('wp_ajax_nopriv_ghs_add_to_mailing_list', 'ghs_add_to_mailing_list');
 add_action('wp_ajax_ghs_set_hero_settings', 'ghs_set_hero_settings');
 add_action('wp_ajax_nopriv_ghs_get_hero_settings', 'ghs_get_hero_settings');
 add_action('admin_enqueue_scripts', 'ghs_admin_scripts');
-
+add_action ( 'edit_category_form_fields', 'ghs_extra_category_fields');
+add_action ( 'edited_category', 'save_extra_category_fileds');
 
 // Filters
 add_filter('acf/settings/url', 'ghs_acf_settings_url');
 add_filter('acf/settings/show_admin', 'ghs_acf_settings_show_admin');
+add_filter('excerpt_more', 'ghs_excerpt');
 
 // Defines
 define('ghs_acf_path', get_stylesheet_directory() . '/includes/plugins/advanced-custom-fields/');
@@ -40,7 +42,7 @@ function ghs_defaults(){
 
 function ghs_head(){
     ?>
-    <title><?php if(!is_front_page()): echo get_the_title() . ' | '; endif; echo bloginfo('Name'); ?></title>
+    <title><?php if(!is_front_page()): echo ucwords(get_the_title()) . ' | '; endif; echo ucwords(bloginfo('Name')); ?></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="<?php if(is_front_page()): bloginfo('description'); else: echo get_the_excerpt(); endif;?>" />
@@ -52,7 +54,7 @@ function ghs_head(){
     if(is_singular('post')):?>
         <meta property="og:locale" content="<?php echo get_locale(); ?>" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="<?php the_title(); ?>" />
+        <meta property="og:title" content="<?php ucwords(the_title()); ?>" />
 
         <?php if ( get_the_excerpt() ) : ?>
             <meta property="og:description" content="<?php the_excerpt(); ?>" />
@@ -87,7 +89,7 @@ function ghs_footer(){ ?>
 
     <?php endif; ?>
 
-<? }
+<?php }
 
 function ghs_scripts(){
 
@@ -143,27 +145,29 @@ function ghs_get_navigation($name = ''){
     $key = 0;
     $subKey = 0;
 
-    foreach ($menuItems as $mi):
+    if($menuItems) {
+        foreach ($menuItems as $mi):
 
-        if($mi->menu_item_parent == 0):
-            $data[$key]['ID'] = $mi->ID;
-            $data[$key]['url'] = $mi->url;
-            $data[$key]['target'] = $mi->target;
-            $data[$key]['title'] = $mi->title;
-            $data[$key]['submenu'] = array();
-            $key++;
-            $subKey = 0;
-        else:
-            $parentKey = array_search($mi->menu_item_parent, $data);
-            $data[$parentKey]['submenu'][$subKey]['ID'] = $mi->ID;
-            $data[$parentKey]['submenu'][$subKey]['url'] = $mi->url;
-            $data[$parentKey]['submenu'][$subKey]['target'] = $mi->target;
-            $data[$parentKey]['submenu'][$subKey]['title'] = $mi->title;
-            $subKey++;
-        endif;
+            if ($mi->menu_item_parent == 0):
+                $data[$key]['ID'] = $mi->ID;
+                $data[$key]['url'] = $mi->url;
+                $data[$key]['target'] = $mi->target;
+                $data[$key]['title'] = $mi->title;
+                $data[$key]['submenu'] = array();
+                $key++;
+                $subKey = 0;
+            else:
+                $parentKey = array_search($mi->menu_item_parent, $data);
+                $data[$parentKey]['submenu'][$subKey]['ID'] = $mi->ID;
+                $data[$parentKey]['submenu'][$subKey]['url'] = $mi->url;
+                $data[$parentKey]['submenu'][$subKey]['target'] = $mi->target;
+                $data[$parentKey]['submenu'][$subKey]['title'] = $mi->title;
+                $subKey++;
+            endif;
 
 
-    endforeach;
+        endforeach;
+    }
 
     return $data;
 }
@@ -224,6 +228,37 @@ function ghs_admin_options(){
     add_menu_page('Theme Settings', 'Theme Settings', 'manage_options', 'ghs-theme-settings', 'ghs_theme_settings', 'dashicons-admin-settings', 90);
     add_submenu_page('ghs-theme-settings', 'Home Page Settings', 'Home Page Settings', 'manage_options', 'ghs_theme_settings_hps', 'ghs_theme_settings_hps');
 
+}
+
+function ghs_extra_category_fields($tag){
+    $t_id = $tag->term_id;
+    $cat_meta = get_option( "category_$t_id");
+    ?>
+
+    <tr class="form-field">
+        <th scope="row" valign="top"><label for="cat_Image_url"><?php _e('Category Image Url'); ?></label></th>
+        <td>
+            <input type="text" name="Cat_meta[img]" id="Cat_meta[img]" size="3" style="width:60%;" value="<?php echo $cat_meta['img'] ? $cat_meta['img'] : ''; ?>"><br />
+            <span class="description"><?php _e('Image for category: use full url with '); ?></span>
+        </td>
+    </tr>
+
+<?php
+}
+
+function save_extra_category_fileds( $term_id ) {
+    if ( isset( $_POST['Cat_meta'] ) ) {
+        $t_id = $term_id;
+        $cat_meta = get_option( "category_$t_id");
+        $cat_keys = array_keys($_POST['Cat_meta']);
+        foreach ($cat_keys as $key){
+            if (isset($_POST['Cat_meta'][$key])){
+                $cat_meta[$key] = $_POST['Cat_meta'][$key];
+            }
+        }
+        //save the option array
+        update_option( "category_$t_id", $cat_meta );
+    }
 }
 
 function ghs_theme_settings(){
@@ -436,7 +471,7 @@ function decode_base64($base64File, $nameToSave){
 
 if(!function_exists('ghs_remove_default_endpoints')) {
 
-    add_filter('rest_endpoints', 'ghs_remove_default_endpoints');
+//    add_filter('rest_endpoints', 'ghs_remove_default_endpoints');
 
 //disable default routes and keep my endpoints
     function ghs_remove_default_endpoints($endpoints)
@@ -463,4 +498,56 @@ if(!function_exists('ghs_remove_default_endpoints')) {
 
 function ghs_add_post_types(){
 
+}
+
+function ghs_get_latest_post(){
+
+    global $wpdb;
+
+    $query = "SELECT ID FROM $wpdb->posts WHERE `post_status` = 'publish' AND `post_type` = 'post' ORDER BY ID DESC LIMIT 0,1";
+
+    $result = $wpdb->get_results($query);
+    $row = $result[0];
+    $id = $row->ID;
+
+    return $id;
+
+}
+
+function ghs_get_featured_cat(){
+    $cat_data =  get_categories();
+    $data = [];
+    $key = 0;
+
+    foreach ($cat_data as $cat){
+        if($cat->cat_ID != 1 && $key < 3) {
+            $data[$key]['ID'] = $cat->cat_ID;
+            $data[$key]['title'] = $cat->cat_name;
+            $options = get_option( "category_$cat->cat_ID");
+            if($options['img']){
+                $data[$key]['thumbnail'] = $options['img'];
+            }
+            $key++;
+        }
+    }
+
+    return $data;
+}
+
+function get_recent_post(){
+
+    $recentPost = [];
+    $data = query_posts(['offset'=>1,'post_per_page'=>get_option('posts_per_page')]);
+    $key = 0;
+
+    foreach ($data as $post){
+        $recentPost[$key] = $post->ID;
+        $key++;
+    }
+
+    return $recentPost;
+}
+
+function ghs_excerpt($more){
+    return '...';
 }

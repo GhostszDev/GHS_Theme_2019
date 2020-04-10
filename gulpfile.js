@@ -52,8 +52,7 @@ gulp.task('css', function (done) {
         .pipe(cleanCSS())
         .pipe(postcss([autoprefixer, cssnano]))
         .pipe(concat('bundle.css'))
-        .pipe(gulp.dest('assets/css/'))
-        .pipe(browserSync.reload({ stream: true }));
+        .pipe(gulp.dest('assets/css/'));
     done();
 });
 
@@ -61,24 +60,25 @@ gulp.task('js', function (done) {
     gulp.src(jsScripts, { sourcemaps: true })
         .pipe(concat('bundle.js'))
         .pipe(minify())
-        .pipe(gulp.dest('assets/js/', { sourcemaps: true }))
-        .pipe(browserSync.reload({ stream: true }));
+        .pipe(gulp.dest('assets/js/', { sourcemaps: true }));
     done();
 });
 
 gulp.task('watch_files', function(){
-    gulp.watch('style.css', '', 'css');
-    gulp.watch('assets/js/main.js', '', 'js');
-    browserSync.reload();
+    gulp.watch('style.css', '', ['css']);
+    gulp.watch('assets/js/main.js', '', ['js']);
 });
 
 gulp.task('copy_fonts', function (done) {
     gulp.src(webfontsFiles)
         .pipe(gulp.dest('assets/webfonts/'));
-    // gulp.src(fontFiles)
-    //     .pipe(gulp.dest('assets/fonts/'));
+    // console.log(cssFiles);
     done();
 });
 
+gulp.task('hi', function(done) {
+    console.log(cssFiles);
+    done();
+});
 
-exports.default = gulp.series('js', 'css', 'copy_fonts', 'browserSync', 'watch_files');
+exports.default = gulp.series('js', 'css', 'browserSync', 'watch_files');
