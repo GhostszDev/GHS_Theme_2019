@@ -11,7 +11,7 @@ var set_social = function(){
         'snapchat': jQuery('.ghs-set-social-snapchat').val(),
     };
 
-    jQuery.post(ghs_ajax_obj.ajaxurl, data, function (response) {
+    jQuery.post(ghs_ajax_obj, data, function (response) {
         // console.log(response);
         if(response.success){
             jQuery('.ghs_admin_alert').css('display','block').addClass('ghs_success');
@@ -30,7 +30,7 @@ var get_social = function(){
         'name': ''
     };
 
-    jQuery.post(ghs_ajax_obj.ajaxurl, data, function (response) {
+    jQuery.post(ghs_ajax_obj, data, function (response) {
 
         if(response.success){
             if(document.URL.indexOf("page=ghs-theme-settings") !== -1) {
@@ -87,7 +87,7 @@ var set_hero_settings = function () {
                 'hero-banner-link': heroBannerData.link
             };
 
-            jQuery.post(ghs_ajax_obj.ajaxurl, data, function (response) {
+            jQuery.post(ghs_ajax_obj, data, function (response) {
 
                 if(response.success){
                     jQuery('.ghs_admin_alert').css('display','block').addClass('ghs_success');
@@ -100,43 +100,9 @@ var set_hero_settings = function () {
 
 };
 
-var get_hero_settings = function () {
-
-    var data = {
-        action: 'ghs_get_hero_settings'
-    };
-
-    jQuery.post(ghs_ajax_obj.ajaxurl, data, function (response) {
-
-        if(response.success){
-            if(jQuery('.ghs_hero_banner').length > 0){
-                jQuery('.ghs_hero_banner').css({
-                    "background-color":"black",
-                    "background-image":"url('"+ response.hero_banner_img +"')",
-                    "background-repeat": "no-repeat",
-                    "background-position":  "center center"
-                });
-            }
-
-            if(jQuery('.ghs_hero_preview').length > 0){
-                jQuery('.ghs_hero_preview').css({
-                    "display":"block",
-                    "background-image":"url('"+ response.hero_banner_img +"')",
-                    "background-repeat": "no-repeat",
-                    "background-position":  "center center"
-                });
-                jQuery('.ghs-hero-banner-title').val(response.hero_banner_data[0].Title);
-                jQuery('.ghs-hero-banner-title-tag').val(response.hero_banner_data[0].TitleTag);
-                jQuery('.ghs-hero-banner-subtitle').val(response.hero_banner_data[0].Subtitle);
-                jQuery('.ghs-hero-banner-subtitle-tag').val(response.hero_banner_data[0].SubtitleTag);
-                jQuery('.ghs-hero-banner-theme').val(response.hero_banner_data[0].TextBgColor);
-                jQuery('.ghs-hero-banner-link').val(response.hero_banner_data[0].Link);
-            }
-        }
-
-    }, 'json');
-
-};
+var goToPage = function(url){
+    window.location.href = url;
+}
 
 function addToMailingList() {
     var email = jQuery('.ghs_email_list input').val();
@@ -147,7 +113,7 @@ function addToMailingList() {
         'mailingListEmail': email
     };
 
-    jQuery.post(ghs_ajax_obj.ajaxurl, data, function (response) {
+    jQuery.post(ghs_ajax_obj, data, function (response) {
 
         if(response.success){
             if(jQuery('.ghs_email_list').length > 1){
@@ -174,7 +140,7 @@ if(document.URL.indexOf("page=ghs_theme_settings_hps") !== -1) {
     get_hero_settings();
 }
 
-jQuery(document).ready(function ($) {
+jQuery( document ).ready(function($) {
 
     var init = function(){
 
@@ -186,11 +152,7 @@ jQuery(document).ready(function ($) {
             $('.ghs-content').css('margin-top', jQuery('nav').outerHeight(true)+18);
         }
 
-        if($('.ghs_hero_banner').length > 0){
-            get_hero_settings();
-        }
-
-        if($('.social-list').length > 0){
+        if ($('.social-list').length > 0) {
             get_social();
         }
 

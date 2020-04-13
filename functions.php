@@ -14,8 +14,8 @@ add_action('wp_ajax_nopriv_ghs_add_to_mailing_list', 'ghs_add_to_mailing_list');
 add_action('wp_ajax_ghs_set_hero_settings', 'ghs_set_hero_settings');
 add_action('wp_ajax_nopriv_ghs_get_hero_settings', 'ghs_get_hero_settings');
 add_action('admin_enqueue_scripts', 'ghs_admin_scripts');
-add_action ( 'edit_category_form_fields', 'ghs_extra_category_fields');
-add_action ( 'edited_category', 'save_extra_category_fileds');
+add_action ('edit_category_form_fields', 'ghs_extra_category_fields');
+add_action ('edited_category', 'save_extra_category_fileds');
 
 // Filters
 add_filter('acf/settings/url', 'ghs_acf_settings_url');
@@ -42,6 +42,7 @@ function ghs_defaults(){
 
 function ghs_head(){
     ?>
+
     <title><?php if(!is_front_page()): echo ucwords(get_the_title()) . ' | '; endif; echo ucwords(bloginfo('Name')); ?></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -101,7 +102,7 @@ function ghs_scripts(){
     wp_enqueue_script('bundleJS', get_template_directory_uri() . '/assets/js/bundle-min.js', array('jquery'), '', true);
 
     // all localize scripts
-    wp_localize_script('bundleJS', 'ghs_ajax_obj', array('ajaxurl' => admin_url( 'admin-ajax.php' )));
+    wp_localize_script('bundleJS', 'ghs_ajax_obj', admin_url('admin-ajax.php'));
 }
 
 function ghs_admin_scripts(){
@@ -114,7 +115,7 @@ function ghs_admin_scripts(){
     wp_enqueue_script('mainJS', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), null, true);
 
     // all localize scripts
-    wp_localize_script('mainJS', 'ghs_ajax_obj', array('ajaxurl' => admin_url( 'admin-ajax.php' )));
+    wp_localize_script('mainJS', 'ghs_ajax_obj', admin_url('admin-ajax.php'));
 }
 
 function ghs_clear_wp_cache(){
@@ -290,7 +291,7 @@ function ghs_get_social(){
 
     $wpdb->flush();
     echo json_encode($data);
-    wp_die();
+    exit();
 
 }
 
@@ -337,7 +338,7 @@ function ghs_set_social(){
 
     $wpdb->flush();
     echo json_encode($data);
-    wp_die();
+    exit();
 
 }
 
@@ -387,7 +388,7 @@ function ghs_set_hero_settings(){
 
     $wpdb->flush();
     echo json_encode($data);
-    wp_die();
+    exit();
 }
 
 function ghs_get_hero_settings(){
@@ -414,7 +415,7 @@ function ghs_get_hero_settings(){
 
 
     echo json_encode($data);
-    wp_die();
+    exit();
 }
 
 function ghs_add_to_mailing_list(){
@@ -443,7 +444,7 @@ function ghs_add_to_mailing_list(){
 
     $wpdb->flush();
     echo json_encode($data);
-    wp_die();
+    exit();
 }
 
 function decode_base64($base64File, $nameToSave){

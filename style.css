@@ -29,6 +29,7 @@ ul li{ list-style: none; margin: 0; padding: 0; }
 button{ background: #977fff; color: white; transition: all .5s ease-in-out; }
 button:hover{ background: #7878e6; color: #d4d4d4; }
 .footer{ width: 100%; color: #fff; padding: 0.5rem 1rem; display: flex; margin-top: 1rem; }
+.footer .ghs_title{ font-size: .8em; }
 .ghs_error{ width: 100%; color: #be002a; padding: .5rem; }
 .ghs_success{ width: 100%; color: #009220; padding: .5rem; }
 .ghs_theme_settings{ margin-right: 3rem; }
@@ -45,7 +46,7 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .social-list{ display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; align-items: flex-start; align-content: flex-start; font-size: 2.5em; }
 .social-list li{ margin-left: .5rem; }
 .social-list li:first-child{ margin-left: 0; }
-.ghs_email_list{ width: 50%; }
+.ghs_email_list{ width: 60%; }
 .ghs_email_list button{ background: #977fff; color: white; }
 .ghs_email_list button:hover{ background: #7878e6; color: #d4d4d4; }
 .ghs_button{ background: #977fff; color: white !important; border: none; }
@@ -58,6 +59,10 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .recent-posts .recent-posts__img{ background-position: center center; background-size: 100% 100%; background-repeat: no-repeat; transition: all .5s ease-in-out; }
 .recent-posts .recent-posts__img:hover{ background-size: 110% 110%; cursor: pointer; }
 .recent-posts .ghs_title, .recent-posts .lead { font-size: 1em; }
+.call-to-action{ width: 100%; height: 45vh; background-color: rgba(0, 0, 0, 0.55); }
+.call-to-action .ghs_email_list{ width: 100%; }
+.call-to-action .d-flex{ padding-top: 10.5%; }
+.call-to-action .lead{ font-size: 1em; }
 
 @media only screen and (max-width: 768px) {
     .ghs_hero_banner .container{ margin-top: 40vh; }
