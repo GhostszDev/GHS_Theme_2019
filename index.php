@@ -56,12 +56,12 @@
                     <a class="btn btn-primary ghs_button" href="<?php echo get_the_permalink($post) ?>" role="button">Read More</a>
                 </div>
             <?php else: ?>
-                <div class="col-md-6 order-sm-2 order-md-1 mb-4">
+                <div class="col-md-6 order-sm-1 order-md-1 mb-4">
                     <h2 class="ghs_title"><?php echo get_the_title($post) ?></h2>
                     <p class="lead"><?php echo get_the_excerpt($post) ?></p>
                     <a class="btn btn-primary ghs_button" href="<?php echo get_the_permalink($post) ?>" role="button">Read More</a>
                 </div>
-                <div onclick="goToPage('<?php echo get_the_permalink($post) ?>')" class="col-md-6 recent-posts__img mb-4 order-sm-1 order-md-2" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<?php echo get_the_post_thumbnail_url($post) ?>')"></div>
+                <div onclick="goToPage('<?php echo get_the_permalink($post) ?>')" class="col-md-6 recent-posts__img mb-4 order-sm-2 order-md-2" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<?php echo get_the_post_thumbnail_url($post) ?>')"></div>
             <?php endif; $key++; ?>
         </div>
         <?php endforeach; ?>
