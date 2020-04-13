@@ -102,7 +102,7 @@ function ghs_scripts(){
     wp_enqueue_script('bundleJS', get_template_directory_uri() . '/assets/js/bundle-min.js', array('jquery'), '', true);
 
     // all localize scripts
-    wp_localize_script('bundleJS', 'ghs_ajax_obj', admin_url('admin-ajax.php'));
+    wp_localize_script('bundleJS', 'ghs_ajax_obj', array('ajaxurl'		=> admin_url( 'admin-ajax.php' )));
 }
 
 function ghs_admin_scripts(){
@@ -115,7 +115,7 @@ function ghs_admin_scripts(){
     wp_enqueue_script('mainJS', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), null, true);
 
     // all localize scripts
-    wp_localize_script('mainJS', 'ghs_ajax_obj', admin_url('admin-ajax.php'));
+    wp_localize_script('mainJS', 'ghs_ajax_obj', array('ajaxurl'		=> admin_url( 'admin-ajax.php' )));
 }
 
 function ghs_clear_wp_cache(){
@@ -318,7 +318,7 @@ function ghs_set_social(){
 
         $results=$wpdb->get_results('SELECT * FROM `ghs_settings`');
 
-        if($results <= 0):
+        if($results <= 0 || empty($results)):
             $data['success'] = false;
             $insert = $wpdb->insert('ghs_settings', $collect);
 

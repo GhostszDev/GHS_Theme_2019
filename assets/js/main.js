@@ -11,7 +11,7 @@ var set_social = function(){
         'snapchat': jQuery('.ghs-set-social-snapchat').val(),
     };
 
-    jQuery.post(ghs_ajax_obj, data, function (response) {
+    jQuery.post(ghs_ajax_obj.ajaxurl, data, function (response) {
         // console.log(response);
         if(response.success){
             jQuery('.ghs_admin_alert').css('display','block').addClass('ghs_success');
@@ -30,7 +30,7 @@ var get_social = function(){
         'name': ''
     };
 
-    jQuery.post(ghs_ajax_obj, data, function (response) {
+    jQuery.post(ghs_ajax_obj.ajaxurl, data, function (response) {
 
         if(response.success){
             if(document.URL.indexOf("page=ghs-theme-settings") !== -1) {
@@ -87,7 +87,7 @@ var set_hero_settings = function () {
                 'hero-banner-link': heroBannerData.link
             };
 
-            jQuery.post(ghs_ajax_obj, data, function (response) {
+            jQuery.post(ghs_ajax_obj.ajaxurl, data, function (response) {
 
                 if(response.success){
                     jQuery('.ghs_admin_alert').css('display','block').addClass('ghs_success');
@@ -113,7 +113,7 @@ function addToMailingList() {
         'mailingListEmail': email
     };
 
-    jQuery.post(ghs_ajax_obj, data, function (response) {
+    jQuery.post(ghs_ajax_obj.ajaxurl, data, function (response) {
 
         if(response.success){
             if(jQuery('.ghs_email_list').length > 1){
