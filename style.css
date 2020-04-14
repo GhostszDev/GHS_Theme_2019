@@ -38,6 +38,7 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .ghs_hero_preview img{ position: absolute; }
 .ghs_hero_banner { height: 100vh; position: relative; overflow: hidden; background-position: center center; background-size: cover; background-repeat: no-repeat; text-align: center; }
 .ghs_hero_banner .container{ margin-top: 55vh; }
+.ghs_hero_banner .ghs_title{ text-shadow: 4px 4px #7878e6; }
 .ghs_title{ font-family: "PressStart2P", Serif; }
 .ghs_light_bg{ background: rgba(255, 255, 255, 0.5); color: #000000; }
 .ghs_dark_bg{ background: #1f1f1f; color: #FFFFFF; }
