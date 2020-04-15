@@ -32,7 +32,7 @@
 
             <?php foreach (ghs_get_featured_cat() as $feat){ ?>
 
-            <div class="col-md mb-4" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<?php echo $feat['thumbnail'] ?>')">
+            <div class="col-md mb-4" onclick="goToPage('<?php echo get_category_link($feat['ID']) ?>')" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<?php echo $feat['thumbnail'] ?>')">
                 <h3 class="ghs_title"><?php echo $feat['title'] ?></h3>
             </div>
 
