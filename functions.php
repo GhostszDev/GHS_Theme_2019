@@ -572,3 +572,9 @@ function ghs_comment_fields_fix($fields){
     $fields['comment'] = $comment_field;
     return $fields;
 }
+
+function get_recent_cat_post($name){
+
+    var_dump($name);
+
+}
