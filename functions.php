@@ -575,6 +575,15 @@ function ghs_comment_fields_fix($fields){
 
 function get_recent_cat_post($name){
 
-    var_dump($name);
+    $recentPost = [];
+    $data = query_posts(['post_per_page'=>get_option('posts_per_page')]);
+    $key = 0;
+
+    foreach ($data as $post){
+        $recentPost[$key] = $post->ID;
+        $key++;
+    }
+
+    return $recentPost;
 
 }
