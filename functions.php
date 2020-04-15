@@ -21,6 +21,8 @@ add_action ('edited_category', 'save_extra_category_fileds');
 add_filter('acf/settings/url', 'ghs_acf_settings_url');
 add_filter('acf/settings/show_admin', 'ghs_acf_settings_show_admin');
 add_filter('excerpt_more', 'ghs_excerpt');
+add_filter('comment_form_default_fields', 'ghs_comment_fields');
+add_filter('comment_form_fields', 'ghs_comment_fields_fix');
 
 // Defines
 define('ghs_acf_path', get_stylesheet_directory() . '/includes/plugins/advanced-custom-fields/');
@@ -551,4 +553,22 @@ function get_recent_post(){
 
 function ghs_excerpt($more){
     return '...';
+}
+
+function ghs_comment_fields($field){
+
+    $field = array(
+        'author' => '<div class="form-row align-items-center"><div class="form-group col-md-6"><label class="sr-only" for="inlineFormInputName">Name</label><input type="text" class="form-control" id="inlineFormInputName" placeholder="Name*"></div>',
+        'email' => '<div class="form-group col-md-6"><label class="sr-only" for="inlineFormInputName">Email</label><input type="email" class="form-control" id="inputEmail4" placeholder="Email*"></div>',
+        'url' => '</div>',
+    );
+
+    return $field;
+}
+
+function ghs_comment_fields_fix($fields){
+    $comment_field = $fields['comment'];
+    unset( $fields['comment'] );
+    $fields['comment'] = $comment_field;
+    return $fields;
 }

@@ -2,6 +2,23 @@
     <div class="container">
 
         <div class="col-md-12">
+            <?php
+            $comments_args = array(
+                // Change the title of send button
+                'label_submit' => __( 'Submit', 'textdomain' ),
+                'class_submit' => 'btn btn-primary ghs_button mb-4',
+                // Change the title of the reply section
+                'title_reply' => __( 'Comments', 'textdomain' ),
+                // Remove "Text or HTML to be displayed after the set of comment fields".
+                'comment_notes_after' => '',
+                // Redefine your own textarea (the comment body).
+                'comment_field' => '<div class="form-group"><label for="exampleFormControlTextarea1"></label><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Leave a comment here.."></textarea></div>',
+            );
+            comment_form( $comments_args );
+            ?>
+        </div>
+
+        <div class="col-md-12">
 
             <?php if ( have_comments() ) : ?>
 
