@@ -60,6 +60,9 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .recent-posts .recent-posts__img{ background-position: center center; background-size: 100% 100%; background-repeat: no-repeat; transition: all .5s ease-in-out; }
 .recent-posts .recent-posts__img:hover{ background-size: 110% 110%; cursor: pointer; }
 .recent-posts .ghs_title, .recent-posts .lead { font-size: 1em; }
+.recent-posts .page-link { background: #977fff; color: white !important; border: none; }
+.recent-posts .page-link:hover{ background: #7878e6; color: #d4d4d4 !important; border: none; }
+.recent-posts .disabled .page-link{ background: #8181a3; color: #d4d4d4 !important; border: none; }
 .call-to-action{ width: 100%; height: 45vh; background-color: rgba(0, 0, 0, 0.55); }
 .call-to-action .ghs_email_list{ width: 100%; }
 .call-to-action .d-flex{ padding-top: 10.5%; }
