@@ -32,14 +32,12 @@
                 <?php endif; $key++; ?>
             </div>
 
-        <?php $key++; endwhile; ?>
+        <?php endwhile; ?>
 
-            <ul class="pagination pagination-lg">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            <ul class="pagination pagination-lg justify-content-center">
+                <?php global $wp_query; $current_page = $wp_query->query_vars['paged']; $pages = $wp_query->max_num_pages; ?>
+                <li class="page-item <?php if($current_page == 0){ echo 'disabled'; } ?>"><a class="page-link" href="<?php echo get_previous_posts_page_link($pages) ?>">Previous</a></li>
+                <li class="page-item <?php if($current_page == $pages){ echo 'disabled'; } ?>"><a class="page-link" href="<?php echo get_next_posts_page_link($pages) ?>">Next</a></li>
             </ul>
 
         <?php endif; ?>
