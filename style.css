@@ -21,6 +21,7 @@ Use it to make something cool, have fun, and share what you've learned with othe
 .ghs_animate_slide_down{}
 
 /* All Styling elements */
+.xdebug-var-dump{ color: white; }
 .ghs_body{ background: #1f1f1f; color: #FFFFFF; }
 a{ color: #977fff; }
 a:hover, a:visited, a:focus{ color: #7878e6; }

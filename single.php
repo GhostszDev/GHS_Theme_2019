@@ -1,9 +1,10 @@
-<?php get_header(); ?>
+<?php get_header(); var_dump(the_author_meta('display_name')); ?>
 
 
 <div class="jumbotron jumbotron-fluid ghs_hero_banner mb-4" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<?php if(has_post_thumbnail(get_the_ID())): echo get_the_post_thumbnail_url(get_the_ID()); endif; ?>');">
     <div class="container">
         <h1 class="display-5 ghs_title"><?php echo get_the_title(get_the_ID()); ?></h1>
+        <p class="lead"><?php echo get_the_date("M j, Y g:ia") ?> | By <?php ?></p>
     </div>
 </div>
 
