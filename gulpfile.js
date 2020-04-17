@@ -19,6 +19,8 @@ const
     jsScripts     = [
         'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
         'node_modules/@fortawesome/fontawesome-free/js/all.js',
+        'assets/js/twitter.js',
+        'node_modules/clipboard/dist/clipboard.min.js',
         'assets/js/main.js'
     ],
     cssFiles      = [

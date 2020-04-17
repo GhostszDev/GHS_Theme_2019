@@ -53,6 +53,8 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .ghs_email_list button:hover{ background: #7878e6; color: #d4d4d4; }
 .ghs_button{ background: #977fff; color: white !important; border: none; }
 .ghs_button:hover{ background: #7878e6; color: #d4d4d4 !important; border: none; }
+.ghs_button a{ color: white; }
+.ghs_button a:hover{ color: #d4d4d4; }
 .feat-cats .col-md{ height: 20rem; text-align: center; background-position: center center; background-size: 150% 100%; background-repeat: no-repeat; margin-right: .5rem; transition: all .5s ease-in-out; }
 .feat-cats .col-md:last-child{ margin-right: 0; }
 .feat-cats .col-md h3{ padding-top: 8rem; }
@@ -70,8 +72,12 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .call-to-action .lead{ font-size: 1em; }
 .ghs_comments .ghs_title .lead{ font-size: .65em; }
 .ghs_comments .comment-reply-title{ font-family: "PressStart2P", Serif; font-size: 2em; }
+.ghs_author .col-md{ display: flex; }
+.ghs_author .rounded-circle { width: 4rem; height: 4rem; }
+.ghs_author .ghs_share { height: 2.5em; display: flex; flex-direction: column; }
 
 @media only screen and (max-width: 768px) {
     .ghs_hero_banner .container{ margin-top: 40vh; }
     .ghs_email_list{ width: 100%; }
+    .ghs_author .ghs_share{ display: block; }
 }

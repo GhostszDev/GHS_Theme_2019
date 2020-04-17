@@ -52,22 +52,21 @@ function ghs_head(){
     <meta name="" content="" />
     <meta name="p:domain_verify" content="e341cb4b482b32ffd88698442a7c6c71"/>
 
-<?php
+<?php if(is_single()):?>
 
-    if(is_singular('post')):?>
         <meta property="og:locale" content="<?php echo get_locale(); ?>" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="<?php ucwords(the_title()); ?>" />
+        <meta property="og:title" content="<?php echo ucwords(get_the_title(get_the_ID())); ?>" />
 
         <?php if ( get_the_excerpt() ) : ?>
-            <meta property="og:description" content="<?php the_excerpt(); ?>" />
-            <meta name="twitter:description" content="<?php the_excerpt(); ?>" />
+            <meta property="og:description" content="<?php the_excerpt(get_the_ID()); ?>" />
+            <meta name="twitter:description" content="<?php the_excerpt(get_the_ID()); ?>" />
         <?php endif; ?>
 
         <meta property="og:url" content="<?php echo ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http' ) . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; ?>" />
         <meta property="og:site_name" content="<?php bloginfo( 'name' ); ?>" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="<?php the_title(); ?>" />
+        <meta name="twitter:title" content="<?php echo ucwords(get_the_title(get_the_ID())); ?>" />
 
         <?php if ( get_the_post_thumbnail() ) :
             $image_data_wh = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'large' );

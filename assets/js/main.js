@@ -147,9 +147,6 @@ jQuery( document ).ready(function($) {
         if($('#wpadminbar').length > 0){
             var wpadminHeight = jQuery('#wpadminbar').outerHeight(true);
             $('nav').css('margin-top', wpadminHeight);
-            $('.ghs-content').css('margin-top', jQuery('nav').outerHeight(true)-18);
-        } else {
-            $('.ghs-content').css('margin-top', jQuery('nav').outerHeight(true)+18);
         }
 
         if ($('.social-list').length > 0) {
@@ -157,6 +154,12 @@ jQuery( document ).ready(function($) {
         }
 
     };
+
+    new Clipboard('.copyLinkBtn', {
+        text: function() {
+            return window.location.href;
+        }
+    });
 
     init();
       

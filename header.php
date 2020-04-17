@@ -7,6 +7,9 @@
 </head>
 
 <body class="ghs_body">
+    <?php if(is_single()): ?>
+        <div id="fb-root"></div>
+    <?php endif; ?>
 
 <?php $navItem = ghs_get_navigation('Nav Bar'); $active = ghs_get_current_url(); ?>
 
