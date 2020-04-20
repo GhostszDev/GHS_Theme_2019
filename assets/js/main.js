@@ -105,18 +105,18 @@ var goToPage = function(url){
 }
 
 var copyToClipboard = function(copyInputText){
-    var hiddenInput = document.getElementsByClassName('copyInput');
-    hiddenInput[0].value = copyInputText;
+    var hiddenInput = document.getElementById('copyInput');
+    hiddenInput.value = copyInputText;
 
     /* Select the text field */
-    hiddenInput[0].select();
-    hiddenInput[0].setSelectionRange(0, 99999); /*For mobile devices*/
+    hiddenInput.select();
+    hiddenInput.setSelectionRange(0, 99999); /*For mobile devices*/
 
     /* Copy the text inside the text field */
     document.execCommand('copy');
 
     /* Alert the copied text */
-    alert("Copied the text: " + hiddenInput[0].value);
+    alert("Copied the text: " + hiddenInput.value);
 }
 
 function addToMailingList() {

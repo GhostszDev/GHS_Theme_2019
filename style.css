@@ -75,7 +75,7 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .ghs_author .col-md{ display: flex; }
 .ghs_author .rounded-circle { width: 4rem; height: 4rem; }
 .ghs_author .ghs_share { height: 2.5em; display: flex; flex-direction: column; }
-.copyInput{ display: none; }
+#copyInput{ display: none; }
 
 @media only screen and (max-width: 768px) {
     .ghs_hero_banner .container{ margin-top: 40vh; }
