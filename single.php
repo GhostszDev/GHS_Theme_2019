@@ -35,7 +35,7 @@
                         <button type="button" class="btn btn-secondary ghs_button fb-xfbml-parse-ignore" onclick="goToPage('https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_the_permalink(get_the_ID())) ?>;src=sdkpreparse')"><i class="fab fa-facebook-square"></i></button>
                         <button type="button" class="btn btn-secondary ghs_button twitter-share-button" data-via="GhostszMusic" data-hashtags="ghostszmusic" data-show-count="false" onclick="goToPage('https://twitter.com/share?ref_src=<?php echo urlencode(get_the_permalink(get_the_ID())) ?>')"><i class="fab fa-twitter-square"></i></button>
                         <button type="button" class="btn btn-secondary ghs_button" onclick="goToPage('mailto:?subject=<?php echo get_the_title() ?>&amp;body=<?php echo get_the_excerpt() ?>')"><i class="far fa-envelope"></i></button>
-                        <button type="button" class="btn btn-secondary ghs_button copyLinkBtn"><i class="fas fa-link"></i></button>
+                        <button type="button" class="btn btn-secondary ghs_button copyLinkBtn" onclick="copyToClipboard('<?php echo get_the_permalink(get_the_ID()) ?>')"><i class="fas fa-link"></i></button>
                     </div>
                 </div>
             </div>

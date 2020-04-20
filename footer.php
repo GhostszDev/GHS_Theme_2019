@@ -25,6 +25,10 @@
 
         <?php wp_footer(); ?>
 
+        <?php if(is_single()): ?>
+            <input class="copyInput">
+        <?php endif; ?>
+
     </body>
 
 </html>
