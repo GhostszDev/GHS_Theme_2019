@@ -9,7 +9,7 @@
     <table style="width:100%">
         <tr>
             <th>Facebook:</th>
-            <td><input class="theme-settings-input ghs-set-social-facebook" placeholder="Facebook"></td>
+            <td><input onchange="checkURL(this.value)" class="theme-settings-input ghs-set-social-facebook" placeholder="Facebook"></td>
         </tr>
         <tr>
             <th>Twitter:</th>

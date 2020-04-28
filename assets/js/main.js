@@ -11,7 +11,7 @@ var set_social = function(){
         'snapchat': jQuery('.ghs-set-social-snapchat').val(),
     };
 
-    jQuery.post(ghs_ajax_obj.ajaxurl, data, function (response) {
+    jQuery.post(ghs_obj.ghs_api_uri + 'set_social', data, function (response) {
         // console.log(response);
         if(response.success){
             jQuery('.ghs_admin_alert').css('display','block').addClass('ghs_success');
@@ -23,14 +23,11 @@ var set_social = function(){
 };
 
 var get_social = function(){
-
     var data = {
-        'action': 'ghs_get_social',
-        'post_type': 'POST',
-        'name': ''
+
     };
 
-    jQuery.post(ghs_ajax_obj.ajaxurl, data, function (response) {
+    jQuery.get(ghs_obj.ghs_api_uri + 'get_social', data, function (response) {
 
         if(response.success){
             if(document.URL.indexOf("page=ghs-theme-settings") !== -1) {
@@ -102,6 +99,15 @@ var set_hero_settings = function () {
 
 var goToPage = function(url){
     window.location.href = url;
+}
+
+var checkURL = function(url){
+    console.log(url);
+    // if (validUrl.isUri(suspect)){
+    //     console.log('Looks like an URI');
+    // } else {
+    //     console.log('Not a URI');
+    // }
 }
 
 var copyToClipboard = function(copyInputText){

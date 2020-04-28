@@ -27,10 +27,12 @@ add_filter('comment_form_fields', 'ghs_comment_fields_fix');
 // Defines
 define('ghs_acf_path', get_stylesheet_directory() . '/includes/plugins/advanced-custom-fields/');
 define('ghs_acf_url', get_stylesheet_directory_uri() . '/includes/plugins/advanced-custom-fields/');
+define('ghs_api_path', get_stylesheet_directory() . '/includes/plugins/ghs_api/');
 
 
 // Includes
 include_once(ghs_acf_path . 'acf.php');
+include_once(ghs_api_path . 'ghs_api.php');
 
 // Requires
 
@@ -103,7 +105,11 @@ function ghs_scripts(){
     wp_enqueue_script('bundleJS', get_template_directory_uri() . '/assets/js/bundle-min.js', array('jquery'), '', true);
 
     // all localize scripts
-    wp_localize_script('bundleJS', 'ghs_ajax_obj', array('ajaxurl'		=> admin_url( 'admin-ajax.php' )));
+    wp_localize_script('bundleJS', 'ghs_obj', array(
+            'ajaxurl' => admin_url( 'admin-ajax.php'),
+            'ghs_site' => site_url('/'),
+            'ghs_api_uri' => site_url('/wp-json/ghs_api/v1/'),
+    ));
 }
 
 function ghs_admin_scripts(){
@@ -116,7 +122,11 @@ function ghs_admin_scripts(){
     wp_enqueue_script('mainJS', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), null, true);
 
     // all localize scripts
-    wp_localize_script('mainJS', 'ghs_ajax_obj', array('ajaxurl'		=> admin_url( 'admin-ajax.php' )));
+    wp_localize_script('mainJS', 'ghs_obj', array(
+        'ajaxurl' => admin_url( 'admin-ajax.php'),
+        'ghs_site' => site_url('/'),
+        'ghs_api_uri' => site_url('/wp-json/ghs_api/v1/'),
+    ));
 }
 
 function ghs_clear_wp_cache(){
