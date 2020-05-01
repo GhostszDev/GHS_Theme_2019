@@ -55,6 +55,19 @@ function ghs_api_routes(){
 //                return is_user_admin();
 //            }
         ));
+
+    register_rest_route('ghs_api/'.$v, '/login',
+        array(
+            'methods' => 'POST',
+            'callback' => 'ghs_api_login',
+            'args' => array(
+                'user' => array(
+                    'validate_callback' => function($parameter, $request, $key) {
+                        return filter_var($parameter, FILTER_VALIDATE_EMAIL);
+                    },),
+                'password' => ''
+            ),
+        ));
 }
 
 function ghs_api_set_social($request){
@@ -120,6 +133,27 @@ function ghs_api_get_social(){
     return $data;
 }
 
-function ghs_api_login(){}
+function ghs_api_login($request){
+    $data['success'] = false;
+
+    if($request['user'] && $request['password']){
+        $userInfo = [
+            'user_name' => $request['user'],
+            'user_password' => $request['password']
+        ];
+
+        $signon = wp_signon($userInfo, true);
+
+        if($signon->errors){
+            if($signon->errors['incorrect_password'] or $signon->errors['invalid_username']){
+                $data['error_message'] = "Please check the information entered!";
+            }
+        } else {
+            
+        }
+    }
+
+    return $data;
+}
 
 
