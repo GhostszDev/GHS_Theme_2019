@@ -28,11 +28,13 @@ add_filter('comment_form_fields', 'ghs_comment_fields_fix');
 define('ghs_acf_path', get_stylesheet_directory() . '/includes/plugins/advanced-custom-fields/');
 define('ghs_acf_url', get_stylesheet_directory_uri() . '/includes/plugins/advanced-custom-fields/');
 define('ghs_api_path', get_stylesheet_directory() . '/includes/plugins/ghs_api/');
+define('jwt_path', get_stylesheet_directory() . '/includes/plugins/jwt-authentication-for-wp-rest-api/');
 
 
 // Includes
 include_once(ghs_acf_path . 'acf.php');
 include_once(ghs_api_path . 'ghs_api.php');
+include_once(ghs_api_path . 'jwt-auth.php');
 
 // Requires
 

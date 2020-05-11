@@ -149,7 +149,32 @@ function ghs_api_login($request){
                 $data['error_message'] = "Please check the information entered!";
             }
         } else {
-            
+            $authLogin = [
+                'username' => $request['user'],
+                'password' => $request['password'],
+
+            ];
+            $data['success'] = true;
+            $sendData = [
+                'body'    => $authLogin,
+                'headers' => array(
+                    'Content-Type' => 'application/x-www-form-urlencoded'
+                ),
+            ];
+            $authInfo = wp_remote_post(site_url() . '/api/jwt-auth/v1/token', $sendData);
+            $token = json_decode(wp_remote_retrieve_body($authInfo));
+
+            if($token->token){
+                setcookie('Token', $token->token, time() + (DAY_IN_SECONDS * 7), COOKIEPATH, COOKIE_DOMAIN);
+                $data['success'] = true;
+                $data['token'] = $token->token;
+                $data['name'] = $signon->user_nicename;
+                $data['user_icon'] = gravatarToBase64(get_avatar_url($signon->ID));
+                $data['useBlob'] = true;
+            } else {
+                $data['success'] = false;
+                console.error_log("Failed to authentication user!");
+            }
         }
     }
 
