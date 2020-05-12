@@ -9,9 +9,13 @@ Author: Steven "Ghost" Rivera
 add_action('rest_api_init', 'ghs_api_routes');
 
 //filters
-
+add_filter('rest_url_prefix', 'ghs_rest_url_prefix');
 
 //functions
+function ghs_rest_url_prefix(){
+	return 'api';
+}
+
 function ghs_api_routes(){
     $v = 'v1';
 
@@ -61,11 +65,12 @@ function ghs_api_routes(){
             'methods' => 'POST',
             'callback' => 'ghs_api_login',
             'args' => array(
-                'user' => array(
-                    'validate_callback' => function($parameter, $request, $key) {
-                        return filter_var($parameter, FILTER_VALIDATE_EMAIL);
-                    },),
-                'password' => ''
+                'user' => array('sanitize_callback' => function($param, $request, $key) {
+	                return sanitize_text_field( $param );
+                }),
+                'password' => array('sanitize_callback' => function($param, $request, $key) {
+	                return sanitize_text_field( $param );
+                })
             ),
         ));
 }
@@ -133,12 +138,18 @@ function ghs_api_get_social(){
     return $data;
 }
 
+function gravatarToBase64($url){
+	$img = file_get_contents($url);
+	$blob = base64_encode($img);
+	return $blob;
+}
+
 function ghs_api_login($request){
     $data['success'] = false;
 
     if($request['user'] && $request['password']){
         $userInfo = [
-            'user_name' => $request['user'],
+            'user_login' => $request['user'],
             'user_password' => $request['password']
         ];
 

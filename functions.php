@@ -23,6 +23,7 @@ add_filter('acf/settings/show_admin', 'ghs_acf_settings_show_admin');
 add_filter('excerpt_more', 'ghs_excerpt');
 add_filter('comment_form_default_fields', 'ghs_comment_fields');
 add_filter('comment_form_fields', 'ghs_comment_fields_fix');
+add_filter('rest_endpoints', 'ghs_remove_default_endpoints');
 
 // Defines
 define('ghs_acf_path', get_stylesheet_directory() . '/includes/plugins/advanced-custom-fields/');
@@ -34,7 +35,7 @@ define('jwt_path', get_stylesheet_directory() . '/includes/plugins/jwt-authentic
 // Includes
 include_once(ghs_acf_path . 'acf.php');
 include_once(ghs_api_path . 'ghs_api.php');
-include_once(ghs_api_path . 'jwt-auth.php');
+include_once(jwt_path . 'jwt-auth.php');
 
 // Requires
 
@@ -483,31 +484,24 @@ function decode_base64($base64File, $nameToSave){
     return $data;
 }
 
-if(!function_exists('ghs_remove_default_endpoints')) {
+function ghs_remove_default_endpoints($endpoints){
+	$prefix = 'ghs_api';
+	$jwtPreix = 'jwt-auth';
 
-//    add_filter('rest_endpoints', 'ghs_remove_default_endpoints');
+	foreach($endpoints as $endpoint => $details) {
+		switch ($endpoint):
+			case fnmatch('/' . $prefix . '/*', $endpoint, FNM_CASEFOLD):
+			case fnmatch('/' . $jwtPreix . '/*', $endpoint, FNM_CASEFOLD):
+				break;
 
-//disable default routes and keep my endpoints
-    function ghs_remove_default_endpoints($endpoints)
-    {
-        $prefix = 'ghs-api';
-        $jwtPreix = 'jwt-auth';
+			default:
+				unset($endpoints[$endpoint]);
+				break;
 
-        foreach ($endpoints as $endpoint => $details) {
-            switch ($endpoint):
-                case fnmatch('/' . $prefix . '/*', $endpoint, FNM_CASEFOLD):
-                case fnmatch('/' . $jwtPreix . '/*', $endpoint, FNM_CASEFOLD):
-                    break;
+		endswitch;
+	}
 
-                default:
-                    unset($endpoints[$endpoint]);
-                    break;
-
-            endswitch;
-        }
-
-        return $endpoints;
-    }
+	return $endpoints;
 }
 
 function ghs_add_post_types(){
