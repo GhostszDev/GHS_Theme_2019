@@ -23,7 +23,7 @@ add_filter('acf/settings/show_admin', 'ghs_acf_settings_show_admin');
 add_filter('excerpt_more', 'ghs_excerpt');
 add_filter('comment_form_default_fields', 'ghs_comment_fields');
 add_filter('comment_form_fields', 'ghs_comment_fields_fix');
-add_filter('rest_endpoints', 'ghs_remove_default_endpoints');
+//add_filter('rest_endpoints', 'ghs_remove_default_endpoints');
 
 // Defines
 define('ghs_acf_path', get_stylesheet_directory() . '/includes/plugins/advanced-custom-fields/');
@@ -111,7 +111,7 @@ function ghs_scripts(){
     wp_localize_script('bundleJS', 'ghs_obj', array(
             'ajaxurl' => admin_url( 'admin-ajax.php'),
             'ghs_site' => site_url('/'),
-            'ghs_api_uri' => site_url('/wp-json/ghs_api/v1/'),
+            'ghs_api_uri' => site_url('/api/ghs_api/v1/'),
     ));
 }
 
@@ -128,7 +128,7 @@ function ghs_admin_scripts(){
     wp_localize_script('mainJS', 'ghs_obj', array(
         'ajaxurl' => admin_url( 'admin-ajax.php'),
         'ghs_site' => site_url('/'),
-        'ghs_api_uri' => site_url('/wp-json/ghs_api/v1/'),
+        'ghs_api_uri' => site_url('/api/ghs_api/v1/'),
     ));
 }
 
