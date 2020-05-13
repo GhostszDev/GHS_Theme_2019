@@ -28,28 +28,40 @@
 
                 <ul class="navbar-nav mr-auto">
                     <?php foreach ($navItem as $nI): ?>
-                        <li class="nav-item<?php if($nI['url'] == $active): echo " active"; endif; if(!empty($nI['submenu'])): echo " dropdown"; endif;?>">
-                            <a
-                                    class="nav-link <?php if($nI['submenu']): echo " dropdown-toggle"; endif; ?>"
-                                    title="<?php echo $nI['title'] ?>"
-                                    href="<?php if($nI['submenu']): echo '#'; else: echo $nI['url']; endif; ?>"
-                                    id="<?php if($nI['submenu']): echo "navbarDropdownMenuLink"; endif;?>"
-                                    data-toggle="<?php if($nI['submenu']): echo "dropdown"; endif;?>"
-                                    aria-haspopup="<?php if($nI['submenu']): echo "true"; endif;?>"
-                                    aria-expanded="<?php if($nI['submenu']): echo "false"; endif;?>"
-                                    target="<?php echo $nI['target'] ?>"><?php echo $nI['title']; if($nI['url'] == $active): echo ' <span class="sr-only">(current)</span>'; endif; ?></a>
+                        <?php if($nI['title'] != 'Login' or $nI['title'] != 'login'): ?>
+                            <li class="nav-item<?php if($nI['url'] == $active): echo " active"; endif; if(!empty($nI['submenu'])): echo " dropdown"; endif;?>">
+                                <a
+                                        class="nav-link <?php if($nI['submenu']): echo " dropdown-toggle"; endif; ?>"
+                                        title="<?php echo $nI['title'] ?>"
+                                        href="<?php if($nI['submenu']): echo '#'; else: echo $nI['url']; endif; ?>"
+                                        id="<?php if($nI['submenu']): echo "navbarDropdownMenuLink"; endif;?>"
+                                        data-toggle="<?php if($nI['submenu']): echo "dropdown"; endif;?>"
+                                        aria-haspopup="<?php if($nI['submenu']): echo "true"; endif;?>"
+                                        aria-expanded="<?php if($nI['submenu']): echo "false"; endif;?>"
+                                        target="<?php echo $nI['target'] ?>"><?php echo $nI['title']; if($nI['url'] == $active): echo ' <span class="sr-only">(current)</span>'; endif; ?></a>
 
-                            <?php  if($nI['submenu']): ?>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <?php foreach ($nI['submenu'] as $sub): ?>
-                                <a class="dropdown-item" href="<?php echo $sub['url'] ?>" title="<?php echo $sub['title'] ?>">
-                                    <?php echo $sub['title'] ?>
-                                </a>
-                                <?php endforeach; ?>
-                            </div>
+                                <?php  if($nI['submenu']): ?>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <?php foreach ($nI['submenu'] as $sub): ?>
+                                    <a class="dropdown-item" href="<?php echo $sub['url'] ?>" title="<?php echo $sub['title'] ?>">
+                                        <?php echo $sub['title'] ?>
+                                    </a>
+                                    <?php endforeach; ?>
+                                </div>
+                                <?php endif; ?>
+
+                            </li>
+                        <?php else: ?>
+                            <?php if(is_user_logged_in()): ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" title="Logout" href="<?php echo wp_logout_url(site_url('/')); ?>">Logout</a>
+                                </li>
+                            <?php else: ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" title="<?php echo $nI['title']; ?>" href="<?php echo $nI['url']; ?>"><?php echo $nI['title']; ?></a>
+                                </li>
                             <?php endif; ?>
-
-                        </li>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </ul>
 
