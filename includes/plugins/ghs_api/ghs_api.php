@@ -73,6 +73,23 @@ function ghs_api_routes(){
                 })
             ),
         ));
+	
+	egister_rest_route('ghs_api/'.$v, '/signup',
+        array(
+            'methods' => 'POST',
+            'callback' => 'ghs_api_signup',
+            'args' => array(
+                'user' => array('sanitize_callback' => function($param, $request, $key) {
+	                return sanitize_text_field( $param );
+                }),
+                'password' => array('sanitize_callback' => function($param, $request, $key) {
+	                return sanitize_text_field( $param );
+                }),
+	        'email' => array('validate_callback' => function($parameter, $request, $key) {
+			return filter_var($parameter, FILTER_VALIDATE_EMAIL);
+	    },),
+            ),
+        ));
 }
 
 function ghs_api_set_social($request){
@@ -190,6 +207,24 @@ function ghs_api_login($request){
     }
 
     return $data;
+}
+
+function ghs_api_signup($request){
+	
+	$data['success'] = false;
+	
+	$user_id = username_exists($request['user']);
+	
+	if(! $user_id && false == email_exists($request['email'])){
+		$user_created = wp_create_user( $request['user'], $request['password'], $request['email'] );
+		
+		if($user_created){
+			$data['success'] = true;
+		}
+	} else {
+		$data['error_message'] = 'Sorry, this user already exist';
+	}
+	
 }
 
 
