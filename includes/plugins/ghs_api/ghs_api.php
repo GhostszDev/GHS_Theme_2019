@@ -55,9 +55,9 @@ function ghs_api_routes(){
                         return filter_var($parameter, FILTER_VALIDATE_URL);
                     },),
             ),
-//            'permission_callback' => function () {
-//                return is_user_admin();
-//            }
+            'permission_callback' => function () {
+                return is_user_admin();
+            }
         ));
 
     register_rest_route('ghs_api/'.$v, '/login',
