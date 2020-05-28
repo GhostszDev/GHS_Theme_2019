@@ -175,6 +175,32 @@ function login(){
      }
 }
 
+function signup(){
+     var data = {
+         user: jQuery('.ghs-username').val(),
+         password: jQuery('.ghs-pwd').val(),
+         email: jQuery('.ghs-email').val()
+     };
+
+     if(data.user && data.password && data.email) {
+         jQuery.post(ghs_obj.ghs_api_uri + 'signup', data, function (response) {
+             console.log(response);
+             if (response.success) {
+                 jQuery('.ghs-login-alert').css("display", "none").empty();
+                 goToPage(ghs_obj.ghs_site);
+             } else {
+                 if (response.error_message) {
+                     jQuery('.ghs-login-alert').css("display", "block").empty().append(response.error_message);
+                 }
+             }
+         }, 'json');
+     } else {
+         jQuery('.ghs-login-alert').css("display", "block").empty().append("Missing Username, Email or Password");
+     }
+}
+
+
+
 if(document.URL.indexOf("page=ghs-theme-settings") !== -1) {
     //found
     get_social();

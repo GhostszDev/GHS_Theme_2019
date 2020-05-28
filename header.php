@@ -28,7 +28,7 @@
 
                 <ul class="navbar-nav mr-auto">
                     <?php foreach ($navItem as $nI): ?>
-                        <?php if($nI['title'] != 'Login' or $nI['title'] != 'login'): ?>
+                        <?php if($nI['title'] != 'Login'): ?>
                             <li class="nav-item<?php if($nI['url'] == $active): echo " active"; endif; if(!empty($nI['submenu'])): echo " dropdown"; endif;?>">
                                 <a
                                         class="nav-link <?php if($nI['submenu']): echo " dropdown-toggle"; endif; ?>"

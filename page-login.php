@@ -13,7 +13,12 @@
     <div class="checkbox">
         <label><input type="checkbox" value="" class="ghs-remember"> Remember Me</label>
     </div>
-    <a class="btn btn-primary ghs_button" onclick="login()" role="button">Submit</a>
+    <div class="d-flex justify-content-between mt-3">
+        <a class="btn btn-primary ghs_button" onclick="login()" role="button">Submit</a>
+        <?php if(get_page_by_path('sign-up') ): ?>
+            <a href="<?php echo site_url('/sign-up') ?>">Sign Up</a>
+        <?php endif; ?>
+    </div>
 </section>
 
 <?php get_footer(); ?>

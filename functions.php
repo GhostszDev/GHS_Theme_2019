@@ -23,6 +23,7 @@ add_filter('acf/settings/show_admin', 'ghs_acf_settings_show_admin');
 add_filter('excerpt_more', 'ghs_excerpt');
 add_filter('comment_form_default_fields', 'ghs_comment_fields');
 add_filter('comment_form_fields', 'ghs_comment_fields_fix');
+//add_filter('login_url', 'ghs_login_url', 10, 3);
 //add_filter('rest_endpoints', 'ghs_remove_default_endpoints');
 
 // Defines
@@ -604,4 +605,8 @@ function get_recent_cat_post($name){
 
     return $recentPost;
 
+}
+
+function ghs_login_url($login_url, $redirect, $force_reauth){
+	return site_url('/login');
 }

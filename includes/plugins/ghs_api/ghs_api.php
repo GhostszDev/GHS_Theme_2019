@@ -74,7 +74,7 @@ function ghs_api_routes(){
             ),
         ));
 	
-	egister_rest_route('ghs_api/'.$v, '/signup',
+	register_rest_route('ghs_api/'.$v, '/signup',
         array(
             'methods' => 'POST',
             'callback' => 'ghs_api_signup',
@@ -85,8 +85,8 @@ function ghs_api_routes(){
                 'password' => array('sanitize_callback' => function($param, $request, $key) {
 	                return sanitize_text_field( $param );
                 }),
-	        'email' => array('validate_callback' => function($parameter, $request, $key) {
-			return filter_var($parameter, FILTER_VALIDATE_EMAIL);
+		        'email' => array('validate_callback' => function($parameter, $request, $key) {
+					return filter_var($parameter, FILTER_VALIDATE_EMAIL);
 	    },),
             ),
         ));
@@ -220,10 +220,13 @@ function ghs_api_signup($request){
 		
 		if($user_created){
 			$data['success'] = true;
+			ghs_api_login($request);
 		}
 	} else {
 		$data['error_message'] = 'Sorry, this user already exist';
 	}
+
+	return $data;
 	
 }
 
