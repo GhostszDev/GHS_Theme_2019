@@ -83,4 +83,5 @@ gulp.task('hi', function(done) {
     done();
 });
 
+exports.prod = gulp.series('js', 'css');
 exports.default = gulp.series('js', 'css', 'browserSync', 'watch_files');
