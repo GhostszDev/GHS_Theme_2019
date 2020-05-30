@@ -51,7 +51,19 @@ function ghs_defaults(){
 function ghs_head(){
     ?>
 
-    <title><?php if(!is_front_page()): echo ucwords(get_the_title()) . ' | '; endif; echo ucwords(bloginfo('Name')); ?></title>
+    <?php
+    if(is_single()):
+        echo '<title>' . ucwords(get_the_title()) . ' | ' . ucwords(get_bloginfo('Name')) . '</title>';
+    elseif (is_category()):
+        echo '<title>' . ucwords(get_the_category()[0]->name) . ' | ' . ucwords(get_bloginfo('Name')) . '</title>';
+    elseif (is_404()):
+	    echo '<title>' . 'Page Not Found  | ' . ucwords(get_bloginfo('Name')) . '</title>';
+    elseif (is_front_page()):
+	    echo '<title>' . ucwords(get_bloginfo('Name')) . '</title>';
+    elseif (is_page()):
+	    echo '<title>' . ucwords(get_the_title()) . ' | ' . ucwords(get_bloginfo('Name')) . '</title>';
+        endif;
+    ?>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="<?php if(is_front_page()): bloginfo('description'); else: echo get_the_excerpt(); endif;?>" />
