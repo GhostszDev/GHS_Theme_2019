@@ -13,6 +13,7 @@
     "autoprefixer": "latest",
     "bootstrap": "latest",
     "browser-sync": "latest",
+    "js-cookie": "latest",
     "cssnano": "latest",
     "gulp": "latest",
     "gulp-clean": "latest",

@@ -19,6 +19,7 @@ const
     jsScripts     = [
         'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
         'node_modules/@fortawesome/fontawesome-free/js/all.js',
+        'node_modules/js-cookie/src/js.cookie.js',
         'assets/js/twitter.js',
         'assets/js/main.js'
     ],

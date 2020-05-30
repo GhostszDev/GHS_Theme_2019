@@ -20,6 +20,7 @@ Use it to make something cool, have fun, and share what you've learned with othe
 .ghs_animate_slide_up{}
 .ghs_animate_slide_down{}
 
+
 /* All Styling elements */
 .xdebug-var-dump{ color: white; }
 .ghs_body{ background: #1f1f1f; color: #FFFFFF; }
@@ -78,9 +79,32 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 #copyInput{ display: none; }
 .ghs_login, .ghs_signup{ padding: 8.5rem 0; width: 25rem; margin: 6.5rem auto; }
 .ghs-login-alert { display: none; }
+.ghs_404{ height:80.5vh }
+.ghs_404 .outer-box { background: #1a1a1a; }
+.ghs_404 .inner-box { background: #363b3f; width: 60vw; height: 25rem; }
+.screenOBJ { font-family: "PressStart2P", Serif; display: inline-block; }
+.screenText { display: inline-block; overflow: hidden; animation: typing 5s steps(30, end), blink .75s step-end infinite; white-space: nowrap; border-right: 4px solid green; box-sizing: border-box; }
 
 @media only screen and (max-width: 768px) {
     .ghs_hero_banner .container{ margin-top: 40vh; }
     .ghs_email_list{ width: 100%; }
     .ghs_author .ghs_share{ display: block; }
+}
+
+@keyframes typing {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink {
+    from, to{
+        border-color: transparent;
+    }
+    50% {
+        border-color: green;
+    }
 }

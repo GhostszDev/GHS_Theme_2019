@@ -1,24 +1,27 @@
 var set_social = function(){
 
-    var data = {
-        'action': 'ghs_set_social',
-        'post_type': 'POST',
-        'facebook': jQuery('.ghs-set-social-facebook').val(),
-        'twitter': jQuery('.ghs-set-social-twitter').val(),
-        'tumblr': jQuery('.ghs-set-social-tumblr').val(),
-        'instagram': jQuery('.ghs-set-social-instagram').val(),
-        'youtube': jQuery('.ghs-set-social-youtube').val(),
-        'snapchat': jQuery('.ghs-set-social-snapchat').val(),
-    };
-
-    jQuery.post(ghs_obj.ghs_api_uri + 'set_social', data, function (response) {
-        // console.log(response);
+    jQuery.ajax({
+        method: 'POST',
+        url: ghs_obj.ghs_api_uri + 'set_social',
+        headers: {
+            Authorization: 'Bearer ' + Cookies.get('Token')
+        },
+        data: {
+            facebook: jQuery('.ghs-set-social-facebook').val(),
+            twitter: jQuery('.ghs-set-social-twitter').val(),
+            tumblr: jQuery('.ghs-set-social-tumblr').val(),
+            instagram: jQuery('.ghs-set-social-instagram').val(),
+            youtube: jQuery('.ghs-set-social-youtube').val(),
+            snapchat: jQuery('.ghs-set-social-snapchat').val(),
+        }
+    }).done(function(response) {
+        console.log(response);
         if(response.success){
             jQuery('.ghs_admin_alert').css('display','block').addClass('ghs_success');
         }else{
             jQuery('.ghs_admin_alert').css('display','block').addClass('ghs_error');
         }
-    }, 'json');
+    })
 
 };
 

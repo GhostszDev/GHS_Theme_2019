@@ -135,7 +135,8 @@ function ghs_admin_scripts(){
 
     // all scripts
     wp_enqueue_script('jquery');
-    wp_enqueue_script('mainJS', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), null, true);
+    wp_enqueue_script('js-cookies', get_template_directory_uri() . '/node_modules/js-cookie/src/js.cookie.js');
+    wp_enqueue_script('mainJS', get_template_directory_uri() . '/assets/js/main.js', array('jquery', 'js-cookies'), null, true);
 
     // all localize scripts
     wp_localize_script('mainJS', 'ghs_obj', array(

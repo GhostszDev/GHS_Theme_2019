@@ -56,7 +56,7 @@ function ghs_api_routes(){
                     },),
             ),
             'permission_callback' => function () {
-                return is_user_admin();
+                return current_user_can( 'edit_posts' );
             }
         ));
 
@@ -90,6 +90,16 @@ function ghs_api_routes(){
 	    },),
             ),
         ));
+
+//	register_rest_route('ghs_api/'.$v, '/testFunction',
+//		array(
+//			'methods' => 'GET',
+//			'callback' => 'testFunction'
+//		));
+}
+
+function testFunction(){
+	return current_user_can( 'edit_posts' );
 }
 
 function ghs_api_set_social($request){
