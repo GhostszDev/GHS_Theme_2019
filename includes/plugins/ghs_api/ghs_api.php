@@ -211,7 +211,7 @@ function ghs_api_login($request){
                 $data['useBlob'] = true;
             } else {
                 $data['success'] = false;
-                console.error_log("Failed to authentication user!");
+                $data['error_message'] = "Failed to authentication user!";
             }
         }
     }

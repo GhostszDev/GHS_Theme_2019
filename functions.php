@@ -27,6 +27,7 @@ add_filter('comment_form_fields', 'ghs_comment_fields_fix');
 //add_filter('rest_endpoints', 'ghs_remove_default_endpoints');
 
 // Defines
+define('JWT_AUTH_SECRET_KEY', AUTH_KEY);
 define('ghs_acf_path', get_stylesheet_directory() . '/includes/plugins/advanced-custom-fields/');
 define('ghs_acf_url', get_stylesheet_directory_uri() . '/includes/plugins/advanced-custom-fields/');
 define('ghs_api_path', get_stylesheet_directory() . '/includes/plugins/ghs_api/');
