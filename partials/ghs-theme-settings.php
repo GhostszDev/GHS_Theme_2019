@@ -36,3 +36,21 @@
     <button onclick="set_social()">Submit</button>
 
 </section>
+
+<section class="ghs_theme_cat_settings">
+
+    <div class="ghs_admin_alert" role="alert">
+        <strong>Oh snap!</strong> Change a few things up and try submitting again.
+    </div>
+
+    <div class="ghs_theme_cat_options">
+
+        <select class="ghs_theme_cat_1"><option value="" disabled selected hidden>Category 1</option></select>
+        <select class="ghs_theme_cat_2"><option value="" disabled selected hidden>Category 2</option></select>
+        <select class="ghs_theme_cat_3"><option value="" disabled selected hidden>Category 3</option></select>
+
+    </div>
+
+    <button onclick="set_theme_cats()">Submit</button>
+
+</section>

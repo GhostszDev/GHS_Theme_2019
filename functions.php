@@ -47,6 +47,7 @@ function ghs_defaults(){
     ghs_check_if_db_exist('ghs_settings');
     ghs_check_if_db_exist('ghs_hero_banner_settings');
     ghs_check_if_db_exist('ghs_mailing_list');
+    ghs_check_if_db_exist('ghs_cat_selection');
 }
 
 function ghs_head(){
@@ -252,6 +253,10 @@ function ghs_check_if_db_exist($name){
 
             case 'ghs_mailing_list':
                 $create = $wpdb->query("CREATE TABLE " . $name . "( ID int NOT NULL AUTO_INCREMENT, Email varchar(255), OptIn int, PRIMARY KEY(ID) ); ");
+                break;
+
+            case 'ghs_cat_selection':
+                $create = $wpdb->query("CREATE TABLE " . $name . "( cat_1 int, cat_2 int, cat_3 int, ); ");
                 break;
         endswitch;
 
@@ -551,22 +556,52 @@ function ghs_get_latest_post(){
 }
 
 function ghs_get_featured_cat(){
-    $cat_data =  get_categories();
     $data = [];
+    global $wpdb;
     $key = 0;
 
-    foreach ($cat_data as $cat){
-        if($cat->cat_ID != 1 && $key < 3) {
-            $data[$key]['ID'] = $cat->cat_ID;
-            $data[$key]['title'] = $cat->cat_name;
-            $options = get_option( "category_$cat->cat_ID");
-            if($options['img']){
-                $data[$key]['thumbnail'] = $options['img'];
+    $check = $wpdb->get_results('SELECT * FROM `ghs_cat_selection`');
+
+    if($check) {
+        $data[0]['ID'] = $check[0]->cat_1;
+        $data[0]['title'] = get_cat_name($check[0]->cat_1);
+        $options1 = get_option("category_".$check[0]->cat_1);
+        if ($options1['img']) {
+            $data[0]['thumbnail'] = $options1['img'];
+        }
+
+        $data[1]['ID'] = $check[0]->cat_2;
+        $data[1]['title'] = get_cat_name($check[0]->cat_2);
+        $options2 = get_option("category_".$check[0]->cat_2);
+        if ($options2['img']) {
+            $data[1]['thumbnail'] = $options2['img'];
+        }
+
+
+        $data[2]['ID'] = $check[0]->cat_3;
+        $data[2]['title'] = get_cat_name($check[0]->cat_3);
+        $options3 = get_option("category_".$check[0]->cat_3);
+        if ($options3['img']) {
+            $data[2]['thumbnail'] = $options3['img'];
+        }
+
+    } else {
+        $cat_data = get_categories();
+
+        foreach ($cat_data as $cat) {
+            if ($cat->cat_ID != 1 && $key < 3) {
+                $data[$key]['ID'] = $cat->cat_ID;
+                $data[$key]['title'] = $cat->cat_name;
+                $options = get_option("category_$cat->cat_ID");
+                if ($options['img']) {
+                    $data[$key]['thumbnail'] = $options['img'];
+                }
+                $key++;
             }
-            $key++;
         }
     }
 
+//    var_dump($data);
     return $data;
 }
 
@@ -623,4 +658,14 @@ function get_recent_cat_post($name){
 
 function ghs_login_url($login_url, $redirect, $force_reauth){
 	return site_url('/login');
+}
+
+function ghs_grab_selected_cats(){
+    global $wpdb;
+
+    $selected = $wpdb->get_results('SELECT * FROM `ghs_cat_selection`');
+
+    $data['selected'] = $selected;
+
+    return $data;
 }

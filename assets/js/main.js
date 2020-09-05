@@ -55,6 +55,63 @@ var get_social = function(){
 
 };
 
+var get_theme_cats = function(){
+    var data = {
+
+    };
+
+    jQuery.get(ghs_obj.ghs_api_uri + 'get_theme_cats', data, function (response) {
+
+        if(response.success){
+            if(document.URL.indexOf("page=ghs-theme-settings") !== -1) {
+
+                if(response.cats.length > 0){
+                    jQuery.each(response.cats, function (i, val) {
+
+                        if(val !== ''){
+                            jQuery('.ghs_theme_cat_settings .ghs_theme_cat_options .ghs_theme_cat_1').append(new Option(val.name, val.ID));
+                            jQuery('.ghs_theme_cat_settings .ghs_theme_cat_options .ghs_theme_cat_2').append(new Option(val.name, val.ID));
+                            jQuery('.ghs_theme_cat_settings .ghs_theme_cat_options .ghs_theme_cat_3').append(new Option(val.name, val.ID));
+                        }
+                    });
+                }
+
+                if(response.selected.length > 0){
+                    jQuery('.ghs_theme_cat_settings .ghs_theme_cat_options .ghs_theme_cat_1').val(response.selected[0].cat_1);
+                    jQuery('.ghs_theme_cat_settings .ghs_theme_cat_options .ghs_theme_cat_2').val(response.selected[0].cat_2);
+                    jQuery('.ghs_theme_cat_settings .ghs_theme_cat_options .ghs_theme_cat_3').val(response.selected[0].cat_3);
+                }
+
+            }
+        }
+    }, 'json');
+
+};
+
+var set_theme_cats = function(){
+    var tc = {};
+
+    jQuery.ajax({
+        method: 'POST',
+        url: ghs_obj.ghs_api_uri + 'set_theme_cats',
+        headers: {
+            Authorization: 'Bearer ' + Cookies.get('Token')
+        },
+        data: {
+            cat1: jQuery('.ghs_theme_cat_settings .ghs_theme_cat_options .ghs_theme_cat_1').val(),
+            cat2: jQuery('.ghs_theme_cat_settings .ghs_theme_cat_options .ghs_theme_cat_2').val(),
+            cat3: jQuery('.ghs_theme_cat_settings .ghs_theme_cat_options .ghs_theme_cat_3').val(),
+        }
+    }).done(function(response) {
+        console.log(response);
+        if(response.success){
+            jQuery('.ghs_theme_cat_settings .ghs_admin_alert').css('display','block').addClass('ghs_success');
+        }else{
+            jQuery('.ghs_theme_cat_settings .ghs_admin_alert').css('display','block').addClass('ghs_error');
+        }
+    })
+};
+
 var set_hero_settings = function () {
 
     var hbi = {
@@ -207,6 +264,7 @@ function signup(){
 if(document.URL.indexOf("page=ghs-theme-settings") !== -1) {
     //found
     get_social();
+    get_theme_cats();
 }
 
 if(document.URL.indexOf("page=ghs_theme_settings_hps") !== -1) {

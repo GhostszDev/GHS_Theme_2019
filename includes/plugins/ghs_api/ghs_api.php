@@ -25,6 +25,12 @@ function ghs_api_routes(){
         'callback' => 'ghs_api_get_social'
     ));
 
+    register_rest_route('ghs_api/'.$v, '/get_theme_cats',
+        array(
+            'methods' => 'GET',
+            'callback' => 'ghs_api_get_theme_cats'
+        ));
+
     register_rest_route('ghs_api/'.$v, '/set_social',
         array(
             'methods' => 'POST',
@@ -53,6 +59,29 @@ function ghs_api_routes(){
                 'snapchat' => array(
                     'validate_callback' => function($parameter, $request, $key) {
                         return filter_var($parameter, FILTER_VALIDATE_URL);
+                    },),
+            ),
+            'permission_callback' => function () {
+                return current_user_can( 'edit_posts' );
+            }
+        ));
+
+    register_rest_route('ghs_api/'.$v, '/set_theme_cats',
+        array(
+            'methods' => 'POST',
+            'callback' => 'ghs_api_set_theme_cats',
+            'args' => array(
+                'cat1' => array(
+                    'validate_callback' => function($parameter, $request, $key) {
+                        return filter_var($parameter, FILTER_VALIDATE_INT);
+                    },),
+                'cat2' => array(
+                    'validate_callback' => function($parameter, $request, $key) {
+                        return filter_var($parameter, FILTER_VALIDATE_INT);
+                    },),
+                'cat3' => array(
+                    'validate_callback' => function($parameter, $request, $key) {
+                        return filter_var($parameter, FILTER_VALIDATE_INT);
                     },),
             ),
             'permission_callback' => function () {
@@ -240,4 +269,103 @@ function ghs_api_signup($request){
 	
 }
 
+function ghs_api_capture_score($request){
+    $data['success'] = false;
+    global $wpdb;
 
+    $check = $wpdb->get_results('SELECT ID FROM `' . $request['game_title'] . '`');
+
+    if($check){
+        $update = $wpdb->update($request['game_title'], ['score' => $request['score']], ['ID' => get_current_user_id()]);
+        if($update){
+            $data['success'] = true;
+        } else {
+            $data['error_message'] = 'ERROR: Failed to update the user ' . get_current_user_id() . ' to the database';
+        }
+    } else {
+        $insert = $wpdb->insert($request['game_title'], ['ID' => get_current_user_id(), 'score' => $request['score']]);
+        if($insert){
+            $data['success'] = true;
+        } else {
+            $data['error_message'] = 'ERROR: Failed to insert the user ' . get_current_user_id() . ' to the database';
+        }
+    }
+
+    return $data;
+}
+
+function ghs_api_show_score($request){
+    $data['success'] = false;
+    global $wpdb;
+
+    $check = $wpdb->get_results('SELECT * FROM `' . $request['game_title'] . '`');
+
+    if($check){
+        $data['success'] = true;
+        $data['scores'] = $check;
+    } else {
+        $data['error_message'] = 'ERROR: Failed to get this game\'s leaderboard.';
+    }
+
+    return $data;
+}
+
+function ghs_api_get_theme_cats(){
+    $data['success'] = false;
+    global $wpdb;
+
+    $selected = $wpdb->get_results('SELECT * FROM `ghs_cat_selection`');
+
+    $data['selected'] = $selected;
+
+    $categories = get_categories( array(
+        'orderby' => 'name',
+        'order'   => 'ASC'
+    ) );
+
+    if($categories) {
+        $data['success'] = true;
+        $key = 0;
+
+        foreach ($categories as $c) {
+            $data['cats'][$key]['ID'] = $c->cat_ID;
+            $data['cats'][$key]['name'] = $c->cat_name;
+            $key++;
+        }
+    }
+
+    return $data;
+}
+
+function ghs_api_set_theme_cats($request){
+    $data['success'] = false;
+    global $wpdb;
+
+    $check = $wpdb->get_results('SELECT * FROM `ghs_cat_selection`');
+
+    if($check){
+        for($i = 0; $i < 3; $i++ ) {
+            $update = $wpdb->update('ghs_cat_selection',
+                ['cat_'.$i => $request['cat'.$i]],
+                ['ID' => $i]);
+        }
+        if($update){
+            $data['success'] = true;
+        } else {
+            $data['error_message'] = 'ERROR: Failed to update the cats to the database';
+        }
+    } else {
+        $insert = $wpdb->insert('ghs_cat_selection', [
+                'cat_1' => $request['cat1'],
+                'cat_2' => $request['cat2'],
+                'cat_3' => $request['cat3']
+            ]);
+        if($insert){
+            $data['success'] = true;
+        } else {
+            $data['error_message'] = 'ERROR: Failed to insert the cats to the database';
+        }
+    }
+
+    return $data;
+}

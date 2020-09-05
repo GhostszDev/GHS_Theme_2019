@@ -84,6 +84,8 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .ghs_404 .inner-box { background: #363b3f; width: 60vw; height: 25rem; }
 .screenOBJ { font-family: "PressStart2P", Serif; display: inline-block; }
 .screenText { display: inline-block; overflow: hidden; animation: typing 5s steps(30, end), blink .75s step-end infinite; white-space: nowrap; border-right: 4px solid green; box-sizing: border-box; }
+.ghs_theme_cat_settings { margin: 3rem 0; }
+.ghs_theme_cat_settings .ghs_theme_cat_options select { width: 20%; }
 
 @media only screen and (max-width: 768px) {
     .ghs_hero_banner .container{ margin-top: 40vh; }
