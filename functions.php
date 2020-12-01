@@ -53,6 +53,17 @@ function ghs_defaults(){
 function ghs_head(){
     ?>
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-63287923-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-63287923-1');
+</script>
+
+
     <?php
     if(is_single()):
         echo '<title>' . ucwords(get_the_title()) . ' | ' . ucwords(get_bloginfo('Name')) . '</title>';
