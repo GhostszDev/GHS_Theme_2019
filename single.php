@@ -3,6 +3,14 @@
 
 <div class="jumbotron jumbotron-fluid ghs_hero_banner mb-4" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<?php if(has_post_thumbnail(get_the_ID())): echo get_the_post_thumbnail_url(get_the_ID()); endif; ?>');">
     <div class="container">
+        <?php if(get_post_meta(get_the_ID(), 'ghs_youtube_meta')): ?>
+
+        <iframe id="ytplayer" type="text/html" width="1080" height="607.5"
+                src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&disablekb=1&color=white"
+                frameborder="0" allowfullscreen></iframe>
+
+        <span class="ghs_vid_play_btn"><i class="far fa-play-circle"></i></span>
+        <?php endif; ?>
         <h1 class="display-5 ghs_title"><?php echo get_the_title(get_the_ID()); ?></h1>
     </div>
 </div>

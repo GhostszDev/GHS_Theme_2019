@@ -120,15 +120,16 @@ function ghs_api_routes(){
             ),
         ));
 
-//	register_rest_route('ghs_api/'.$v, '/testFunction',
-//		array(
-//			'methods' => 'GET',
-//			'callback' => 'testFunction'
-//		));
+	register_rest_route('ghs_api/'.$v, '/testFunction',
+		array(
+			'methods' => 'GET',
+			'callback' => 'testFunction'
+		));
 }
 
 function testFunction(){
-	return current_user_can( 'edit_posts' );
+//	return current_user_can( 'edit_posts' );
+    return get_current_user_id();
 }
 
 function ghs_api_set_social($request){

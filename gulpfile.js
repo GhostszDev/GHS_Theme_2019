@@ -67,8 +67,8 @@ gulp.task('js', function (done) {
 });
 
 gulp.task('watch_files', function(){
-    gulp.watch('style.css', '', ['css']);
-    gulp.watch('assets/js/main.js', '', ['js']);
+    gulp.watch('style.css', '', ['css']).on('change', browserSync.reload);
+    gulp.watch('assets/js/main.js', '', ['js']).on('change', browserSync.reload);
 });
 
 gulp.task('copy_fonts', function (done) {

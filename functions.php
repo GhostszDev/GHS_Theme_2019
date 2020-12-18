@@ -16,6 +16,8 @@ add_action('wp_ajax_nopriv_ghs_get_hero_settings', 'ghs_get_hero_settings');
 add_action('admin_enqueue_scripts', 'ghs_admin_scripts');
 add_action ('edit_category_form_fields', 'ghs_extra_category_fields');
 add_action ('edited_category', 'save_extra_category_fileds');
+add_action('add_meta_boxes', 'ghs_add_metaboxes');
+add_action( 'save_post', 'ghs_save_metadata' );
 
 // Filters
 add_filter('acf/settings/url', 'ghs_acf_settings_url');
@@ -25,9 +27,11 @@ add_filter('comment_form_default_fields', 'ghs_comment_fields');
 add_filter('comment_form_fields', 'ghs_comment_fields_fix');
 //add_filter('login_url', 'ghs_login_url', 10, 3);
 //add_filter('rest_endpoints', 'ghs_remove_default_endpoints');
+add_filter( 'mod_rewrite_rules', 'ghs_rewrite_conditions', 10, 1 );
 
 // Defines
 define('JWT_AUTH_SECRET_KEY', AUTH_KEY);
+define('JWT_AUTH_CORS_ENABLE', true);
 define('ghs_acf_path', get_stylesheet_directory() . '/includes/plugins/advanced-custom-fields/');
 define('ghs_acf_url', get_stylesheet_directory_uri() . '/includes/plugins/advanced-custom-fields/');
 define('ghs_api_path', get_stylesheet_directory() . '/includes/plugins/ghs_api/');
@@ -48,20 +52,46 @@ function ghs_defaults(){
     ghs_check_if_db_exist('ghs_hero_banner_settings');
     ghs_check_if_db_exist('ghs_mailing_list');
     ghs_check_if_db_exist('ghs_cat_selection');
+
+//	register_post_type('ghs_youtube',
+//		array(
+//			'labels'      => array(
+//				'name'          => __('Youtube', 'textdomain'),
+//				'singular_name' => __('Youtube', 'textdomain'),
+//			),
+//			'public'      => true,
+//			'has_archive' => true,
+//			'rewrite'     => array( 'slug' => 'youtube' ),
+//			'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' )
+//		)
+//	);
+
+    register_post_type('ghs_games',
+        array(
+            'labels'      => array(
+                'name'          => __('Games', 'textdomain'),
+                'singular_name' => __('Game', 'textdomain'),
+            ),
+            'public'      => true,
+            'has_archive' => true,
+            'rewrite'     => array( 'slug' => 'Media' ),
+            'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' )
+        )
+    );
 }
 
 function ghs_head(){
     ?>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-63287923-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-63287923-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  gtag('config', 'UA-63287923-1');
-</script>
+      gtag('config', 'UA-63287923-1');
+    </script>
 
 
     <?php
@@ -170,8 +200,27 @@ function ghs_admin_redirects(){
 
     if( !defined("DOING_AJAX") && !current_user_can("administrator")):
         wp_redirect(site_url()); exit;
-        endif;
+    endif;
 
+    global $wp_rewrite;
+
+    //$wp_rewrite->add_rewrite_tag("RewriteCond","%{HTTP:Authorization} ^(.*)",null); //this fails
+    $wp_rewrite->add_rule("(.*) - [E=HTTP_AUTHORIZATION:%1]",null);
+
+    $wp_rewrite->wp_rewrite_rules();
+    $wp_rewrite->flush_rules();
+
+    flush_rewrite_rules();
+
+}
+
+function ghs_rewrite_conditions($rules){
+    $new_rules = <<<EOD
+    RewriteCond %{HTTP:Authorization} ^(.*)
+    RewriteRule ^(.*) - [E=HTTP_AUTHORIZATION:%1]
+    SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+EOD;
+    return $rules . $new_rules;
 }
 
 function ghs_theme_setup(){
@@ -679,4 +728,70 @@ function ghs_grab_selected_cats(){
     $data['selected'] = $selected;
 
     return $data;
+}
+
+function ghs_add_metaboxes(){
+    add_meta_box('ghs_youtube_meta', 'Youtube Link', 'ghs_youtube_metaboxes', "post", "side", "low", null);
+    add_meta_box('ghs_game_meta', 'Game Link', 'ghs_game_metaboxes', "ghs_games", "side", "low", null);
+}
+
+function ghs_get_YT_thumbnail($url){
+    $id = explode('.be/', $url);
+
+    $yt_link_url = 'http://img.youtube.com/vi/'.
+        $id[1].
+        '/maxresdefault.jpg';
+
+    return $yt_link_url;
+}
+
+function ghs_upload_img($image_url, $post_id){
+    $upload_dir = wp_upload_dir();
+    $image_data = file_get_contents($image_url);
+    $filename = basename($image_url);
+    if(wp_mkdir_p($upload_dir['path']))
+        $file = $upload_dir['path'] . '/' . $filename;
+    else
+        $file = $upload_dir['basedir'] . '/' . $filename;
+    file_put_contents($file, $image_data);
+
+    $wp_filetype = wp_check_filetype($filename, null );
+    $attachment = array(
+        'post_mime_type' => $wp_filetype['type'],
+        'post_title' => sanitize_file_name($filename),
+        'post_content' => '',
+        'post_status' => 'inherit'
+    );
+    $attach_id = wp_insert_attachment( $attachment, $file, $post_id );
+    require_once(ABSPATH . 'wp-admin/includes/image.php');
+    $attach_data = wp_generate_attachment_metadata( $attach_id, $file );
+    $res1= wp_update_attachment_metadata( $attach_id, $attach_data );
+    $res2= set_post_thumbnail( $post_id, $attach_id );
+}
+
+function ghs_save_metadata($post_id){
+    global $post;
+    switch (get_post_type($post_id)){
+        case 'post':
+            update_post_meta($post_id,
+                'ghs_youtube_meta',
+                $_POST['ghs_youtube_meta']);
+            ghs_upload_img(ghs_get_YT_thumbnail($_POST['ghs_youtube_meta']), $post_id);
+            break;
+
+        case 'ghs_game':
+            break;
+    }
+}
+
+function ghs_game_metaboxes(){}
+
+function ghs_youtube_metaboxes($object){
+
+    ?>
+    <div>
+        <label for="ghs_youtube_meta">Link</label>
+        <input name="ghs_youtube_meta" type="text" value="<?php echo get_post_meta($object->ID, "ghs_youtube_meta", true); ?>">
+    </div>
+    <?php
 }

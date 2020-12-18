@@ -285,9 +285,14 @@ jQuery( document ).ready(function($) {
             get_social();
         }
 
+        if ($('.ghs_hero_banner').length > 0) {
+            $('.ghs_hero_banner .ghs_vid_play_btn').on( "click", "svg", function() {
+                $(this).fadeOut();
+                $('.ghs_hero_banner #ytplayer').css('display', 'block');
+            });
+        }
+
     };
-
-
 
     init();
       
