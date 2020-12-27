@@ -3,10 +3,10 @@
 
 <div class="jumbotron jumbotron-fluid ghs_hero_banner mb-4" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<?php if(has_post_thumbnail(get_the_ID())): echo get_the_post_thumbnail_url(get_the_ID()); endif; ?>');">
     <div class="container">
-        <?php if(get_post_meta(get_the_ID(), 'ghs_youtube_meta')): ?>
+        <?php if(!empty(get_post_meta(get_the_ID(), 'ghs_youtube_meta')[0])): ?>
 
         <iframe id="ytplayer" type="text/html" width="1080" height="607.5"
-                src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&disablekb=1&color=white"
+                src="<?php echo get_post_meta(get_the_ID(), 'ghs_youtube_meta')[0] ?>"
                 frameborder="0" allowfullscreen></iframe>
 
         <span class="ghs_vid_play_btn"><i class="far fa-play-circle"></i></span>
@@ -57,6 +57,12 @@
 
             <div class="col-md-8">
                 <article>
+                    <?php if(!empty(get_post_meta(get_the_ID(), 'ghs_podcast_meta')[0])): ?>
+
+<!--                    --><?php //var_dump(get_post_meta(get_the_ID(), 'ghs_podcast_meta')) ?>
+                        <iframe class="ghs_podcast_iframe mb-4" src="<?php echo get_post_meta(get_the_ID(), 'ghs_podcast_meta')[0] ?>" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
+
+                    <?php endif; ?>
                     <?php echo get_the_content('', false, get_the_ID()) ?>
                 </article>
             </div>

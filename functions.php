@@ -732,6 +732,7 @@ function ghs_grab_selected_cats(){
 
 function ghs_add_metaboxes(){
     add_meta_box('ghs_youtube_meta', 'Youtube Link', 'ghs_youtube_metaboxes', "post", "side", "low", null);
+    add_meta_box('ghs_postcast_meta', 'Podcast Link', 'ghs_podcast_metaboxes', "post", "side", "low", null);
     add_meta_box('ghs_game_meta', 'Game Link', 'ghs_game_metaboxes', "ghs_games", "side", "low", null);
 }
 
@@ -773,10 +774,21 @@ function ghs_save_metadata($post_id){
     global $post;
     switch (get_post_type($post_id)){
         case 'post':
-            update_post_meta($post_id,
-                'ghs_youtube_meta',
-                $_POST['ghs_youtube_meta']);
-            ghs_upload_img(ghs_get_YT_thumbnail($_POST['ghs_youtube_meta']), $post_id);
+            if($_POST['ghs_youtube_meta']) {
+	            update_post_meta( $post_id,
+		            'ghs_youtube_meta',
+		            $_POST['ghs_youtube_meta'] );
+	            ghs_upload_img( ghs_get_YT_thumbnail( $_POST['ghs_youtube_meta'] ), $post_id );
+            }
+
+	        if($_POST['ghs_podcast_meta']) {
+		        $updatedStr = explode('/', $_POST['ghs_podcast_meta']);
+		        update_post_meta( $post_id,
+			        'ghs_podcast_meta',
+			        $updatedStr[0] . '/' . $updatedStr[1] . '/' . $updatedStr[2] . '/' . $updatedStr[3] . '/embed/' . $updatedStr[4] . '/' . $updatedStr[5]
+//			        json_encode($updatedStr)
+                );
+	        }
             break;
 
         case 'ghs_game':
@@ -792,6 +804,16 @@ function ghs_youtube_metaboxes($object){
     <div>
         <label for="ghs_youtube_meta">Link</label>
         <input name="ghs_youtube_meta" type="text" value="<?php echo get_post_meta($object->ID, "ghs_youtube_meta", true); ?>">
+    </div>
+    <?php
+}
+
+function ghs_podcast_metaboxes($object){
+
+    ?>
+    <div>
+        <label for="ghs_podcast_meta">Link</label>
+        <input name="ghs_podcast_meta" type="text" value="<?php echo get_post_meta($object->ID, "ghs_podcast_meta", true); ?>">
     </div>
     <?php
 }

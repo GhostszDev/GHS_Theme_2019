@@ -2,7 +2,10 @@
 <project version="4">
   <component name="PhpProjectServersManager">
     <servers>
-      <server host="ghostszmusic.local" port="80" id="de154bad-dfe2-476d-9e0a-7eff96e39fd0" name="Local"></server>
+      <server host="ghostszmusic.local" id="de154bad-dfe2-476d-9e0a-7eff96e39fd0" name="Local" />
     </servers>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.1">
+    <option name="suggestChangeDefaultLanguageLevel" value="false" />
   </component>
 </project>
