@@ -21,6 +21,8 @@ const
         'node_modules/@fortawesome/fontawesome-free/js/all.js',
         'node_modules/js-cookie/src/js.cookie.js',
         'assets/js/twitter.js',
+        'assets/js/UnityLoader.js',
+        'assets/js/UnityProgress.js',
         'assets/js/main.js'
     ],
     cssFiles      = [
@@ -67,8 +69,8 @@ gulp.task('js', function (done) {
 });
 
 gulp.task('watch_files', function(){
-    gulp.watch('style.css', '', ['css']).on('change', browserSync.reload);
-    gulp.watch('assets/js/main.js', '', ['js']).on('change', browserSync.reload);
+    gulp.watch('style.css', ['css']).on('change', browserSync.reload);
+    gulp.watch('assets/js/main.js', ['js']).on('change', browserSync.reload);
 });
 
 gulp.task('copy_fonts', function (done) {
@@ -83,5 +85,30 @@ gulp.task('hi', function(done) {
     done();
 });
 
-exports.prod = gulp.series('js', 'css');
+function css(done){
+    gulp.src(cssFiles)
+        .pipe(cleanCSS())
+        .pipe(postcss([autoprefixer, cssnano]))
+        .pipe(concat('bundle.css'))
+        .pipe(gulp.dest('assets/css/'));
+    done();
+}
+
+function js(done){
+    gulp.src(jsScripts, { sourcemaps: true })
+        .pipe(concat('bundle.js'))
+        .pipe(minify())
+        .pipe(gulp.dest('assets/js/', { sourcemaps: true }));
+    browserSync.reload();
+    done();
+}
+
+// exports.prod = gulp.parallel('js', 'css');
 exports.default = gulp.series('js', 'css', 'browserSync', 'watch_files');
+
+// exports.default = function() {
+//     // gulp.watch('style.css', css);
+//     // gulp.watch('assets/js/main.js', js);
+//     // gulp.watch('*.php').on('change', browserSync.reload);
+//     gulp.parallel('js', 'css', 'browserSync', 'watch_files');
+// };

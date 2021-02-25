@@ -288,7 +288,14 @@ jQuery( document ).ready(function($) {
         if ($('.ghs_hero_banner').length > 0) {
             $('.ghs_hero_banner .ghs_vid_play_btn').on( "click", "svg", function() {
                 $(this).fadeOut();
-                $('.ghs_hero_banner #ytplayer').css('display', 'block');
+                $('.ghs_hero_banner').css('background', 'none');
+                if($('.ghs_hero_banner #ytplayer').length > 0) {
+                    $('.ghs_hero_banner #ytplayer').css('display', 'block');
+                }
+
+                if($('.ghs_hero_banner #ghs_game').length > 0) {
+                    $('.ghs_hero_banner #ghs_game').css('display', 'block');
+                }
             });
         }
 

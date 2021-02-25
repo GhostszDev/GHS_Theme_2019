@@ -36,6 +36,8 @@ define('ghs_acf_path', get_stylesheet_directory() . '/includes/plugins/advanced-
 define('ghs_acf_url', get_stylesheet_directory_uri() . '/includes/plugins/advanced-custom-fields/');
 define('ghs_api_path', get_stylesheet_directory() . '/includes/plugins/ghs_api/');
 define('jwt_path', get_stylesheet_directory() . '/includes/plugins/jwt-authentication-for-wp-rest-api/');
+define('unity_path_dir', get_stylesheet_directory() . '/assets/unity/');
+define('unity_path', get_stylesheet_directory_uri() . '/assets/unity/');
 
 
 // Includes
@@ -74,8 +76,8 @@ function ghs_defaults(){
             ),
             'public'      => true,
             'has_archive' => true,
-            'rewrite'     => array( 'slug' => 'Media' ),
-            'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' )
+            'rewrite'     => array( 'slug' => 'Game' ),
+            'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments' )
         )
     );
 }
@@ -83,6 +85,7 @@ function ghs_defaults(){
 function ghs_head(){
     ?>
 
+	<?php if(strpos(site_url(), 'localhost') == false): ?>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-63287923-1"></script>
     <script>
@@ -92,6 +95,7 @@ function ghs_head(){
 
       gtag('config', 'UA-63287923-1');
     </script>
+    <?php endif; ?>
 
 
     <?php
@@ -152,6 +156,15 @@ function ghs_footer(){ ?>
 
     <?php endif; ?>
 
+	<?php if(is_singular('ghs_games')): ?>
+<!--		--><?php //var_dump(get_post_meta(get_the_ID(), 'ghs_game_meta')) ?>
+        <script>
+            <?php if(!empty(get_post_meta(get_the_ID(), 'ghs_game_meta')[0])): ?>
+            var unityInstance = UnityLoader.instantiate("unityContainer", "<?php echo unity_path . get_post_meta(get_the_ID(), 'ghs_game_meta')[0]?>", {onProgress: UnityProgress});
+            <?php endif; ?>
+        </script>
+	<?php endif; ?>
+
 <?php }
 
 function ghs_scripts(){
@@ -161,7 +174,7 @@ function ghs_scripts(){
 
     // all scripts
     wp_enqueue_script('jquery');
-    wp_enqueue_script('bundleJS', get_template_directory_uri() . '/assets/js/bundle-min.js', array('jquery'), '', true);
+    wp_enqueue_script('bundleJS', get_template_directory_uri() . '/assets/js/bundle-min.js', array('jquery'), '', false);
 
     // all localize scripts
     wp_localize_script('bundleJS', 'ghs_obj', array(
@@ -791,12 +804,32 @@ function ghs_save_metadata($post_id){
 	        }
             break;
 
-        case 'ghs_game':
+        case 'ghs_games':
+	        if($_POST['ghs_game_meta']) {
+		        update_post_meta( $post_id,
+			        'ghs_game_meta',
+			        $_POST['ghs_game_meta']
+		        );
+	        }
             break;
     }
 }
 
-function ghs_game_metaboxes(){}
+function ghs_game_metaboxes($object){
+    $jsonFiles = preg_grep('~\.(json)$~', scandir(unity_path_dir));
+//    var_dump(get_post_type(get_the_ID()));
+    ?>
+    <div>
+        <label for="ghs_game_meta">Playable Game</label>
+        <select id="ghs_game_meta" class="ghs_game_select" name="ghs_game_meta" class="postbox">
+            <option value="">Select a game</option>
+            <?php foreach ($jsonFiles as $js): ?>
+                <option value="<?php echo $js ?>" <?php selected( get_post_meta($object->ID, "ghs_game_meta", true), $js ); ?>><?php echo $js ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <?php
+}
 
 function ghs_youtube_metaboxes($object){
 

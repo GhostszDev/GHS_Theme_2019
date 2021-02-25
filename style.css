@@ -20,6 +20,30 @@ Use it to make something cool, have fun, and share what you've learned with othe
 .ghs_animate_slide_up{}
 .ghs_animate_slide_down{}
 
+/* Unity styling */
+.ghs_hero_banner .webgl-content * {border: 0; margin: 0; padding: 0}
+.ghs_hero_banner .webgl-content {position: absolute; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}
+
+.ghs_hero_banner .webgl-content .logo, .progress {position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}
+.ghs_hero_banner .webgl-content .logo {background: url('../imgs/progressLogo.Light.png') no-repeat center / contain; width: 154px; height: 130px;}
+.ghs_hero_banner .webgl-content .progress {height: 18px; width: 141px; margin-top: 90px;}
+.ghs_hero_banner .webgl-content .progress .empty {background: url('../imgs/progressEmpty.Light.png') no-repeat right / cover; float: right; width: 100%; height: 100%; display: inline-block;}
+.ghs_hero_banner .webgl-content .progress .full {background: url('../imgs/progressFull.Light.png') no-repeat left / cover; float: left; width: 0%; height: 100%; display: inline-block;}
+
+.ghs_hero_banner .webgl-content .logo.Dark {background-image: url('../imgs/progressLogo.Dark.png');}
+.ghs_hero_banner .webgl-content .progress.Dark .empty {background-image: url('../imgs/progressEmpty.Dark.png');}
+.ghs_hero_banner .webgl-content .progress.Dark .full {background-image: url('../imgs/progressFull.Dark.png');}
+
+.ghs_hero_banner .webgl-content .footer {margin-top: 5px; height: 38px; line-height: 38px; font-family: Helvetica, Verdana, Arial, sans-serif; font-size: 18px;}
+.ghs_hero_banner .webgl-content .footer .webgl-logo, .title, .fullscreen {height: 100%; display: inline-block; background: transparent center no-repeat;}
+.ghs_hero_banner .webgl-content .footer .webgl-logo {background-image: url('../imgs/webgl-logo.png'); width: 204px; float: left;}
+.ghs_hero_banner .webgl-content .footer .title {margin-right: 10px; float: left;}
+.ghs_hero_banner .webgl-content .footer .fullscreen {background-image: url('../imgs/fullscreen.png'); width: 38px; float: right;}
+
+.ghs_hero_banner #unityContainer{width:100vw;}
+.ghs_hero_banner .footer {display: block;}
+.ghs_game_select{width: 100%; margin-top: 1rem;}
+
 
 /* All Styling elements */
 .xdebug-var-dump{ color: white; }
@@ -44,6 +68,7 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .ghs_hero_banner .ghs_vid_play_btn{ position: absolute; top: 47%; font-size: 5em; left: 47%; z-index: 9999999; }
 .ghs_hero_banner .ghs_vid_play_btn svg:hover{ cursor: pointer; }
 .ghs_hero_banner #ytplayer{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; z-index: 1 }
+.ghs_hero_banner #ghs_game{ display: none; }
 .ghs_title{ font-family: "PressStart2P", Serif; }
 .ghs_light_bg{ background: rgba(255, 255, 255, 0.5); color: #000000; }
 .ghs_dark_bg{ background: #1f1f1f; color: #FFFFFF; }
@@ -91,6 +116,9 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .ghs_theme_cat_settings .ghs_theme_cat_options select { width: 20%; }
 .ghs-content .ghs_podcast_iframe{ width: 100% !important; }
 .ghs-content .ghs_podcast_iframe .app{ width: 100% !important; }
+
+/* Text Corrects */
+.display-3.ghs_title{ text-shadow: 2px 2px #7878e6;  }
 
 @media only screen and (max-width: 768px) {
     .ghs_hero_banner .container{ margin-top: 40vh; }

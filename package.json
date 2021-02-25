@@ -31,6 +31,8 @@
     "gulp-uglify": "latest",
     "gulp-util": "latest",
     "node-sass": "latest",
-    "popper.js": "latest"
+    "popper.js": "latest",
+    "postcss": "latest",
+    "jquery": "latest"
   }
 }
