@@ -15,28 +15,29 @@
 
             <span class="ghs_vid_play_btn"><i class="far fa-play-circle"></i></span>
         <?php endif; ?>
-        <h1 class="display-5 ghs_title"><?php echo get_the_title(get_the_ID()); ?></h1>
     </div>
 </div>
 
     <section class="ghs_author mb-4">
         <div class="container">
             <div class="row">
-                <div class="col-md">
-                    <img src="<?php echo get_avatar_url($author_id) ?>" class="rounded-circle mr-3">
-                    <span>
-                    <p class="lead mb-0">
-                        <a href="<?php echo get_the_author_meta('url', $author_id) ?>">
-                            <?php echo ucwords(get_the_author_meta('first_name', $author_id)
-                                               .' '. get_the_author_meta('display_name', $author_id)
-                                               .' '. get_the_author_meta('last_name', $author_id)) ?>
-                        </a>
-                    </p>
+                <div class="col-md ghs_games" style="display: block">
+                    <h1 class="ghs_title"><?php echo get_the_title(get_the_ID()); ?></h1>
 
-                    <p class="lead"><?php echo get_the_date() ?> -
-                        <a href="<?php echo get_category_link(get_the_category()[0]->cat_ID) ?>"><?php echo get_the_category()[0]->name ?></a>
-                    </p>
-                </span>
+                    <br>
+                    <div>
+                        <p>Available On:</p>
+
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-secondary"><svg class="svgIcon ghs_avaiable_icon"><use xlink:href="<?php echo svg_defs; ?>#nintendo-switch"></use></svg></button>
+                            <button type="button" class="btn btn-secondary"><i class="fab fa-xbox"></i></button>
+                            <button type="button" class="btn btn-secondary"><i class="fab fa-playstation"></i></button>
+                            <button type="button" class="btn btn-secondary"><svg class="svgIcon ghs_avaiable_icon"><use xlink:href="<?php echo svg_defs; ?>#android"></use></svg></button>
+                            <button type="button" class="btn btn-secondary"><i class="fab fa-apple"></i></button>
+                            <button type="button" class="btn btn-secondary"><i class="fab fa-steam"></i></button>
+                            <button type="button" class="btn btn-secondary"><svg class="svgIcon ghs_avaiable_icon"><use xlink:href="<?php echo svg_defs; ?>#epic-games"></use></svg></button>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md ghs_share">
                     <div class="btn-toolbar justify-content-md-between" role="toolbar" aria-label="Toolbar with button groups">
@@ -61,13 +62,6 @@
 
                 <div class="col-md-8">
                     <article>
-						<?php if(!empty(get_post_meta(get_the_ID(), 'ghs_podcast_meta')[0])): ?>
-
-                            <!--                    --><?php //var_dump(get_post_meta(get_the_ID(), 'ghs_podcast_meta')) ?>
-                            <iframe class="ghs_podcast_iframe mb-4" src="<?php echo get_post_meta(get_the_ID(), 'ghs_podcast_meta')[0] ?>" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
-
-						<?php endif; ?>
-						<?php echo get_the_content('', false, get_the_ID()) ?>
                     </article>
                 </div>
                 <div class="col-md-4">

@@ -65,7 +65,7 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .ghs_hero_banner { height: 100vh; position: relative; overflow: hidden; background-position: center center; background-size: cover; background-repeat: no-repeat; text-align: center; }
 .ghs_hero_banner .container{ margin-top: 55vh; }
 .ghs_hero_banner .ghs_title{ text-shadow: 4px 4px #7878e6; }
-.ghs_hero_banner .ghs_vid_play_btn{ position: absolute; top: 47%; font-size: 5em; left: 47%; z-index: 9999999; }
+.ghs_hero_banner .ghs_vid_play_btn{ position: absolute; top: 47%; font-size: 5em; left: 47%; z-index: 1000; }
 .ghs_hero_banner .ghs_vid_play_btn svg:hover{ cursor: pointer; }
 .ghs_hero_banner #ytplayer{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; z-index: 1 }
 .ghs_hero_banner #ghs_game{ display: none; }
@@ -104,6 +104,7 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .ghs_author .col-md{ display: flex; }
 .ghs_author .rounded-circle { width: 4rem; height: 4rem; }
 .ghs_author .ghs_share { height: 2.5em; display: flex; flex-direction: column; }
+.ghs_author .ghs_title { text-shadow: 0.2rem 0.2rem #7878e6; font-size: 1.5rem; }
 #copyInput{ display: none; }
 .ghs_login, .ghs_signup{ padding: 8.5rem 0; width: 25rem; margin: 6.5rem auto; }
 .ghs-login-alert { display: none; }
@@ -116,6 +117,9 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .ghs_theme_cat_settings .ghs_theme_cat_options select { width: 20%; }
 .ghs-content .ghs_podcast_iframe{ width: 100% !important; }
 .ghs-content .ghs_podcast_iframe .app{ width: 100% !important; }
+.svgIcon { width: 2em; height: 2em; }
+.ghs_avaiable_icon { fill: white; }
+.ghs_games .svg-inline--fa { font-size: 2em; }
 
 /* Text Corrects */
 .display-3.ghs_title{ text-shadow: 2px 2px #7878e6;  }

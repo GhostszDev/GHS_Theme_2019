@@ -38,6 +38,7 @@ define('ghs_api_path', get_stylesheet_directory() . '/includes/plugins/ghs_api/'
 define('jwt_path', get_stylesheet_directory() . '/includes/plugins/jwt-authentication-for-wp-rest-api/');
 define('unity_path_dir', get_stylesheet_directory() . '/assets/unity/');
 define('unity_path', get_stylesheet_directory_uri() . '/assets/unity/');
+define('svg_defs', get_stylesheet_directory_uri() . '/assets/imgs/icon.svg');
 
 
 // Includes
@@ -85,7 +86,7 @@ function ghs_defaults(){
 function ghs_head(){
     ?>
 
-	<?php if(strpos(site_url(), 'localhost') == false): ?>
+	<?php if(strpos(site_url(), 'localhost') !== false): ?>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-63287923-1"></script>
     <script>
@@ -156,8 +157,7 @@ function ghs_footer(){ ?>
 
     <?php endif; ?>
 
-	<?php if(is_singular('ghs_games')): ?>
-<!--		--><?php //var_dump(get_post_meta(get_the_ID(), 'ghs_game_meta')) ?>
+    <?php if(is_singular('ghs_games')): ?>
         <script>
             <?php if(!empty(get_post_meta(get_the_ID(), 'ghs_game_meta')[0])): ?>
             var unityInstance = UnityLoader.instantiate("unityContainer", "<?php echo unity_path . get_post_meta(get_the_ID(), 'ghs_game_meta')[0]?>", {onProgress: UnityProgress});
@@ -174,7 +174,8 @@ function ghs_scripts(){
 
     // all scripts
     wp_enqueue_script('jquery');
-    wp_enqueue_script('bundleJS', get_template_directory_uri() . '/assets/js/bundle-min.js', array('jquery'), '', false);
+    wp_enqueue_script('bundleJS', get_template_directory_uri() . '/assets/js/bundle-min.js',
+        array('jquery'), '', false);
 
     // all localize scripts
     wp_localize_script('bundleJS', 'ghs_obj', array(
