@@ -86,7 +86,7 @@ function ghs_defaults(){
 function ghs_head(){
     ?>
 
-	<?php if(strpos(site_url(), 'localhost') !== false): ?>
+	<?php if(strpos(site_url(), 'localhost') == false): ?>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-63287923-1"></script>
     <script>
@@ -157,7 +157,8 @@ function ghs_footer(){ ?>
 
     <?php endif; ?>
 
-    <?php if(is_singular('ghs_games')): ?>
+	<?php if(is_singular('ghs_games')): ?>
+<!--		--><?php //var_dump(get_post_meta(get_the_ID(), 'ghs_game_meta')) ?>
         <script>
             <?php if(!empty(get_post_meta(get_the_ID(), 'ghs_game_meta')[0])): ?>
             var unityInstance = UnityLoader.instantiate("unityContainer", "<?php echo unity_path . get_post_meta(get_the_ID(), 'ghs_game_meta')[0]?>", {onProgress: UnityProgress});
@@ -174,8 +175,7 @@ function ghs_scripts(){
 
     // all scripts
     wp_enqueue_script('jquery');
-    wp_enqueue_script('bundleJS', get_template_directory_uri() . '/assets/js/bundle-min.js',
-        array('jquery'), '', false);
+    wp_enqueue_script('bundleJS', get_template_directory_uri() . '/assets/js/bundle-min.js', array('jquery'), '', false);
 
     // all localize scripts
     wp_localize_script('bundleJS', 'ghs_obj', array(
@@ -806,10 +806,53 @@ function ghs_save_metadata($post_id){
             break;
 
         case 'ghs_games':
+            var_dump($_POST['ghs_game_meta']);
 	        if($_POST['ghs_game_meta']) {
 		        update_post_meta( $post_id,
 			        'ghs_game_meta',
 			        $_POST['ghs_game_meta']
+		        );
+	        }
+	        if($_POST['ghs_game_meta_android']) {
+		        update_post_meta( $post_id,
+			        'ghs_game_meta_android',
+			        $_POST['ghs_game_meta_android']
+		        );
+	        }
+	        if($_POST['ghs_game_meta_ios']) {
+		        update_post_meta( $post_id,
+			        'ghs_game_meta_ios',
+			        $_POST['ghs_game_meta_ios']
+		        );
+	        }
+	        if($_POST['ghs_game_meta_ps']) {
+		        update_post_meta( $post_id,
+			        'ghs_game_meta_ps',
+			        $_POST['ghs_game_meta_ps']
+		        );
+	        }
+	        if($_POST['ghs_game_meta_nintendo']) {
+		        update_post_meta( $post_id,
+			        'ghs_game_meta_nintendo',
+			        $_POST['ghs_game_meta_nintendo']
+		        );
+	        }
+	        if($_POST['ghs_game_meta_xbox']) {
+		        update_post_meta( $post_id,
+			        'ghs_game_meta_xbox',
+			        $_POST['ghs_game_meta_xbox']
+		        );
+	        }
+	        if($_POST['ghs_game_meta_steam']) {
+		        update_post_meta( $post_id,
+			        'ghs_game_meta_steam',
+			        $_POST['ghs_game_meta_steam']
+		        );
+	        }
+	        if($_POST['ghs_game_meta_epic']) {
+		        update_post_meta( $post_id,
+			        'ghs_game_meta_epic',
+			        $_POST['ghs_game_meta_epic']
 		        );
 	        }
             break;
@@ -818,7 +861,6 @@ function ghs_save_metadata($post_id){
 
 function ghs_game_metaboxes($object){
     $jsonFiles = preg_grep('~\.(json)$~', scandir(unity_path_dir));
-//    var_dump(get_post_type(get_the_ID()));
     ?>
     <div>
         <label for="ghs_game_meta">Playable Game</label>
@@ -828,6 +870,45 @@ function ghs_game_metaboxes($object){
                 <option value="<?php echo $js ?>" <?php selected( get_post_meta($object->ID, "ghs_game_meta", true), $js ); ?>><?php echo $js ?></option>
             <?php endforeach; ?>
         </select>
+    </div>
+
+    <h3> Game Availability Links</h3>
+
+    <div>
+        <label for="ghs_game_meta_android">Android</label>
+        <div class="input-group mb-3 ghs_game_meta_android">
+            <input type="text" class="form-control ghs_game_meta_android" id="ghs_game_meta_android" aria-describedby="basic-addon3" value="<?php get_post_meta($object->ID, "ghs_game_meta_android", true) ?>">
+        </div>
+
+        <label for="ghs_game_meta_ios">IOS</label>
+        <div class="input-group mb-3 ghs_game_meta_ios">
+            <input type="text" class="form-control ghs_game_meta_ios" id="ghs_game_meta_ios" aria-describedby="basic-addon3">
+        </div>
+
+        <label for="ghs_game_meta_ps">Playstation</label>
+        <div class="input-group mb-3 ghs_game_meta_ps">
+            <input type="text" class="form-control ghs_game_meta_ps" id="ghs_game_meta_ps" aria-describedby="basic-addon3">
+        </div>
+
+        <label for="ghs_game_meta_nintendo">Nintendo</label>
+        <div class="input-group mb-3 ghs_game_meta_nintendo">
+            <input type="text" class="form-control ghs_game_meta_nintendo" id="ghs_game_meta_nintendo" aria-describedby="basic-addon3">
+        </div>
+
+        <label for="ghs_game_meta_xbox">Xbox</label>
+        <div class="input-group mb-3 ghs_game_meta_xbox">
+            <input type="text" class="form-control ghs_game_meta_xbox" id="ghs_game_meta_xbox" aria-describedby="basic-addon3">
+        </div>
+
+        <label for="ghs_game_meta_steam">Steam</label>
+        <div class="input-group mb-3 ghs_game_meta_steam">
+            <input type="text" class="form-control ghs_game_meta_steam" id="ghs_game_meta_steam" aria-describedby="basic-addon3">
+        </div>
+
+        <label for="ghs_game_meta_epic">Epic Game Store</label>
+        <div class="input-group mb-3 ghs_game_meta_epic">
+            <input type="text" class="form-control ghs_game_meta_epic" id="ghs_game_meta_epic" aria-describedby="basic-addon3">
+        </div>
     </div>
     <?php
 }

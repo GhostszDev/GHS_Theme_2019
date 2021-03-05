@@ -29,13 +29,13 @@
                         <p>Available On:</p>
 
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-secondary"><svg class="svgIcon ghs_avaiable_icon"><use xlink:href="<?php echo svg_defs; ?>#nintendo-switch"></use></svg></button>
-                            <button type="button" class="btn btn-secondary"><i class="fab fa-xbox"></i></button>
-                            <button type="button" class="btn btn-secondary"><i class="fab fa-playstation"></i></button>
-                            <button type="button" class="btn btn-secondary"><svg class="svgIcon ghs_avaiable_icon"><use xlink:href="<?php echo svg_defs; ?>#android"></use></svg></button>
-                            <button type="button" class="btn btn-secondary"><i class="fab fa-apple"></i></button>
-                            <button type="button" class="btn btn-secondary"><i class="fab fa-steam"></i></button>
-                            <button type="button" class="btn btn-secondary"><svg class="svgIcon ghs_avaiable_icon"><use xlink:href="<?php echo svg_defs; ?>#epic-games"></use></svg></button>
+                            <?php if(!empty(get_post_meta(get_the_ID(), 'ghs_game_meta_nintendo')[0])): ?><button type="button" class="btn btn-secondary" onclick="window.location.href='<?php echo get_post_meta(get_the_ID(), 'ghs_game_meta_nintendo')[0] ?>'"><svg class="svgIcon ghs_avaiable_icon"><use xlink:href="<?php echo svg_defs; ?>#nintendo-switch"></use></svg></button><?php endif; ?>
+	                        <?php if(!empty(get_post_meta(get_the_ID(), 'ghs_game_meta_nintendo')[0])): ?><button type="button" class="btn btn-secondary"><i class="fab fa-xbox"></i></button><?php endif; ?>
+	                        <?php if(!empty(get_post_meta(get_the_ID(), 'ghs_game_meta_nintendo')[0])): ?><button type="button" class="btn btn-secondary"><i class="fab fa-playstation"></i></button><?php endif; ?>
+	                        <?php if(!empty(get_post_meta(get_the_ID(), 'ghs_game_meta_android')[0])): ?><button type="button" class="btn btn-secondary"><svg class="svgIcon ghs_avaiable_icon"><use xlink:href="<?php echo svg_defs; ?>#android"></use></svg></button><?php endif; ?>
+	                        <?php if(!empty(get_post_meta(get_the_ID(), 'ghs_game_meta_nintendo')[0])): ?><button type="button" class="btn btn-secondary"><i class="fab fa-apple"></i></button><?php endif; ?>
+	                        <?php if(!empty(get_post_meta(get_the_ID(), 'ghs_game_meta_nintendo')[0])): ?><button type="button" class="btn btn-secondary"><i class="fab fa-steam"></i></button><?php endif; ?>
+	                        <?php if(!empty(get_post_meta(get_the_ID(), 'ghs_game_meta_nintendo')[0])): ?><button type="button" class="btn btn-secondary"><svg class="svgIcon ghs_avaiable_icon"><use xlink:href="<?php echo svg_defs; ?>#epic-games"></use></svg></button><?php endif; ?>
                         </div>
                     </div>
                 </div>
