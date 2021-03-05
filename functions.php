@@ -748,6 +748,7 @@ function ghs_add_metaboxes(){
     add_meta_box('ghs_youtube_meta', 'Youtube Link', 'ghs_youtube_metaboxes', "post", "side", "low", null);
     add_meta_box('ghs_postcast_meta', 'Podcast Link', 'ghs_podcast_metaboxes', "post", "side", "low", null);
     add_meta_box('ghs_game_meta', 'Game Link', 'ghs_game_metaboxes', "ghs_games", "side", "low", null);
+    add_meta_box('ghs_games_availability_meta', 'Game Availability', 'ghs_games_availability_metaboxes', "ghs_games", "side", "low", null);
 }
 
 function ghs_get_YT_thumbnail($url){
@@ -806,50 +807,51 @@ function ghs_save_metadata($post_id){
             break;
 
         case 'ghs_games':
-            var_dump($_POST['ghs_game_meta']);
-	        if($_POST['ghs_game_meta']) {
+//            var_dump($_POST['ghs_game_meta']);
+
+	        if(isset($_POST['ghs_game_meta'])) {
 		        update_post_meta( $post_id,
 			        'ghs_game_meta',
 			        $_POST['ghs_game_meta']
 		        );
 	        }
-	        if($_POST['ghs_game_meta_android']) {
+	        if(isset($_POST['ghs_game_meta_android'])) {
 		        update_post_meta( $post_id,
 			        'ghs_game_meta_android',
 			        $_POST['ghs_game_meta_android']
 		        );
 	        }
-	        if($_POST['ghs_game_meta_ios']) {
+	        if(isset($_POST['ghs_game_meta_ios'])) {
 		        update_post_meta( $post_id,
 			        'ghs_game_meta_ios',
 			        $_POST['ghs_game_meta_ios']
 		        );
 	        }
-	        if($_POST['ghs_game_meta_ps']) {
+	        if(isset($_POST['ghs_game_meta_ps'])) {
 		        update_post_meta( $post_id,
 			        'ghs_game_meta_ps',
 			        $_POST['ghs_game_meta_ps']
 		        );
 	        }
-	        if($_POST['ghs_game_meta_nintendo']) {
+	        if(isset($_POST['ghs_game_meta_nintendo'])) {
 		        update_post_meta( $post_id,
 			        'ghs_game_meta_nintendo',
 			        $_POST['ghs_game_meta_nintendo']
 		        );
 	        }
-	        if($_POST['ghs_game_meta_xbox']) {
+	        if(isset($_POST['ghs_game_meta_xbox'])) {
 		        update_post_meta( $post_id,
 			        'ghs_game_meta_xbox',
 			        $_POST['ghs_game_meta_xbox']
 		        );
 	        }
-	        if($_POST['ghs_game_meta_steam']) {
+	        if(isset($_POST['ghs_game_meta_steam'])) {
 		        update_post_meta( $post_id,
 			        'ghs_game_meta_steam',
 			        $_POST['ghs_game_meta_steam']
 		        );
 	        }
-	        if($_POST['ghs_game_meta_epic']) {
+	        if(isset($_POST['ghs_game_meta_epic'])) {
 		        update_post_meta( $post_id,
 			        'ghs_game_meta_epic',
 			        $_POST['ghs_game_meta_epic']
@@ -871,46 +873,51 @@ function ghs_game_metaboxes($object){
             <?php endforeach; ?>
         </select>
     </div>
+    <?php
+}
 
-    <h3> Game Availability Links</h3>
+function ghs_games_availability_metaboxes($object){
+    ?>
 
     <div>
         <label for="ghs_game_meta_android">Android</label>
         <div class="input-group mb-3 ghs_game_meta_android">
-            <input type="text" class="form-control ghs_game_meta_android" id="ghs_game_meta_android" aria-describedby="basic-addon3" value="<?php get_post_meta($object->ID, "ghs_game_meta_android", true) ?>">
+            <input name="ghs_game_meta_android" type="text" class="form-control ghs_game_meta_android" id="ghs_game_meta_android" aria-describedby="basic-addon3" value="<?php echo get_post_meta($object->ID, "ghs_game_meta_android", true) ?>">
         </div>
 
         <label for="ghs_game_meta_ios">IOS</label>
         <div class="input-group mb-3 ghs_game_meta_ios">
-            <input type="text" class="form-control ghs_game_meta_ios" id="ghs_game_meta_ios" aria-describedby="basic-addon3">
+            <input name="ghs_game_meta_ios" value="<?php echo get_post_meta($object->ID, "ghs_game_meta_ios", true) ?>" type="text" class="form-control ghs_game_meta_ios" id="ghs_game_meta_ios" aria-describedby="basic-addon3">
         </div>
 
         <label for="ghs_game_meta_ps">Playstation</label>
         <div class="input-group mb-3 ghs_game_meta_ps">
-            <input type="text" class="form-control ghs_game_meta_ps" id="ghs_game_meta_ps" aria-describedby="basic-addon3">
+            <input name="ghs_game_meta_ps" type="text" value="<?php echo get_post_meta($object->ID, "ghs_game_meta_ps", true) ?>" class="form-control ghs_game_meta_ps" id="ghs_game_meta_ps" aria-describedby="basic-addon3">
         </div>
 
         <label for="ghs_game_meta_nintendo">Nintendo</label>
         <div class="input-group mb-3 ghs_game_meta_nintendo">
-            <input type="text" class="form-control ghs_game_meta_nintendo" id="ghs_game_meta_nintendo" aria-describedby="basic-addon3">
+            <input name="ghs_game_meta_nintendo" type="text" value="<?php echo get_post_meta($object->ID, "ghs_game_meta_nintendo", true) ?>" class="form-control ghs_game_meta_nintendo" id="ghs_game_meta_nintendo" aria-describedby="basic-addon3">
         </div>
 
         <label for="ghs_game_meta_xbox">Xbox</label>
         <div class="input-group mb-3 ghs_game_meta_xbox">
-            <input type="text" class="form-control ghs_game_meta_xbox" id="ghs_game_meta_xbox" aria-describedby="basic-addon3">
+            <input name="ghs_game_meta_xbox" type="text" value="<?php echo get_post_meta($object->ID, "ghs_game_meta_xbox", true) ?>" class="form-control ghs_game_meta_xbox" id="ghs_game_meta_xbox" aria-describedby="basic-addon3">
         </div>
 
         <label for="ghs_game_meta_steam">Steam</label>
         <div class="input-group mb-3 ghs_game_meta_steam">
-            <input type="text" class="form-control ghs_game_meta_steam" id="ghs_game_meta_steam" aria-describedby="basic-addon3">
+            <input name="ghs_game_meta_steam" type="text" value="<?php echo get_post_meta($object->ID, "ghs_game_meta_steam", true) ?>" class="form-control ghs_game_meta_steam" id="ghs_game_meta_steam" aria-describedby="basic-addon3">
         </div>
 
         <label for="ghs_game_meta_epic">Epic Game Store</label>
         <div class="input-group mb-3 ghs_game_meta_epic">
-            <input type="text" class="form-control ghs_game_meta_epic" id="ghs_game_meta_epic" aria-describedby="basic-addon3">
+            <input name="ghs_game_meta_epic" type="text" value="<?php echo get_post_meta($object->ID, "ghs_game_meta_epic", true) ?>" class="form-control ghs_game_meta_epic" id="ghs_game_meta_epic" aria-describedby="basic-addon3">
         </div>
     </div>
+
     <?php
+
 }
 
 function ghs_youtube_metaboxes($object){
