@@ -51,21 +51,60 @@
                             <button type="button" class="btn btn-secondary ghs_button copyLinkBtn" onclick="copyToClipboard('<?php echo get_the_permalink(get_the_ID()) ?>')"><i class="fas fa-link"></i></button>
                         </div>
                     </div>
+
+<!--                    <div class="ghs_rating mt-3">-->
+<!--                        <div class="star-rating" title="3.5 rating based on 1,234 ratings">-->
+<!--                            <div class="star star-full"></div>-->
+<!--                            <div class="star star-full"></div>-->
+<!--                            <div class="star star-full"></div>-->
+<!--                            <div class="star star-half"></div>-->
+<!--                            <div class="star star-empty"></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="ghs-content mb-4">
-        <div class="container">
+    <section class="ghs_games_content ghs-content mb-4">
+        <div class="container mt-5">
             <div class="row">
 
-                <div class="col-md-8">
-                    <article>
+                <div class="col-md-12">
+                    <section class="ghs_games_main">
+
+                        <div class="slick">
+
+                            <?php if(get_post_meta(get_the_ID(), 'ghs_games_slide_1')[0]): ?>
+                            <div class="ghs_video_wrapper">
+                                <img src="<?php echo get_post_meta(get_the_ID(), 'ghs_games_slide_1')[0]; ?>">
+                            </div>
+                            <?php endif; ?>
+
+	                        <?php if(get_post_meta(get_the_ID(), 'ghs_games_slide_2')[0]): ?>
+                                <div class="ghs_video_wrapper">
+                                    <img src="<?php echo get_post_meta(get_the_ID(), 'ghs_games_slide_2')[0]; ?>">
+                                </div>
+	                        <?php endif; ?>
+
+                            <?php if(get_post_meta(get_the_ID(), 'ghs_games_slide_4')[0]): ?>
+	                            <?php $yt_embed = explode('/', get_post_meta(get_the_ID(), 'ghs_games_slide_4')[0]);?>
+                                <div class="ghs_video_wrapper"><iframe src="https://www.youtube.com/embed/<?php echo $yt_embed[count($yt_embed)-1] ?>?controls=1"></iframe></div>
+	                        <?php endif; ?>
+
+	                        <?php if(get_post_meta(get_the_ID(), 'ghs_games_slide_3')[0]): ?>
+                                <div class="ghs_video_wrapper">
+                                    <img src="<?php echo get_post_meta(get_the_ID(), 'ghs_games_slide_3')[0]; ?>">
+                                </div>
+	                        <?php endif; ?>
+
+                        </div>
+                    </section>
+
+                    <article class="mt-3 mb-3">
+	                    <?php echo get_the_content('', false, get_the_ID()) ?>
                     </article>
-                </div>
-                <div class="col-md-4">
-					<?php get_sidebar() ?>
                 </div>
 
             </div>

@@ -171,7 +171,7 @@ function ghs_footer(){ ?>
 function ghs_scripts(){
 
     // all style files
-    wp_enqueue_style('bundleCSS', get_stylesheet_directory_uri() . '/assets/css/bundle.css');
+	wp_enqueue_style('bundleCSS', get_stylesheet_directory_uri() . '/assets/css/bundle.css');
 
     // all scripts
     wp_enqueue_script('jquery');
@@ -749,6 +749,7 @@ function ghs_add_metaboxes(){
     add_meta_box('ghs_postcast_meta', 'Podcast Link', 'ghs_podcast_metaboxes', "post", "side", "low", null);
     add_meta_box('ghs_game_meta', 'Game Link', 'ghs_game_metaboxes', "ghs_games", "side", "low", null);
     add_meta_box('ghs_games_availability_meta', 'Game Availability', 'ghs_games_availability_metaboxes', "ghs_games", "side", "low", null);
+    add_meta_box('ghs_games_slide_meta', 'Game Slide', 'ghs_games_slide_metaboxes', "ghs_games", "side", "low", null);
 }
 
 function ghs_get_YT_thumbnail($url){
@@ -857,8 +858,64 @@ function ghs_save_metadata($post_id){
 			        $_POST['ghs_game_meta_epic']
 		        );
 	        }
+
+            if(isset($_POST['ghs_games_slide_1'])) {
+	            update_post_meta( $post_id,
+		            'ghs_games_slide_1',
+		            $_POST['ghs_games_slide_1']
+	            );
+            }
+
+            if(isset($_POST['ghs_games_slide_2'])) {
+	            update_post_meta( $post_id,
+		            'ghs_games_slide_2',
+		            $_POST['ghs_games_slide_2']
+	            );
+            }
+
+            if(isset($_POST['ghs_games_slide_3'])) {
+	            update_post_meta( $post_id,
+		            'ghs_games_slide_3',
+		            $_POST['ghs_games_slide_3']
+	            );
+            }
+
+            if(isset($_POST['ghs_games_slide_4'])) {
+	            update_post_meta( $post_id,
+		            'ghs_games_slide_4',
+		            $_POST['ghs_games_slide_4']
+	            );
+            }
             break;
     }
+}
+
+function ghs_games_slide_metaboxes($object){
+    ?>
+
+    <div>
+        <label for="ghs_games_slide_1">Slide 1</label>
+        <div class="input-group mb-3 ghs_games_slide_1">
+            <input name="ghs_games_slide_1" type="text" class="form-control ghs_games_slide_1" id="ghs_games_slide_1" aria-describedby="basic-addon3" value="<?php echo get_post_meta($object->ID, "ghs_games_slide_1", true) ?>">
+        </div>
+
+        <label for="ghs_games_slide_2">Slide 2</label>
+        <div class="input-group mb-3 ghs_games_slide_2">
+            <input name="ghs_games_slide_2" type="text" class="form-control ghs_games_slide_2" id="ghs_games_slide_2" aria-describedby="basic-addon3" value="<?php echo get_post_meta($object->ID, "ghs_games_slide_2", true) ?>">
+        </div>
+
+        <label for="ghs_games_slide_3">Slide 3</label>
+        <div class="input-group mb-3 ghs_games_slide_3">
+            <input name="ghs_games_slide_3" type="text" class="form-control ghs_games_slide_3" id="ghs_games_slide_3" aria-describedby="basic-addon3" value="<?php echo get_post_meta($object->ID, "ghs_games_slide_3", true) ?>">
+        </div>
+
+        <label for="ghs_games_slide_4">Youtube Link</label>
+        <div class="input-group mb-3 ghs_games_slide_4">
+            <input name="ghs_games_slide_4" type="text" class="form-control ghs_games_slide_4" id="ghs_games_slide_4" aria-describedby="basic-addon3" value="<?php echo get_post_meta($object->ID, "ghs_games_slide_4", true) ?>">
+        </div>
+    </div>
+
+    <?php
 }
 
 function ghs_game_metaboxes($object){

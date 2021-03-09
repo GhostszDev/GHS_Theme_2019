@@ -15,6 +15,8 @@ Use it to make something cool, have fun, and share what you've learned with othe
 
 /* Fonts */
 @font-face { font-family: 'PressStart2P'; src: url('../webfonts/PressStart2P-Regular.eot'); src: url('../webfonts/PressStart2P-Regular.woff') format('woff'), url('../webfonts/PressStart2P-Regular.ttf') format('truetype'), url('../webfonts/PressStart2P-Regular.svg') format('svg'); font-weight: normal; font-style: normal; }
+@font-face { font-family: "dashicons"; src: url("../webfonts/dashicons.eot"); }
+@font-face { font-family: "dashicons"; src: url("../webfonts/dashicons.ttf") format("truetype"), url("../imgs/dashicons.svg#dashicons") format("svg"); font-weight: normal; font-style: normal; }
 
 /* Animations */
 .ghs_animate_slide_up{}
@@ -68,7 +70,7 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .ghs_hero_banner .ghs_vid_play_btn{ position: absolute; top: 47%; font-size: 5em; left: 47%; z-index: 1000; }
 .ghs_hero_banner .ghs_vid_play_btn svg:hover{ cursor: pointer; }
 .ghs_hero_banner #ytplayer{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; z-index: 1 }
-.ghs_hero_banner #ghs_game{ display: none; }
+.ghs_hero_banner #ghs_game{ display: none; margin-top: 2rem; }
 .ghs_title{ font-family: "PressStart2P", Serif; }
 .ghs_light_bg{ background: rgba(255, 255, 255, 0.5); color: #000000; }
 .ghs_dark_bg{ background: #1f1f1f; color: #FFFFFF; }
@@ -105,6 +107,7 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .ghs_author .rounded-circle { width: 4rem; height: 4rem; }
 .ghs_author .ghs_share { height: 2.5em; display: flex; flex-direction: column; }
 .ghs_author .ghs_title { text-shadow: 0.2rem 0.2rem #7878e6; font-size: 1.5rem; }
+.ghs_author .ghs_share { margin-top: 0; }
 #copyInput{ display: none; }
 .ghs_login, .ghs_signup{ padding: 8.5rem 0; width: 25rem; margin: 6.5rem auto; }
 .ghs-login-alert { display: none; }
@@ -120,6 +123,17 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .svgIcon { width: 2em; height: 2em; }
 .ghs_avaiable_icon { fill: white; }
 .ghs_games .svg-inline--fa { font-size: 2em; }
+.ghs_video_wrapper { position: relative; padding-bottom: 56.25%; /* 16:9 */ padding-top: 25px; height: 0; }
+.ghs_video_wrapper iframe, .ghs_video_wrapper img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.ghs_rating { width: 100%; }
+.ghs_rating .star-rating { display: flex; justify-content: flex-end; }
+.ghs_rating .star-full:before { content: "\f155"; }
+.ghs_rating .star-half:before { content: "\f459"; }
+.ghs_rating .star-empty:before { content: "\f154"; }
+.star-rating .star { color: #7878e6; display: inline-block; font-family: dashicons; font-size: 2rem; font-style: normal; font-weight: 400; height: 2rem; line-height: 1; text-align: center; text-decoration: inherit; vertical-align: top; width: 2rem; }
+article div { margin-bottom: 1rem; }
+article div:last-child { margin-bottom: 0; }
+
 
 /* Text Corrects */
 .display-3.ghs_title{ text-shadow: 2px 2px #7878e6;  }
@@ -128,6 +142,8 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
     .ghs_hero_banner .container{ margin-top: 40vh; }
     .ghs_email_list{ width: 100%; }
     .ghs_author .ghs_share{ display: block; }
+    .ghs_rating .star-rating { justify-content: flex-start; }
+    .ghs_author .ghs_share { margin-top: 1rem; }
 }
 
 @keyframes typing {

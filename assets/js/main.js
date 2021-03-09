@@ -299,6 +299,26 @@ jQuery( document ).ready(function($) {
             });
         }
 
+        if($('.slick').length > 0){
+            $('.slick').slick({
+                // slidesToShow: 1,
+                // slidesToScroll: 1,
+                // autoplay: true,
+                // autoplaySpeed: 3000,
+                // dots: true,
+                // infinite: true,
+                // adaptiveHeight: true,
+                // arrows: false
+            });
+
+            // var video = $('.slick .slick-active').find('iframe').get(0).play();
+            //
+            // $('.slick').on('afterChange', function(event, slick, currentSlide, nextSlide){
+            //     $('.slick .slick-slide').find('video').get(0).pause();
+            //     var video = $('.slick .slick-active').find('video').get(0).play();
+            // });
+        }
+
     };
 
     init();

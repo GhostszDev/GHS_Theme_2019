@@ -23,17 +23,21 @@ const
         'assets/js/twitter.js',
         'assets/js/UnityLoader.js',
         'assets/js/UnityProgress.js',
-        'assets/js/main.js'
+        'assets/js/main.js',
+        'node_modules/slick-carousel/slick/slick.js'
     ],
     cssFiles      = [
         'node_modules/bootstrap/dist/css/*.css',
         'node_modules/@fortawesome/fontawesome-free/css/all.min.css',
+        'node_modules/slick-carousel/slick/slick.css',
+        'node_modules/slick-carousel/slick/slick-theme.css',
         'style.css'
     ],
     fontFiles     =[
     ],
     webfontsFiles =[
-        'node_modules/@fortawesome/fontawesome-free/webfonts/*.{ttf,woff,woff2,eot,svg}'
+        'node_modules/@fortawesome/fontawesome-free/webfonts/*.{ttf,woff,woff2,eot,svg}',
+        'node_modules/slick-carousel/slick/fonts/*.{ttf,woff,woff2,eot,svg}',
     ],
     files = [
         'style.css',
