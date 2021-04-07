@@ -125,11 +125,46 @@ function ghs_api_routes(){
 			'methods' => 'GET',
 			'callback' => 'testFunction'
 		));
+
+	register_rest_route('ghs_api/'.$v, '/ghs_add_to_mailing_list',
+		array(
+			'methods' => 'POST',
+			'callback' => 'ghs_api_add_to_mailinglist'
+		));
 }
 
 function testFunction(){
 //	return current_user_can( 'edit_posts' );
     return get_current_user_id();
+}
+
+function ghs_api_add_to_mailinglist($request){
+	$data['success'] = false;
+	$insertData = [
+		'Email' => $request['mailingListEmail'],
+		'OptIn' => 1
+	];
+	$data['insert'] = $insertData;
+
+	global $wpdb;
+
+	$check = $wpdb->get_row('SELECT * FROM `ghs_mailing_list` WHERE `Email` = \' '. $insertData['Email'] .' \' LIMIT 1', ARRAY_A);
+
+	if(!$check) {
+		$insert = $wpdb->insert('ghs_mailing_list', $insertData);
+
+		if ($insert) {
+			$data['success'] = true;
+		} else {
+			$data['error_msg'] = 'Error 419: Email couldn\'t be added to the mailing list!';
+		}
+	} else {
+		$data['error_msg'] = 'Email already has been signed up for the email list!';
+	}
+
+	$wpdb->flush();
+	echo json_encode($data);
+	exit();
 }
 
 function ghs_api_set_social($request){

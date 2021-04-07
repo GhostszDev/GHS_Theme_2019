@@ -144,7 +144,7 @@ var set_hero_settings = function () {
                 'hero-banner-link': heroBannerData.link
             };
 
-            jQuery.post(ghs_ajax_obj.ajaxurl, data, function (response) {
+            jQuery.post(ghs_obj.ajaxurl, data, function (response) {
 
                 if(response.success){
                     jQuery('.ghs_admin_alert').css('display','block').addClass('ghs_success');
@@ -186,16 +186,19 @@ var copyToClipboard = function(copyInputText){
 }
 
 function addToMailingList() {
-    var email = jQuery('.ghs_email_list input').val();
+    var email = jQuery('.ghs_email_list')[1].firstElementChild.value;
 
-    var data = {
-        action: 'ghs_add_to_mailing_list',
-        'post_type': 'POST',
-        'mailingListEmail': email
-    };
-
-    jQuery.post(ghs_ajax_obj.ajaxurl, data, function (response) {
-
+    jQuery.ajax({
+        method: 'POST',
+        url: ghs_obj.ghs_api_uri + 'ghs_add_to_mailing_list',
+        headers: {
+            Authorization: 'Bearer ' + Cookies.get('Token')
+        },
+        data: {
+            'mailingListEmail': email
+        }
+    }).done(function(response) {
+        console.log(response);
         if(response.success){
             if(jQuery('.ghs_email_list').length > 1){
                 var ghs_email_list = jQuery('.ghs_email_list');
@@ -204,10 +207,10 @@ function addToMailingList() {
                     '<p>Thank for joining the mailing list!</p>' +
                     '</div>');
             }
-        } else {
+        }else{
             console.error(response.error_msg);
         }
-    });
+    })
 
 }
 
