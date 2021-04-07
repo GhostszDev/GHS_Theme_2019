@@ -100,7 +100,7 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .recent-posts .ghs-header-title { font-size: 1.5rem; }
 .call-to-action{ width: 100%; height: 45vh; background-color: rgba(0, 0, 0, 0.55); }
 .call-to-action .ghs_email_list{ width: 100%; }
-.call-to-action .d-flex{ padding-top: 10.5%; }
+.call-to-action .d-flex{ padding-top: 7.5%; }
 .call-to-action .lead{ font-size: 1em; }
 .ghs_comments .ghs_title .lead{ font-size: .65em; }
 .ghs_comments .comment-reply-title{ font-family: "PressStart2P", Serif; font-size: 2em; }

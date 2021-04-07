@@ -8,7 +8,7 @@
                         <div class="input-group ghs_email_list mb-4">
                             <input type="email" class="form-control" placeholder="Place gmail here" aria-label="Place email here" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" onclick="addToMailingList()">Button</button>
+                                <button class="btn btn-outline-secondary" type="button" onclick="addToMailingList()">Submit</button>
                             </div>
                         </div>
                     </div>
