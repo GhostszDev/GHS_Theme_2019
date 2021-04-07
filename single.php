@@ -65,9 +65,64 @@
                     <?php endif; ?>
                     <?php echo get_the_content('', false, get_the_ID()) ?>
                 </article>
+
             </div>
             <div class="col-md-4">
                 <?php get_sidebar() ?>
+            </div>
+
+            <div class="col-md-12">
+                <section class="recent-posts mt-5">
+                    <h3 class="ghs_title ghs-header-title">Related Post</h3>
+
+                    <div class="container">
+			            <?php
+			            $key = 0;
+			            $args = [
+				            'post__not_in' => array( get_the_ID(), ),
+				            'cat' => get_the_category( $wp_query->post->ID )->cat_ID,
+				            'post_type' => 'post',
+				            'posts_per_page' => 3
+			            ];
+			            $the_query = new WP_Query( $args );
+
+			            // The Loop
+			            if ( $the_query->have_posts() ) {
+				            while ( $the_query->have_posts() ) {
+					            $the_query->the_post(); ?>
+
+                                <div class="row">
+						            <?php if(($key % 2)): ?>
+                                        <div onclick="goToPage('<?php echo get_the_permalink($post) ?>')" class="col-md-6 recent-posts__img order-sm-1 order-md-2 mb-4" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<?php echo get_the_post_thumbnail_url($post) ?>')"></div>
+                                        <div class="col-md-6 order-sm-2 order-md-2 mb-4">
+                                            <h2 class="ghs_title"><?php echo get_the_title($post) ?></h2>
+                                            <p class="lead"><?php echo get_the_excerpt($post) ?></p>
+                                            <a class="btn btn-primary ghs_button" href="<?php echo get_the_permalink($post) ?>" role="button">Read More</a>
+                                        </div>
+						            <?php else: ?>
+                                        <div class="col-md-6 order-sm-2 order-md-1 mb-4">
+                                            <h2 class="ghs_title"><?php echo get_the_title($post) ?></h2>
+                                            <p class="lead"><?php echo get_the_excerpt($post) ?></p>
+                                            <a class="btn btn-primary ghs_button" href="<?php echo get_the_permalink($post) ?>" role="button">Read More</a>
+                                        </div>
+                                        <div onclick="goToPage('<?php echo get_the_permalink($post) ?>')" class="col-md-6 recent-posts__img mb-4 order-sm-1 order-md-2" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<?php echo get_the_post_thumbnail_url($post) ?>')"></div>
+						            <?php endif; $key++; ?>
+                                </div>
+
+					            <?php
+				            }
+			            } else {
+				            // no posts found ?>
+                            <p>No post were found!</p>
+				            <?php
+			            }
+			            /* Restore original Post Data */
+			            wp_reset_postdata();
+			            ?>
+                    </div>
+
+
+                </section>
             </div>
 
         </div>
