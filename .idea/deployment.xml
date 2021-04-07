@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="hostgator" remoteFilesAllowedToDisappearOnAutoupload="false" showAutoUploadSettingsWarning="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="hostgator" remoteFilesAllowedToDisappearOnAutoupload="false" showDialogOnRemoteDnD="false" showAutoUploadSettingsWarning="false">
     <serverData>
       <paths name="hostgator">
         <serverdata>

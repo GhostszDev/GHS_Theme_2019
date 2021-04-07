@@ -750,6 +750,7 @@ function ghs_add_metaboxes(){
     add_meta_box('ghs_game_meta', 'Game Link', 'ghs_game_metaboxes', "ghs_games", "side", "low", null);
     add_meta_box('ghs_games_availability_meta', 'Game Availability', 'ghs_games_availability_metaboxes', "ghs_games", "side", "low", null);
     add_meta_box('ghs_games_slide_meta', 'Game Slide', 'ghs_games_slide_metaboxes', "ghs_games", "side", "low", null);
+    add_meta_box('ghs_games_choice_cat_meta', 'Featured Category', 'ghs_games_choice_cat_metaboxes', "ghs_games", "side", "low", null);
 }
 
 function ghs_get_YT_thumbnail($url){
@@ -808,7 +809,6 @@ function ghs_save_metadata($post_id){
             break;
 
         case 'ghs_games':
-//            var_dump($_POST['ghs_game_meta']);
 
 	        if(isset($_POST['ghs_game_meta'])) {
 		        update_post_meta( $post_id,
@@ -886,8 +886,41 @@ function ghs_save_metadata($post_id){
 		            $_POST['ghs_games_slide_4']
 	            );
             }
+
+            if(isset($_POST['ghs_games_choice_cat'])){
+                update_post_meta( $post_id,
+                'ghs_games_choice_cat',
+                $_POST['ghs_games_choice_cat']
+                );
+            }
             break;
     }
+}
+
+function ghs_games_choice_cat_metaboxes($object){
+    ?>
+
+    <div>
+        <label for="ghs_games_choice_cat">Feature Category</label>
+        <div class="ghs_games_choice_cat">
+            <select name="ghs_games_choice_cat">
+
+                <option value="">Select Category</option>
+	            <?php
+	            $args = ['hide_empty' => false];
+	            $categories = get_categories($args);
+                foreach ($categories as $cat): ?>
+                    <option value="<?php echo $cat->term_id ?>"
+                        <?php selected( get_post_meta($object->ID, "ghs_games_choice_cat", true), $cat->term_id ); ?>>
+                        <?php echo $cat->name ?>
+                    </option>
+	            <?php endforeach; ?>
+
+            </select>
+        </div>
+    </div>
+
+    <?php
 }
 
 function ghs_games_slide_metaboxes($object){

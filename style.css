@@ -96,7 +96,8 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .recent-posts .ghs_title, .recent-posts .lead { font-size: 1em; }
 .recent-posts .page-link { background: #977fff; color: white !important; border: none; }
 .recent-posts .page-link:hover{ background: #7878e6; color: #d4d4d4 !important; border: none; }
-.recent-posts .disabled .page-link{ background: #8181a3; color: #383838 !important; border: none; }
+.recent-posts .disabled .page-link { background: #8181a3; color: #383838 !important; border: none; }
+.recent-posts .ghs-header-title { font-size: 1.5rem; }
 .call-to-action{ width: 100%; height: 45vh; background-color: rgba(0, 0, 0, 0.55); }
 .call-to-action .ghs_email_list{ width: 100%; }
 .call-to-action .d-flex{ padding-top: 10.5%; }
@@ -106,7 +107,8 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .ghs_author .col-md{ display: flex; }
 .ghs_author .rounded-circle { width: 4rem; height: 4rem; }
 .ghs_author .ghs_share { height: 2.5em; display: flex; flex-direction: column; }
-.ghs_author .ghs_title { text-shadow: 0.2rem 0.2rem #7878e6; font-size: 1.5rem; }
+.ghs_title { text-shadow: 0.2rem 0.2rem #7878e6; font-size: 1.5rem; }
+.ghs_comment .ghs_title { text-shadow: none; font-size: .9rem; }
 .ghs_author .ghs_share { margin-top: 0; }
 #copyInput{ display: none; }
 .ghs_login, .ghs_signup{ padding: 8.5rem 0; width: 25rem; margin: 6.5rem auto; }
@@ -133,6 +135,7 @@ button:hover{ background: #7878e6; color: #d4d4d4; }
 .star-rating .star { color: #7878e6; display: inline-block; font-family: dashicons; font-size: 2rem; font-style: normal; font-weight: 400; height: 2rem; line-height: 1; text-align: center; text-decoration: inherit; vertical-align: top; width: 2rem; }
 article div { margin-bottom: 1rem; }
 article div:last-child { margin-bottom: 0; }
+.ghs_comments .col-md-12 { padding: 0 !important; }
 
 
 /* Text Corrects */
