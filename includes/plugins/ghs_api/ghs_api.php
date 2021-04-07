@@ -38,27 +38,51 @@ function ghs_api_routes(){
             'args' => array(
                 'facebook' => array(
                     'validate_callback' => function($parameter, $request, $key) {
-                        return filter_var($parameter, FILTER_VALIDATE_URL);
+	                    if(!empty($parameter)):
+		                    return filter_var($parameter, FILTER_VALIDATE_URL);
+	                    else:
+		                    return null;
+	                    endif;
                     },),
                 'twitter' => array(
                     'validate_callback' => function($parameter, $request, $key) {
-                        return filter_var($parameter, FILTER_VALIDATE_URL);
+                        if(!empty($parameter)):
+	                        return filter_var($parameter, FILTER_VALIDATE_URL);
+                        else:
+	                        return null;
+                        endif;
                     },),
                 'tumblr' => array(
                     'validate_callback' => function($parameter, $request, $key) {
-                        return filter_var($parameter, FILTER_VALIDATE_URL);
+	                    if(!empty($parameter)):
+		                    return filter_var($parameter, FILTER_VALIDATE_URL);
+	                    else:
+		                    return null;
+	                    endif;
                     },),
                 'instagram' => array(
                     'validate_callback' => function($parameter, $request, $key) {
-                        return filter_var($parameter, FILTER_VALIDATE_URL);
+	                    if(!empty($parameter)):
+		                    return filter_var($parameter, FILTER_VALIDATE_URL);
+	                    else:
+		                    return null;
+	                    endif;
                     },),
                 'youtube' => array(
                     'validate_callback' => function($parameter, $request, $key) {
-                        return filter_var($parameter, FILTER_VALIDATE_URL);
+	                    if(!empty($parameter)):
+		                    return filter_var($parameter, FILTER_VALIDATE_URL);
+	                    else:
+		                    return null;
+	                    endif;
                     },),
                 'snapchat' => array(
                     'validate_callback' => function($parameter, $request, $key) {
-                        return filter_var($parameter, FILTER_VALIDATE_URL);
+	                    if(!empty($parameter)):
+		                    return filter_var($parameter, FILTER_VALIDATE_URL);
+	                    else:
+		                    return null;
+	                    endif;
                     },),
             ),
             'permission_callback' => function () {

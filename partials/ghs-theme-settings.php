@@ -3,13 +3,13 @@
     <h1>Theme Settings</h1>
 
     <div class="ghs_admin_alert" role="alert">
-        <strong>Oh snap!</strong> Change a few things up and try submitting again.
+        <p class="ghs_msg"></p>
     </div>
 
     <table style="width:100%">
         <tr>
             <th>Facebook:</th>
-            <td><input onchange="checkURL(this.value)" class="theme-settings-input ghs-set-social-facebook" placeholder="Facebook"></td>
+            <td><input class="theme-settings-input ghs-set-social-facebook" placeholder="Facebook"></td>
         </tr>
         <tr>
             <th>Twitter:</th>
@@ -38,10 +38,6 @@
 </section>
 
 <section class="ghs_theme_cat_settings">
-
-    <div class="ghs_admin_alert" role="alert">
-        <strong>Oh snap!</strong> Change a few things up and try submitting again.
-    </div>
 
     <div class="ghs_theme_cat_options">
 

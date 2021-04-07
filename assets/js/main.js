@@ -18,8 +18,10 @@ var set_social = function(){
         console.log(response);
         if(response.success){
             jQuery('.ghs_admin_alert').css('display','block').addClass('ghs_success');
+            jQuery('.ghs_admin_alert .ghs_msg').append(response.success_msg);
         }else{
             jQuery('.ghs_admin_alert').css('display','block').addClass('ghs_error');
+            jQuery('.ghs_admin_alert .ghs_msg').append(response.data);
         }
     })
 
