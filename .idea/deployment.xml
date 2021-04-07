@@ -5,8 +5,7 @@
       <paths name="hostgator">
         <serverdata>
           <mappings>
-            <mapping deploy="/public_html/wp-content/themes/ghs_theme_2019" local="$PROJECT_DIR$" web="/public_html/wp-content/themes/GHS_Theme_2019" />
-            <mapping local="" />
+            <mapping deploy="/public_html/wp-content/themes/ghs_theme_2019" local="$PROJECT_DIR$" web="/public_html/wp-content/themes/ghs_theme_2019" />
           </mappings>
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/node_modules" />

@@ -1,10 +1,10 @@
-<?php get_header(); $cat = get_the_category()[0]; $feat_thumb = get_option( "category_$cat->term_id"); ?>
+<?php get_header(); $cat = get_query_var('cat'); $feat_thumb = get_option( "category_$cat"); ?>
 
 
 <div class="jumbotron jumbotron-fluid ghs_hero_banner mb-4" style="background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<?php if($feat_thumb['img']): echo $feat_thumb['img']; endif; ?>');">
     <div class="container">
-        <h1 class="display-5 ghs_title"><?php echo $cat->name; ?></h1>
-        <p class="lead"><?php echo $cat->description ?></p>
+        <h1 class="display-5 ghs_title"><?php echo get_cat_name($cat); ?></h1>
+        <p class="lead"><?php echo category_description($cat) ?></p>
     </div>
 </div>
 
