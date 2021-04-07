@@ -103,7 +103,7 @@ function ghs_head(){
     if(is_single()):
         echo '<title>' . ucwords(get_the_title()) . ' | ' . ucwords(get_bloginfo('Name')) . '</title>';
     elseif (is_category()):
-        echo '<title>' . ucwords(get_the_category()[0]->name) . ' | ' . ucwords(get_bloginfo('Name')) . '</title>';
+        echo '<title>' . ucwords(get_cat_name(get_query_var('cat'))) . ' | ' . ucwords(get_bloginfo('Name')) . '</title>';
     elseif (is_404()):
 	    echo '<title>' . 'Page Not Found  | ' . ucwords(get_bloginfo('Name')) . '</title>';
     elseif (is_front_page()):
