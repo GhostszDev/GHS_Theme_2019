@@ -7,6 +7,7 @@ Author: Steven "Ghost" Rivera
 
 //actions
 add_action('rest_api_init', 'ghs_api_routes');
+do_action('wp_login', 'ghs_jwt_auth', 10, 2);
 
 //filters
 add_filter('rest_url_prefix', 'ghs_rest_url_prefix');
@@ -269,38 +270,11 @@ function ghs_api_login($request){
             'user_password' => $request['password']
         ];
 
-        $signon = wp_signon($userInfo, true);
+        $signon = wp_signon($userInfo, is_ssl());
 
         if($signon->errors){
             if($signon->errors['incorrect_password'] or $signon->errors['invalid_username']){
                 $data['error_message'] = "Please check the information entered!";
-            }
-        } else {
-            $authLogin = [
-                'username' => $request['user'],
-                'password' => $request['password'],
-
-            ];
-            $data['success'] = true;
-            $sendData = [
-                'body'    => $authLogin,
-                'headers' => array(
-                    'Content-Type' => 'application/x-www-form-urlencoded'
-                ),
-            ];
-            $authInfo = wp_remote_post(site_url() . '/api/jwt-auth/v1/token', $sendData);
-            $token = json_decode(wp_remote_retrieve_body($authInfo));
-
-            if($token->token){
-                setcookie('Token', $token->token, time() + (DAY_IN_SECONDS * 7), COOKIEPATH, COOKIE_DOMAIN);
-                $data['success'] = true;
-                $data['token'] = $token->token;
-                $data['name'] = $signon->user_nicename;
-                $data['user_icon'] = gravatarToBase64(get_avatar_url($signon->ID));
-                $data['useBlob'] = true;
-            } else {
-                $data['success'] = false;
-                $data['error_message'] = "Failed to authentication user!";
             }
         }
     }
@@ -428,4 +402,33 @@ function ghs_api_set_theme_cats($request){
     }
 
     return $data;
+}
+
+function ghs_jwt_auth($user_login, $user){
+	$authLogin = [
+                'username' => $request['user'],
+                'password' => $request['password'],
+
+            ];
+            $data['success'] = true;
+            $sendData = [
+                'body'    => $authLogin,
+                'headers' => array(
+                    'Content-Type' => 'application/x-www-form-urlencoded'
+                ),
+            ];
+            $authInfo = wp_remote_post(site_url() . '/api/jwt-auth/v1/token', $sendData);
+            $token = json_decode(wp_remote_retrieve_body($authInfo));
+
+            if($token->token){
+                setcookie('Token', $token->token, time() + (DAY_IN_SECONDS * 7), COOKIEPATH, COOKIE_DOMAIN);
+                $data['success'] = true;
+                $data['token'] = $token->token;
+                $data['name'] = $signon->user_nicename;
+                $data['user_icon'] = gravatarToBase64(get_avatar_url($signon->ID));
+                $data['useBlob'] = true;
+            } else {
+                $data['success'] = false;
+                $data['error_message'] = "Failed to authentication user!";
+            }
 }
