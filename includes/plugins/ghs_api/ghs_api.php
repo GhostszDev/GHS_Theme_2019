@@ -304,18 +304,16 @@ function ghs_api_login($request){
         ];
 
         $signon = wp_signon($userInfo, is_ssl());
+        $data['test'] = $signon;
 
-        if($signon->errors){
-            if($signon->errors['incorrect_password'] or $signon->errors['invalid_username']){
-                $data['error_message'] = "Please check the information entered!";
-            } else {
-            	$data['success'] = true;
-            	$data['signIn'] = ghs_jwt_auth($request['user'], $request['password']);
-            }
-        }
+        if(is_wp_error($signon)){
+            $data['error_message'] = "Please check the information entered!";
+        } else {
+	        $data['success'] = true;
+	        $data['signIn'] = ghs_jwt_auth($request['user'], $request['password']);
+}
     }
-
-    return $data;
+	return $data;
 }
 
 function ghs_api_signup($request){
