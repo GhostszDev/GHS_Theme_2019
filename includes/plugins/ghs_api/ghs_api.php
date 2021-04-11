@@ -223,7 +223,6 @@ function ghs_api_add_to_mailinglist($request){
 
 	$wpdb->flush();
 	echo json_encode($data);
-	exit();
 }
 
 function ghs_api_set_social($request){
