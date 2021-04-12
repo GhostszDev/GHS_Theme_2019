@@ -12,7 +12,10 @@
                 // Remove "Text or HTML to be displayed after the set of comment fields".
                 'comment_notes_after' => '',
                 // Redefine your own textarea (the comment body).
-                'comment_field' => '<div class="form-group"><label for="exampleFormControlTextarea1"></label><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Leave a comment here.."></textarea></div>',
+                'comment_field' =>
+                    '<div class="form-group"><label for="exampleFormControlTextarea1"></label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1 comment" name="comment" rows="3" placeholder="Leave a comment here.."></textarea>
+                    </div>',
             );
             comment_form( $comments_args );
             ?>
