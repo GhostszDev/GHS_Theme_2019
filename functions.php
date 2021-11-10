@@ -96,6 +96,7 @@ function ghs_head(){
 
       gtag('config', 'UA-63287923-1');
     </script>
+    <script data-ad-client="ca-pub-3479977104944029" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <?php endif; ?>
 
 
@@ -149,7 +150,7 @@ function ghs_head(){
 
 function ghs_footer(){ ?>
 
-    <?php if(strpos(site_url(), 'localhost') !== false): ?>
+    <?php if(strpos(site_url(), 'localhost') != false): ?>
 
     <script id="__bs_script__">//<![CDATA[
         document.write("<script async src='<?php echo get_site_url()?>///browser-sync/browser-sync-client.js?v=2.26.7'><\/script>");
@@ -158,7 +159,6 @@ function ghs_footer(){ ?>
     <?php endif; ?>
 
 	<?php if(is_singular('ghs_games')): ?>
-<!--		--><?php //var_dump(get_post_meta(get_the_ID(), 'ghs_game_meta')) ?>
         <script>
             <?php if(!empty(get_post_meta(get_the_ID(), 'ghs_game_meta')[0])): ?>
             var unityInstance = UnityLoader.instantiate("unityContainer", "<?php echo unity_path . get_post_meta(get_the_ID(), 'ghs_game_meta')[0]?>", {onProgress: UnityProgress});
@@ -175,7 +175,8 @@ function ghs_scripts(){
 
     // all scripts
     wp_enqueue_script('jquery');
-    wp_enqueue_script('bundleJS', get_template_directory_uri() . '/assets/js/bundle-min.js', array('jquery'), '', false);
+    wp_enqueue_script('unityJS', get_template_directory_uri() . '/assets/js/unity-min.js', array('jquery'), '', true);
+    wp_enqueue_script('bundleJS', get_template_directory_uri() . '/assets/js/bundle-min.js', array('jquery', 'unityJS'), '', false);
 
     // all localize scripts
     wp_localize_script('bundleJS', 'ghs_obj', array(
@@ -192,11 +193,10 @@ function ghs_admin_scripts(){
 
     // all scripts
     wp_enqueue_script('jquery');
-    wp_enqueue_script('js-cookies', get_template_directory_uri() . '/node_modules/js-cookie/src/js.cookie.js');
-    wp_enqueue_script('mainJS', get_template_directory_uri() . '/assets/js/main.js', array('jquery', 'js-cookies'), null, true);
+    wp_enqueue_script('adminJS', get_template_directory_uri() . '/assets/js/admin-min.js', array('jquery'), null, true);
 
     // all localize scripts
-    wp_localize_script('mainJS', 'ghs_obj', array(
+    wp_localize_script('adminJS', 'ghs_obj', array(
         'ajaxurl' => admin_url( 'admin-ajax.php'),
         'ghs_site' => site_url('/'),
         'ghs_api_uri' => site_url('/api/ghs_api/v1/'),
@@ -384,7 +384,6 @@ function save_extra_category_fileds( $term_id ) {
 }
 
 function ghs_theme_settings(){
-
     include_once(get_stylesheet_directory() . '/partials/ghs-theme-settings.php');
 
 }
@@ -747,6 +746,7 @@ function ghs_grab_selected_cats(){
 function ghs_add_metaboxes(){
     add_meta_box('ghs_youtube_meta', 'Youtube Link', 'ghs_youtube_metaboxes', "post", "side", "low", null);
     add_meta_box('ghs_postcast_meta', 'Podcast Link', 'ghs_podcast_metaboxes', "post", "side", "low", null);
+    add_meta_box('ghs_ad_msg_meta', 'Affiliate or Sponsored Content', 'ghs_ad_msg_metabox', "post", "side", "low", null);
     add_meta_box('ghs_game_meta', 'Game Link', 'ghs_game_metaboxes', "ghs_games", "side", "low", null);
     add_meta_box('ghs_games_availability_meta', 'Game Availability', 'ghs_games_availability_metaboxes', "ghs_games", "side", "low", null);
     add_meta_box('ghs_games_slide_meta', 'Game Slide', 'ghs_games_slide_metaboxes', "ghs_games", "side", "low", null);
@@ -806,6 +806,12 @@ function ghs_save_metadata($post_id){
 //			        json_encode($updatedStr)
                 );
 	        }
+
+            if(isset($_POST['ghs_ad_msg_meta'])):
+                update_post_meta( $post_id, 'ghs_ad_msg_meta', true );
+            else:
+                update_post_meta( $post_id, 'ghs_ad_msg_meta', false );
+            endif;
             break;
 
         case 'ghs_games':
@@ -1026,6 +1032,16 @@ function ghs_podcast_metaboxes($object){
     <div>
         <label for="ghs_podcast_meta">Link</label>
         <input name="ghs_podcast_meta" type="text" value="<?php echo get_post_meta($object->ID, "ghs_podcast_meta", true); ?>">
+    </div>
+    <?php
+}
+
+function ghs_ad_msg_metabox($object){
+    var_dump(get_post_meta( $object->ID, 'ghs_ad_msg_meta', true));
+    ?>
+    <div>
+        <label for="ghs_ad_msg_meta">Has Affiliate Links or Sponsored Content</label>
+        <input type="checkbox" name="ghs_ad_msg_meta" id="ghs_ad_msg_meta" value="<?php echo get_post_meta( $object->ID, 'ghs_ad_msg_meta', true ) ?>" <?php if( get_post_meta( $object->ID, 'ghs_ad_msg_meta', true ) == true ): echo 'checked="checked"'; else: echo ''; endif; ?> />
     </div>
     <?php
 }

@@ -4,16 +4,18 @@ var set_social = function(){
         method: 'POST',
         url: ghs_obj.ghs_api_uri + 'set_social',
         headers: {
-            Authorization: 'Bearer ' + Cookies.get('Token')
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + Cookies.get('Token', { domain: $(location).attr("origin") })
         },
-        data: {
+        data: JSON.stringify({
             facebook: jQuery('.ghs-set-social-facebook').val(),
             twitter: jQuery('.ghs-set-social-twitter').val(),
             tumblr: jQuery('.ghs-set-social-tumblr').val(),
             instagram: jQuery('.ghs-set-social-instagram').val(),
             youtube: jQuery('.ghs-set-social-youtube').val(),
             snapchat: jQuery('.ghs-set-social-snapchat').val(),
-        }
+        })
     }).done(function(response) {
         console.log(response);
         if(response.success){
@@ -97,13 +99,15 @@ var set_theme_cats = function(){
         method: 'POST',
         url: ghs_obj.ghs_api_uri + 'set_theme_cats',
         headers: {
-            Authorization: 'Bearer ' + Cookies.get('Token')
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + Cookies.get('Token', { domain: $(location).attr("origin") })
         },
-        data: {
+        data: JSON.stringify({
             cat1: jQuery('.ghs_theme_cat_settings .ghs_theme_cat_options .ghs_theme_cat_1').val(),
             cat2: jQuery('.ghs_theme_cat_settings .ghs_theme_cat_options .ghs_theme_cat_2').val(),
             cat3: jQuery('.ghs_theme_cat_settings .ghs_theme_cat_options .ghs_theme_cat_3').val(),
-        }
+        })
     }).done(function(response) {
         console.log(response);
         if(response.success){
@@ -194,11 +198,13 @@ function addToMailingList() {
         method: 'POST',
         url: ghs_obj.ghs_api_uri + 'ghs_add_to_mailing_list',
         headers: {
-            Authorization: 'Bearer ' + Cookies.get('Token')
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + Cookies.get('Token', { domain: $(location).attr("origin") })
         },
-        data: {
+        data: JSON.stringify({
             'mailingListEmail': email
-        }
+        })
     }).done(function(response) {
         console.log(response);
         if(response.success){

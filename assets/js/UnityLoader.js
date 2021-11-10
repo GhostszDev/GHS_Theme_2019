@@ -4510,7 +4510,7 @@ var UnityLoader = UnityLoader || {
         switch ((/Windows/.test(u) && ((p = /Windows (.*)/.exec(u)[1]), (u = "Windows")), u)) {
             case "Mac OS X":
                 p = /Mac OS X (10[\.\_\d]+)/.exec(i);
-                console.log(p);
+                // console.log(p);
                 break;
             case "Android":
                 p = /Android ([\.\_\d]+)/.exec(i)[1];

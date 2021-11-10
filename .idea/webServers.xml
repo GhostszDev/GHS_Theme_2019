@@ -2,10 +2,10 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="e0414391-366d-4306-ac3e-61050f892a71" name="hostgator" url="http://gator4052.hostgator.com">
-        <fileTransfer rootFolder="/public_html/wp-content/themes/ghs_theme_2019" host="gator4052.hostgator.com" port="21">
+      <webServer id="f52ba5d3-4d0f-404d-b76c-d85ed2483373" name="ghostszmusic">
+        <fileTransfer rootFolder="/home/wp_r94r8e/ghostszmusic.com/wp-content/themes/ghs_theme_2019" accessType="SFTP" host="ghostszmusic.com" port="22" sshConfigId="db9b940c-9b21-42c0-ab04-3a5a7a3aac35" sshConfig="wp_r94r8e@ghostszmusic.com:22 password">
           <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
         </fileTransfer>
       </webServer>

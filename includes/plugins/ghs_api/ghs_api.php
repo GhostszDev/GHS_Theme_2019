@@ -11,7 +11,10 @@ add_action( 'wp_logout', 'ghs_jwt_auth_remove_token' );
 
 //filters
 add_filter('rest_url_prefix', 'ghs_rest_url_prefix');
-add_filter( 'wp_authenticate', 'ghs_jwt_auth', 30, 2 );
+
+if ( $GLOBALS['pagenow'] === 'wp-login.php' ) {
+	add_filter( 'wp_authenticate', 'ghs_jwt_auth', 30, 2 );
+}
 
 //functions
 function ghs_rest_url_prefix(){
@@ -87,8 +90,10 @@ function ghs_api_routes(){
 	                    endif;
                     },),
             ),
-            'permission_callback' => function () {
-                return current_user_can( 'edit_posts' );
+            'permission_callback' => function() {
+	            $user_id = apply_filters( 'determine_current_user', false );
+	            wp_set_current_user( $user_id );
+	            return current_user_can('edit_posts');
             }
         ));
 
@@ -111,6 +116,8 @@ function ghs_api_routes(){
                     },),
             ),
             'permission_callback' => function () {
+	            $user_id = apply_filters( 'determine_current_user', false );
+	            wp_set_current_user( $user_id );
                 return current_user_can( 'edit_posts' );
             }
         ));
@@ -174,7 +181,7 @@ function ghs_jwt_auth($username, $password){
 	$token = json_decode($json);
 
 	if ( $token->token ) {
-		setcookie( 'Token', $token->token, time() + ( DAY_IN_SECONDS * 7 ), COOKIEPATH, COOKIE_DOMAIN );
+		setcookie( 'Token', $token->token, time() + ( DAY_IN_SECONDS * 7 ), COOKIEPATH, site_url() );
 		$data['success']   = true;
 		$data['token']     = $token->token;
 		$data['name']      = $token->user_nicename;
@@ -189,7 +196,7 @@ function ghs_jwt_auth($username, $password){
 }
 
 function ghs_jwt_auth_remove_token(){
-	setcookie( 'Token', '', time() + ( DAY_IN_SECONDS * 7 ), COOKIEPATH, COOKIE_DOMAIN );
+	setcookie( 'Token', '', time() + ( DAY_IN_SECONDS * 7 ), COOKIEPATH, site_url() );
 }
 
 function testFunction(){
@@ -412,11 +419,12 @@ function ghs_api_set_theme_cats($request){
     $check = $wpdb->get_results('SELECT * FROM `ghs_cat_selection`');
 
     if($check){
-        for($i = 0; $i < 3; $i++ ) {
-            $update = $wpdb->update('ghs_cat_selection',
-                ['cat_'.$i => $request['cat'.$i]],
-                ['ID' => $i]);
-        }
+
+        $update = $wpdb->update('ghs_cat_selection', [
+	        'cat_1' => $request['cat1'],
+	        'cat_2' => $request['cat2'],
+	        'cat_3' => $request['cat3']
+        ], [ 'ID' => 1 ]);
         if($update){
             $data['success'] = true;
         } else {
@@ -426,7 +434,8 @@ function ghs_api_set_theme_cats($request){
         $insert = $wpdb->insert('ghs_cat_selection', [
                 'cat_1' => $request['cat1'],
                 'cat_2' => $request['cat2'],
-                'cat_3' => $request['cat3']
+                'cat_3' => $request['cat3'],
+	            'id' => 1
             ]);
         if($insert){
             $data['success'] = true;

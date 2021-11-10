@@ -57,13 +57,18 @@
 
             <div class="col-md-8">
                 <article>
-                    <?php if(!empty(get_post_meta(get_the_ID(), 'ghs_podcast_meta')[0])): ?>
+                    <?php
+                    if ( get_post_meta( get_the_ID(), 'ghs_ad_msg_meta' ) == true ): ?>
+                    <div class="alert alert-danger" role="alert">This article may have Affiliate or Sponsored content. Any purchases or link help support <?php echo get_bloginfo("name")?>. <a href="#">Learn More</a></div>
+                    <? endif;
+
+                    if(!empty(get_post_meta(get_the_ID(), 'ghs_podcast_meta')[0])): ?>
 
 <!--                    --><?php //var_dump(get_post_meta(get_the_ID(), 'ghs_podcast_meta')) ?>
                         <iframe class="ghs_podcast_iframe mb-4" src="<?php echo get_post_meta(get_the_ID(), 'ghs_podcast_meta')[0] ?>" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-                    <?php endif; ?>
-                    <?php echo get_the_content('', false, get_the_ID()) ?>
+                    <?php endif;
+                    the_content(); ?>
                 </article>
 
             </div>

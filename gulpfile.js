@@ -17,14 +17,20 @@ const
     autoprefixer  = require('autoprefixer'),
     cssnano       = require('cssnano'),
     jsScripts     = [
-        'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
-        'node_modules/@fortawesome/fontawesome-free/js/all.js',
         'node_modules/js-cookie/src/js.cookie.js',
+        'node_modules/@fortawesome/fontawesome-free/js/all.js',
+        'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
+        'node_modules/slick-carousel/slick/slick.js',
         'assets/js/twitter.js',
+        'assets/js/main.js'
+    ],
+    jsUnityScripts= [
         'assets/js/UnityLoader.js',
-        'assets/js/UnityProgress.js',
-        'assets/js/main.js',
-        'node_modules/slick-carousel/slick/slick.js'
+        'assets/js/UnityProgress.js'
+    ],
+    jsAdminScripts= [
+        'node_modules/js-cookie/src/js.cookie.js',
+        'assets/js/main.js'
     ],
     cssFiles      = [
         'node_modules/bootstrap/dist/css/*.css',
@@ -67,6 +73,16 @@ gulp.task('css', function (done) {
 gulp.task('js', function (done) {
     gulp.src(jsScripts, { sourcemaps: true })
         .pipe(concat('bundle.js'))
+        .pipe(minify())
+        .pipe(gulp.dest('assets/js/', { sourcemaps: true }));
+
+    gulp.src(jsUnityScripts, { sourcemaps: true })
+        .pipe(concat('unity.js'))
+        .pipe(minify())
+        .pipe(gulp.dest('assets/js/', { sourcemaps: true }));
+
+    gulp.src(jsAdminScripts, { sourcemaps: true })
+        .pipe(concat('admin.js'))
         .pipe(minify())
         .pipe(gulp.dest('assets/js/', { sourcemaps: true }));
     done();

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="ghostszmusic.com" id="db9b940c-9b21-42c0-ab04-3a5a7a3aac35" port="22" nameFormat="DESCRIPTIVE" username="wp_r94r8e" />
+    </configs>
+  </component>
+</project>
