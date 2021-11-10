@@ -616,14 +616,9 @@ function ghs_add_post_types(){
 
 function ghs_get_latest_post(){
 
-    global $wpdb;
-
-    $query = "SELECT ID FROM $wpdb->posts WHERE `post_status` = 'publish' AND `post_type` = 'post' ORDER BY ID DESC LIMIT 0,1";
-
-    $result = $wpdb->get_results($query);
-    $row = $result[0];
-    $id = $row->ID;
-
+	$args = array( 'numberposts' => '5', 'post_status' => 'publish' );
+	$recent_posts = wp_get_recent_posts( $args );
+	$id = $recent_posts[0]['ID'];
     return $id;
 
 }
